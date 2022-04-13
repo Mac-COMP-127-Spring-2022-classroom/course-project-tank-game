@@ -1,22 +1,30 @@
 package TankGameFiles;
 
+import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
 
-public class Tank {
-    private final double BARREL_LENGTH = 10;
+public class Tank extends GraphicsGroup{
+    private final double BARREL_LENGTH = 60;
+    private final int BARREL_X_OFFSET = 25;
+    private final int BARREL_Y_OFFSET = 15;
+    private final int TANK_WIDTH = 50;
+    private final int TANK_HEIGHT = 30;
     private double centerX;
     private double centerY;
-    Line cannon;
+    private Line cannon;
+    private Rectangle body;
 
-    public Tank(double centerX, double centerY, double width, double height) {
+    public Tank(double centerX, double centerY) {
         this.centerX = centerX;
         this.centerY = centerY;
-        GraphicsObject body = new Rectangle(centerX, centerY, );
-        cannon = new Line(centerX, centerY, centerX+BARREL_LENGTH, centerY);
+        body = new Rectangle(centerX, centerY, TANK_WIDTH, TANK_HEIGHT);
+        cannon = new Line(centerX+BARREL_X_OFFSET, centerY+BARREL_Y_OFFSET, centerX+BARREL_X_OFFSET+BARREL_LENGTH, centerY+BARREL_Y_OFFSET);
+        add(body);
+        add(cannon);
     }
 
     public void setCannonAngle(KeyboardEvent key) {
