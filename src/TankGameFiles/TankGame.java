@@ -5,29 +5,23 @@ import edu.macalester.graphics.CanvasWindow;
 public class TankGame {
     private final int CANVAS_HEIGHT = 600;
     private final int CANVAS_WIDTH = 1000;
-    private static TankGame game = new TankGame();
     private TankManager tankManager;
     private CanvasWindow canvas;
 
-    public TankGame() {
+    public TankGame() { // Refactored the constructor to make code more readable. 
         canvas = new CanvasWindow("Tanks!", CANVAS_WIDTH, CANVAS_HEIGHT);
         tankManager = new TankManager(canvas);
+        tankManager.generateTanks();
+        canvas.draw();
     }
 
     // public void cannonControls() {
     //     canvas.onKeyDown(event -> tank.setCannonAngle(event -> tank.setCannonAngle(event)));
     // }
-
-    public void mainLoop(){
-        game.run();
-    }
-
-    public void run() {
-        tankManager.generateTanks();
-        canvas.draw();
-    }
+    
+    // We will bring back the run method later. We just don't need it at this time.
 
     public static void main(String[] args) {
-        game.mainLoop();
+        TankGame game = new TankGame();             
     }
 }
