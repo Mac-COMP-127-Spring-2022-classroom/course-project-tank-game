@@ -13,6 +13,8 @@ public class Tank extends GraphicsGroup{
     private final int BARREL_Y_OFFSET = 15;
     private final int TANK_WIDTH = 50;
     private final int TANK_HEIGHT = 30;
+    private int angle = 0;                  // Moved angle here so that we can always move the cannon from the last position noted.
+    private boolean working = true;
     private double centerX;
     private double centerY;
     private Line cannon;
@@ -28,7 +30,6 @@ public class Tank extends GraphicsGroup{
     }
 
     public void setCannonAngle(KeyboardEvent key) {
-        int angle = 0;
         if (key.getKey().equals(Key.valueOf("DOWN_ARROW"))){
             angle -= 5;
         }
@@ -40,5 +41,12 @@ public class Tank extends GraphicsGroup{
         cannon.setEndPosition(x2, y2);
     }
 
+    public boolean isWorking() {
+        return working;
+    }
+
+    public void fireCannon() {
+        working = false;
+    }
     //Should fire cannon be here or in TankGame? (Marcus)
 }

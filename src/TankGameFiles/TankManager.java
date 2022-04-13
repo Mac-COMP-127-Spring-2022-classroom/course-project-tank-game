@@ -24,4 +24,17 @@ public class TankManager {
             tanks.add(tank);
         }
     }
+
+    public List<Tank> getTanks() {
+        return tanks;
+    }
+
+    public Tank getWorkingTank() {
+        for (Tank t : tanks) {
+            if (t.isWorking()) {
+                return t;
+            }
+        }
+            return null;
+    }
 }

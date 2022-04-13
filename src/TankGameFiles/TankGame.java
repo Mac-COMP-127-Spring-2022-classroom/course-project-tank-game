@@ -13,11 +13,14 @@ public class TankGame {
         tankManager = new TankManager(canvas);
         tankManager.generateTanks();
         canvas.draw();
+        cannonControls(tankManager.getWorkingTank());
     }
 
-    // public void cannonControls() {
-    //     canvas.onKeyDown(event -> tank.setCannonAngle(event -> tank.setCannonAngle(event)));
-    // }
+    public void cannonControls(Tank tank) {
+        canvas.onKeyDown(event -> tank.setCannonAngle(event));
+    }
+
+    
     
     // We will bring back the run method later. We just don't need it at this time.
 
