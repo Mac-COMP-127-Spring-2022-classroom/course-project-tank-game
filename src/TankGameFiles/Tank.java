@@ -11,8 +11,7 @@ import edu.macalester.graphics.events.KeyboardEvent;
 import java.util.List;
 
 public class Tank extends GraphicsGroup{
-    private Image cannon;
-    private int angle = 180;
+    
     private final double BARREL_LENGTH = 60;
     private final int BARREL_X_OFFSET = 25;
     private final int BARREL_Y_OFFSET = 15;
@@ -26,14 +25,12 @@ public class Tank extends GraphicsGroup{
     private GraphicsGroup group;
     private List<Tank> tanklist;
 
-    public Tank(double centerX, double centerY, String imagePath, String imagePath2) {
+    public Tank(double centerX, double centerY, String imagePath) {
         this.centerX = centerX;
         this.centerY = centerY;  
         body = new Image(centerX, centerY, imagePath);
         body.setMaxHeight(200);
         body.setMaxWidth(150);
-        cannon = new Image(centerX-50, centerY-100, imagePath2);
-        add(cannon);
         add(body);
     }
 
@@ -49,16 +46,6 @@ public class Tank extends GraphicsGroup{
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
                 moveBy(5, 0);
             }
-    }
-
-    public void setCannonAngle(KeyboardEvent key) {
-        if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && angle>0){
-            angle -= 5;
-        }
-        if (key.getKey().equals(Key.valueOf("UP_ARROW")) && angle<180){
-            angle += 5;
-        }
-        cannon.setRotation(angle);
     }
 
     public boolean isWorking() {

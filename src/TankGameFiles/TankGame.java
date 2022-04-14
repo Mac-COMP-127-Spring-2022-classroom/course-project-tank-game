@@ -21,9 +21,9 @@ public class TankGame {
         canvas.onKeyDown(event -> tank.moveTank(event));
     }
 
-    public void cannonControls(Tank tank) {
-        canvas.onKeyDown(event -> tank.setCannonAngle(event));
-    }
+    // public void cannonControls(Tank tank) {
+    //     canvas.onKeyDown(event -> tank.setCannonAngle(event));
+    // }
 
     
     
