@@ -31,10 +31,10 @@ public class Tank extends GraphicsGroup{
     }
 
     public void moveTank(KeyboardEvent key) {
-        if (key.getKey().equals(Key.valueOf("LEFT_ARROW")) && angle>0){
+        if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
             moveBy(-5, 0);
         }
-        if (key.getKey().equals(Key.valueOf("RIGHT_ARROW")) && angle<180){
+        if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
             moveBy(5, 0);
         }
     }
