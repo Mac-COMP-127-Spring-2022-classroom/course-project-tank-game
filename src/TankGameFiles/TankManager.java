@@ -1,6 +1,9 @@
 package TankGameFiles;
+
 import java.util.ArrayList;
 import java.util.List;
+import edu.macalester.graphics.events.Key;
+import edu.macalester.graphics.events.KeyboardEvent;
 
 import edu.macalester.graphics.CanvasWindow;
 
@@ -16,12 +19,35 @@ public class TankManager {
     public void generateTanks() {
         int x = 50;
         int y = 400;
-        for (int i = 0; i<2; i++){
-            Tank tank = new Tank(0, 0);
-            tank.setPosition(x, y);
-            x+=800;
-            canvas.add(tank);
-            tanks.add(tank);
+        for (int i = 0; i < 2; i++) {
+            if (i < 1) {
+                Tank redtank = new Tank(0, 0, "RedTank.png");
+                redtank.setPosition(x, y);
+                x += 800;
+                canvas.add(redtank);
+                tanks.add(redtank);
+            } 
+            else {
+                Tank bluetank = new Tank(0, 0, "BlueTank.png");
+                bluetank.setPosition(x, y);
+                x += 800;
+                canvas.add(bluetank);
+                tanks.add(bluetank);
+            }
+        }
+    }
+       /**
+     * Moves Tank
+     * @param key
+     */
+    public void moveTank(KeyboardEvent key, Tank tank) {
+        if(tank.getCenterX()-75 > 0 ){ //not working properly
+            if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
+                tank.moveBy(-5, 0);
+            }
+            if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
+                tank.moveBy(5, 0);
+            }
         }
     }
 
@@ -35,6 +61,6 @@ public class TankManager {
                 return t;
             }
         }
-            return null;
+        return null;
     }
 }

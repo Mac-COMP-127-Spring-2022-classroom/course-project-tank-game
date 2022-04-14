@@ -14,16 +14,16 @@ public class TankGame {
         tankManager.generateTanks();
         canvas.draw();
         tankControls(tankManager.getWorkingTank());
-        cannonControls(tankManager.getWorkingTank());
+        // cannonControls(tankManager.getWorkingTank());
     }
 
     public void tankControls(Tank tank) {
         canvas.onKeyDown(event -> tank.moveTank(event));
     }
 
-    public void cannonControls(Tank tank) {
-        canvas.onKeyDown(event -> tank.setCannonAngle(event));
-    }
+    // public void cannonControls(Tank tank) {
+    //     canvas.onKeyDown(event -> tank.setCannonAngle(event));
+    // }
 
     
     
