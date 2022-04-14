@@ -9,12 +9,14 @@ import edu.macalester.graphics.events.KeyboardEvent;
 public class Cannon extends GraphicsGroup{
     private Image cannon;
     private int angle = 0; // Moved angle here so that we can always move the cannon from the last position noted.
-    private final double BARREL_LENGTH = 60;
     private double centerX;
     private double centerY;
     
 
     Cannon(double centerX, double centerY, String imagePath){
+        this.centerX = centerX;
+        this.centerY = centerY;  
+        
         cannon = new Image(centerX, centerY, imagePath);
         add(cannon);
     }
@@ -24,17 +26,19 @@ public class Cannon extends GraphicsGroup{
     //  * 
     //  * @param key 
     //  */
-    // public void setCannonAngle(KeyboardEvent key) {
-    //     if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && angle>0){
-    //         angle -= 5;
-    //     }
-    //     if (key.getKey().equals(Key.valueOf("UP_ARROW")) && angle<180){
-    //         angle += 5;
-    //     }
-    //     double x2 = cannon.getX1() + BARREL_LENGTH * Math.cos(Math.toRadians(angle));
-    //     double y2 = cannon.getY1() + BARREL_LENGTH * -Math.sin(Math.toRadians(angle));
-    //     cannon.setEndPosition(x2, y2);
-    // }
+    public void setCannonAngle(KeyboardEvent key) {
+        double cannonHalfLength=cannon.getWidth()/2;
+        if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && angle>0){
+            angle -= 5;
+        }
+        if (key.getKey().equals(Key.valueOf("UP_ARROW")) && angle<180){
+            angle += 5;
+        }
+        double x2 = cannon.getX() + cannonHalfLength * Math.cos(Math.toRadians(angle));
+        System.out.println(cannon.getX());
+        double y2 = cannon.getY() +cannonHalfLength* -Math.sin(Math.toRadians(angle));
+        System.out.println(cannon.getY());
+    }
     
     // public Point getLeftcannon(){
     //     return new Point(getCenterX(), getCenterY());
