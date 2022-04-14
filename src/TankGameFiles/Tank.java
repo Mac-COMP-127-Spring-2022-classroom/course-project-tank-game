@@ -18,6 +18,7 @@ public class Tank extends GraphicsGroup{
     private double centerX;
     private double centerY;
     private Line cannon;
+    private Tank tank;
     private Rectangle body;
 
     public Tank(double centerX, double centerY) {
@@ -29,11 +30,20 @@ public class Tank extends GraphicsGroup{
         add(cannon);
     }
 
+    public void moveTank(KeyboardEvent key) {
+        if (key.getKey().equals(Key.valueOf("LEFT_ARROW")) && angle>0){
+            moveBy(-5, 0);
+        }
+        if (key.getKey().equals(Key.valueOf("RIGHT_ARROW")) && angle<180){
+            moveBy(5, 0);
+        }
+    }
+
     public void setCannonAngle(KeyboardEvent key) {
-        if (key.getKey().equals(Key.valueOf("DOWN_ARROW"))){
+        if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && angle>0){
             angle -= 5;
         }
-        if (key.getKey().equals(Key.valueOf("UP_ARROW"))){
+        if (key.getKey().equals(Key.valueOf("UP_ARROW")) && angle<180){
             angle += 5;
         }
         double x2 = cannon.getX1() + BARREL_LENGTH * Math.cos(Math.toRadians(angle));
