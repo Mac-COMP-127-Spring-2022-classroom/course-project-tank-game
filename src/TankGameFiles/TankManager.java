@@ -10,9 +10,11 @@ import edu.macalester.graphics.CanvasWindow;
 public class TankManager {
     private CanvasWindow canvas;
     private List<Tank> tanks;
+    private List<Cannon> cannons;
 
     public TankManager(CanvasWindow canvas) {
         tanks = new ArrayList<>();
+        cannons = new ArrayList<>();
         this.canvas = canvas;
     }
 
@@ -27,6 +29,7 @@ public class TankManager {
                 canvas.add(redcannon);
                 canvas.add(redtank);
                 tanks.add(redtank);
+                cannons.add(redcannon);
             } 
             else {
                 Tank bluetank = new Tank(0, 0, "BlueTank.png");
@@ -36,6 +39,7 @@ public class TankManager {
                 canvas.add(bluecannon);
                 canvas.add(bluetank);
                 tanks.add(bluetank);
+                cannons.add(bluecannon);
             }
         }
     }
@@ -43,16 +47,34 @@ public class TankManager {
      * Moves Tank
      * @param key
      */
-    public void moveTank(KeyboardEvent key, Tank tank) {
+    public void moveTank(KeyboardEvent key, Tank tank, Cannon cannon) {
         if(tank.getCenterX()-75 > 0 ){ //not working properly
             if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
                 tank.moveBy(-5, 0);
+                cannon.moveBy(-5, 0);
             }
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
                 tank.moveBy(5, 0);
+                cannon.moveBy(5, 0);
             }
         }
     }
+
+    /**
+    * Changes cannon angle
+    * @param key
+    * @param cannon
+    */
+    public void setCannonAngle(KeyboardEvent key, Cannon cannon) {
+        if (key.getKey().equals(Key.valueOf("UP_ARROW")) && cannon.getAngle()>-180){
+            cannon.setAngle(-5);
+        }
+        if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && cannon.getAngle()<0){
+            cannon.setAngle(5);
+        }
+        cannon.setRotation(cannon.getAngle());
+    }
+
 
     public List<Tank> getTanks() {
         return tanks;
@@ -62,6 +84,15 @@ public class TankManager {
         for (Tank t : tanks) {
             if (t.isWorking()) {
                 return t;
+            }
+        }
+        return null;
+    }
+
+    public Cannon getWorkingCannon() {
+        for (Cannon c : cannons) {
+            if (c.isWorking()) {
+                return c;
             }
         }
         return null;

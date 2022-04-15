@@ -8,6 +8,7 @@ import edu.macalester.graphics.events.KeyboardEvent;
 
 public class Cannon extends Image{
     private Image cannon;
+    private boolean working = true;
     private int angle = 0; // Moved angle here so that we can always move the cannon from the last position noted.
     
 
@@ -16,22 +17,25 @@ public class Cannon extends Image{
     }
 
 
-    // /**
-    //  * 
-    //  * @param key 
-    //  */
-    public void setCannonAngle(KeyboardEvent key) {
-        double cannonHalfLength=cannon.getWidth()/2;
-        if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && angle>0){
-            angle -= 5;
+    public double getAngle() {
+        return angle;
+    }
+
+    public double setAngle(int input) {
+        return angle += input;
+    }
+
+    public boolean isWorking() {
+        return working;
+    }
+
+    public void switchWorking() {
+        if (working) {
+            working = false;
         }
-        if (key.getKey().equals(Key.valueOf("UP_ARROW")) && angle<180){
-            angle += 5;
+        else {
+            working = true;
         }
-        double x2 = cannon.getX() + cannonHalfLength * Math.cos(Math.toRadians(angle));
-        System.out.println(cannon.getX());
-        double y2 = cannon.getY() +cannonHalfLength* -Math.sin(Math.toRadians(angle));
-        System.out.println(cannon.getY());
     }
     
     // public Point getLeftcannon(){

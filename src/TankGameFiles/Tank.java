@@ -24,15 +24,15 @@ public class Tank extends Image{
      * Moves Tank
      * @param key
      */
-    public void moveTank(KeyboardEvent key) {
-        // if(body.getLeftPoint())
-            if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
-                moveBy(-5, 0);
-            }
-            if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
-                moveBy(5, 0);
-            }
-    }
+    // public void moveTank(KeyboardEvent key) {
+    //     // if(body.getLeftPoint())
+    //         if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
+    //             moveBy(-5, 0);
+    //         }
+    //         if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
+    //             moveBy(5, 0);
+    //         }
+    // }
 
     // public double getCannonAngle() {
     //     return angle;

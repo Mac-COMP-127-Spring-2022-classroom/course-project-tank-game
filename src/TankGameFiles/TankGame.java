@@ -15,20 +15,20 @@ public class TankGame {
         tankManager = new TankManager(canvas);
         tankManager.generateTanks();
         canvas.draw();
-        tankControls(tankManager.getWorkingTank());
-        // cannonControls(tankManager.getWorkingTank());
+        tankControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
+        cannonControls(tankManager.getWorkingCannon());
         // cannonShoot(tankManager.getWorkingTank());
         // canvas.animate(() -> System.out.println(canvas.getKeysPressed()));
         
     }
 
-    public void tankControls(Tank tank) {
-        canvas.onKeyDown(event -> tank.moveTank(event));
+    public void tankControls(Tank tank, Cannon cannon) {
+        canvas.onKeyDown(event -> tankManager.moveTank(event, tank, cannon));
     }
 
-    // public void cannonControls(Tank tank) {
-    //     canvas.onKeyDown(event -> tank.setCannonAngle(event));
-    // }
+    public void cannonControls(Cannon cannon) {
+        canvas.onKeyDown(event -> tankManager.setCannonAngle(event, cannon));
+    }
 
     // public void cannonShoot(Tank tank) {
     //     canvas.onKeyDown(event -> fireCannon(event, tank, 1, canvas));
