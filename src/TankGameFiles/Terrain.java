@@ -9,7 +9,6 @@ public class Terrain extends GraphicsGroup{
 
     public Terrain() {
         Line line = new Line(0, 400, MAX_X, 400);
-        canvas.add(line);
     }
     
 }
