@@ -21,21 +21,21 @@ public class TankManager {
         int y = 400;
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redtank = new Tank(x, y, "RedTank.png");
-                Cannon redcannon = new Cannon (x, y - 30, "RedCannon.png");
-                x += 800;
-                canvas.add(redcannon);
-                canvas.add(redtank);
-                tanks.add(redtank);
+                Tank redTank = new Tank(x, y, "RedTank.png");
+                Cannon redCannon = new Cannon (x, y - 30, "RedCannon.png");
+                System.out.println(redCannon.getWidth());
+                x += 500;
+                canvas.add(redCannon);
+                canvas.add(redTank);
+                tanks.add(redTank);
             } 
             else {
-                Tank bluetank = new Tank(0, 0, "BlueTank.png");
-                Cannon bluecannon = new Cannon (0,0,"BlueCannon.png");
-                bluetank.setPosition(x, y);
-                x += 800;
-                canvas.add(bluecannon);
-                canvas.add(bluetank);
-                tanks.add(bluetank);
+                Tank blueTank = new Tank(x, y, "BlueTank.png");
+                Cannon blueCannon = new Cannon (x, y - 30,"BlueCannon.png");
+                blueTank.setPosition(x, y);
+                canvas.add(blueCannon);
+                canvas.add(blueTank);
+                tanks.add(blueTank);
             }
         }
     }
