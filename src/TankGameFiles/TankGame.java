@@ -9,11 +9,13 @@ public class TankGame {
     private final int CANVAS_WIDTH = 1000;
     private TankManager tankManager;
     private CanvasWindow canvas;
+    private Terrain terrain;
 
     public TankGame() { // Refactored the constructor to make code more readable. 
         canvas = new CanvasWindow("Tanks!", CANVAS_WIDTH, CANVAS_HEIGHT);
         tankManager = new TankManager(canvas);
         tankManager.generateTanks();
+        canvas.add(terrain);
         canvas.draw();
         tankControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
         cannonControls(tankManager.getWorkingCannon());
