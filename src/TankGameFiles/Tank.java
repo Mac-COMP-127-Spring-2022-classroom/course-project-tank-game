@@ -1,5 +1,6 @@
 package TankGameFiles;
 
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Image;
@@ -10,27 +11,13 @@ import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
 import java.util.List;
 
-public class Tank extends GraphicsGroup{
-    private final double BARREL_LENGTH = 60;
-    private final int BARREL_X_OFFSET = 25;
-    private final int BARREL_Y_OFFSET = 15;
-    // private final int TANK_WIDTH = 50;
-    // private final int TANK_HEIGHT = 30;                 
+public class Tank extends Image{              
     private boolean working = true;
-    private double centerX;
-    private double centerY;
-    private Tank tank;
     private Image body;
-    private GraphicsGroup group;
-    private List<Tank> tanklist;
 
-    public Tank(double centerX, double centerY, String imagePath) {
-        this.centerX = centerX;
-        this.centerY = centerY;  
-        body = new Image(centerX, centerY, imagePath);
-        body.setMaxHeight(200);
-        body.setMaxWidth(150);
-        add(body);
+
+    public Tank(double x, double y, String imagePath) {
+        super(x, y, imagePath);
     }
 
     /**
@@ -47,23 +34,36 @@ public class Tank extends GraphicsGroup{
             }
     }
 
+    // public double getCannonAngle() {
+    //     return angle;
+    // }
+
     public boolean isWorking() {
         return working;
     }
 
-    public void fireCannon() {
-        working = false;
+    public void switchWorking() {
+        if (working) {
+            working = false;
+        }
+        else {
+            working = true;
+        }
     }
 
+    // public Line getCannon() {
+    //     return cannon;
+    // }
+
     public double getCenterX(){
-        return body.getPosition().getX();
+        return getPosition().getX() + getWidth()/2;
     }
     public double getCenterY(){
-        return body.getPosition().getY();
+        return getPosition().getY() + getHeight()/2;
     }
-    public Point getLeftPoint(){
-        return new Point(body.getPosition().getX(), getCenterY());
-    }
+    // public Point getLeftPoint(){
+    //     return new Point(body.getPosition().getX(), getCenterY());
+    // }
     // public Point getRightPoint(){
     //     return new Point(getCenterX()+75, getCenterY());
     // }

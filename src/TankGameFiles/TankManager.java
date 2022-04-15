@@ -21,10 +21,10 @@ public class TankManager {
         int y = 400;
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redtank = new Tank(0, 0, "RedTank.png");
-                Cannon redcannon = new Cannon (0,0,"RedCannon.png");
+                Tank redtank = new Tank(x, y, "RedTank.png");
+                Cannon redcannon = new Cannon (redtank.getCenterX(), redtank.getCenterY(),"RedCannon.png");
                 redtank.setPosition(x, y);
-                redcannon.setPosition(x,y);
+                // redcannon.setPosition(x,y);
                 x += 800;
                 canvas.add(redtank);
                 canvas.add(redcannon);
