@@ -16,7 +16,8 @@ public class Cannon extends GraphicsGroup{
     Cannon(double centerX, double centerY, String imagePath){
         this.centerX = centerX;
         this.centerY = centerY;  
-        
+        cannon.setMaxHeight(50);
+        cannon.setMaxWidth(50);
         cannon = new Image(centerX, centerY, imagePath);
         add(cannon);
     }
