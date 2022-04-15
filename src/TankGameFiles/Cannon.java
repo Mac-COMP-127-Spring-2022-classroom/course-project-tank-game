@@ -10,10 +10,13 @@ public class Cannon extends Image{
     private Image cannon;
     private boolean working = true;
     private int angle = 0; // Moved angle here so that we can always move the cannon from the last position noted.
+    // public static final double MAX_HEIGHT = 100;
+    public static final double MAX_WIDTH = 288;
     
 
     public Cannon(double x, double y, String imagePath){
         super(x, y, imagePath);
+        setMaxWidth(MAX_WIDTH);
     }
 
 
@@ -41,5 +44,7 @@ public class Cannon extends Image{
     // public Point getLeftcannon(){
     //     return new Point(getCenterX(), getCenterY());
     // }
-    
+    public static double getMaxWidth() {
+        return MAX_WIDTH;
+    }
 }
