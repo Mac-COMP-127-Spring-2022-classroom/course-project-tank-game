@@ -14,7 +14,7 @@ public class TankGame {
         tankManager.generateTanks();
         canvas.draw();
         tankControls(tankManager.getWorkingTank());
-        cannonControls(tankManager.getWorkingTank());
+        // cannonControls(tankManager.getWorkingTank());
     }
 
     public void tankControls(Tank tank) {
