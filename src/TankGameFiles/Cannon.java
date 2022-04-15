@@ -6,20 +6,13 @@ import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
 
 
-public class Cannon extends GraphicsGroup{
+public class Cannon extends Image{
     private Image cannon;
     private int angle = 0; // Moved angle here so that we can always move the cannon from the last position noted.
-    private double centerX;
-    private double centerY;
     
 
-    Cannon(double centerX, double centerY, String imagePath){
-        this.centerX = centerX;
-        this.centerY = centerY;  
-        cannon.setMaxHeight(50);
-        cannon.setMaxWidth(50);
-        cannon = new Image(centerX, centerY, imagePath);
-        add(cannon);
+    public Cannon(double x, double y, String imagePath){
+        super(x, y, imagePath);
     }
 
 
