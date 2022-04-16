@@ -7,10 +7,8 @@ import edu.macalester.graphics.events.KeyboardEvent;
 
 
 public class Cannon extends Image{
-    private Image cannon;
     private boolean working = true;
-    private int angle = 0; // Moved angle here so that we can always move the cannon from the last position noted.
-    // public static final double MAX_HEIGHT = 100;
+    private double angle = 0; // Is in radians.
     public static final double MAX_WIDTH = 288;
     
 
@@ -19,13 +17,16 @@ public class Cannon extends Image{
         setMaxWidth(MAX_WIDTH);
     }
 
-
+    /**
+     * Returns the cannon's angle in radians.
+     * @return
+     */
     public double getAngle() {
         return angle;
     }
 
-    public double setAngle(int input) {
-        return angle += input;
+    public void setAngle(double input) {
+        angle = input;
     }
 
     public boolean isWorking() {

@@ -11,16 +11,15 @@ public class TankGame {
     private CanvasWindow canvas;
     private Terrain terrain;
 
-    public TankGame() { // Refactored the constructor to make code more readable. 
+    public TankGame() {
         canvas = new CanvasWindow("Tanks!", CANVAS_WIDTH, CANVAS_HEIGHT);
         tankManager = new TankManager(canvas);
         tankManager.generateTanks();
         // canvas.add(terrain);
         canvas.draw();
         tankControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
-        cannonControls(tankManager.getWorkingCannon());
+        cannonControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
         // cannonShoot(tankManager.getWorkingTank());
-        // canvas.animate(() -> System.out.println(canvas.getKeysPressed()));
         
     }
 
@@ -28,26 +27,16 @@ public class TankGame {
         canvas.onKeyDown(event -> tankManager.moveTank(event, tank, cannon));
     }
 
-    public void cannonControls(Cannon cannon) {
-        canvas.onKeyDown(event -> tankManager.setCannonAngle(event, cannon));
+    public void cannonControls(Tank tank, Cannon cannon) {
+        canvas.onKeyDown(event -> tankManager.setCannonAngle(event, tank, cannon));
+        canvas.onKeyDown(event -> tankManager.fireCannon(event, cannon, 10));
     }
 
     // public void cannonShoot(Tank tank) {
     //     canvas.onKeyDown(event -> fireCannon(event, tank, 1, canvas));
     // }
 
-    // public void fireCannon(KeyboardEvent key, Tank tank, double initialSpeed, CanvasWindow canvas) {
-    //     Cannonball ball = new Cannonball(tank.getCenterX(), tank.getCannon().getY2() + 400 - Cannonball.getRadius(), initialSpeed, tank. getCannonAngle(), CANVAS_WIDTH, CANVAS_HEIGHT);
-    //     ball.addToCanvas(canvas);
-    //     if (key.getKey().equals(Key.valueOf("SPACE"))) {
-    //         System.out.println(ball.getCenterX());
-    //         while (ball.updatePosition(0.1)) {
-    //             canvas.draw();
-    //         }   
-    //     }
-    //     tank.switchWorking();
-    //     ball.removeFromCanvas(canvas);
-    // }
+
     
     
     // We will bring back the run method later. We just don't need it at this time.

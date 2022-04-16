@@ -1,23 +1,15 @@
 package TankGameFiles;
 
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Image;
-import edu.macalester.graphics.Line;
-import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
-import edu.macalester.graphics.events.Key;
-import edu.macalester.graphics.events.KeyboardEvent;
-import java.util.List;
+
 
 public class Tank extends Image{              
     private boolean working = true;
-    private Image body;
-
 
     public Tank(double x, double y, String imagePath) {
         super(x, y, imagePath);
+ 
     }
 
     /**
@@ -34,10 +26,6 @@ public class Tank extends Image{
     //         }
     // }
 
-    // public double getCannonAngle() {
-    //     return angle;
-    // }
-
     public boolean isWorking() {
         return working;
     }
@@ -50,10 +38,6 @@ public class Tank extends Image{
             working = true;
         }
     }
-
-    // public Line getCannon() {
-    //     return cannon;
-    // }
 
     public double getCenterX(){
         return getPosition().getX() + getWidth()/2;

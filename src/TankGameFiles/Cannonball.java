@@ -2,6 +2,10 @@ package TankGameFiles;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 
+
+/**
+ * Creates a Cannonball that is an ellipse object and moves it on the canvas.
+ */
 public class Cannonball {
     public static final double GRAVITY = -9.8;
     public static final double RADIUS = 20; 
@@ -14,6 +18,15 @@ public class Cannonball {
     private double maxY;
     private Ellipse ballShape;
     
+    /**
+     * Creates a cannonball ellipse object.
+     * @param centerX
+     * @param centerY
+     * @param initialSpeed
+     * @param initialAngle
+     * @param maxX
+     * @param maxY
+     */
     public Cannonball(double centerX, double centerY, double initialSpeed, double initialAngle, double maxX, double maxY) {
         this.centerX = centerX;
         this.centerY = centerY;
