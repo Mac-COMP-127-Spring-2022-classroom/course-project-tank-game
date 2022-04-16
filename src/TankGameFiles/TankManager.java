@@ -23,19 +23,20 @@ public class TankManager {
     public void generateTanks() {
         int x = 50;
         int y = 400;
+        int cannonY=y+5;
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
                 Tank redTank = new Tank(x, y, "RedTank.png");
-                Cannon redCannon = new Cannon (redTank.getCenterX(), y + 5, "RedCannon.png");
-                Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
-                Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
-                rect2.setStrokeColor(Color.BLUE);
+                Cannon redCannon = new Cannon (redTank.getCenterX(), cannonY, "RedCannon.png");
+                // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
+                // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
+                // rect2.setStrokeColor(Color.BLUE);
                 // redCannon.setAnchor(redCannon.getX(), redCannon.getY() + redCannon.getHeight()/2);
                 x += 500;
                 canvas.add(redCannon);
                 canvas.add(redTank);
-                canvas.add(rect);
-                canvas.add(rect2);
+                // canvas.add(rect);
+                // canvas.add(rect2);
                 tanks.add(redTank);
                 cannons.add(redCannon);
             } 
@@ -76,12 +77,12 @@ public class TankManager {
         if (key.getKey().equals(Key.valueOf("DOWN_ARROW"))){
             cannon.rotateBy(5);
             cannon.setAngle(cannon.getAngle() - 5);
-            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),  tank.getY() - 5 -50 * Math.sin(Math.toRadians(cannon.getAngle())));
+            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),  - 50 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() +15);
         }
         if (key.getKey().equals(Key.valueOf("UP_ARROW"))){
             cannon.rotateBy(-5);
-            cannon.setAngle(cannon.getAngle() + 5);
-            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),  tank.getY() - 5 -50 * Math.sin(Math.toRadians(cannon.getAngle())));
+            cannon.setAngle(cannon.getAngle() +5);
+            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   - 50 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() + 15);
 
         }
         // cannon.setRotation(cannon.getAngle());
