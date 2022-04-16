@@ -42,9 +42,11 @@ public class TankManager {
             } 
             else {
                 Tank blueTank = new Tank(x, y, "BlueTank.png");
-                Cannon blueCannon = new Cannon (x, y - 30,"BlueCannon.png");
+                Cannon blueCannon = new Cannon (blueTank.getCenterX() - 100.1, y + 5,"BlueCannon.png");
+                blueCannon.setAngle(180);
                 x += 500;
                 canvas.add(blueCannon);
+
                 canvas.add(blueTank);
                 tanks.add(blueTank);
                 cannons.add(blueCannon);
@@ -89,7 +91,7 @@ public class TankManager {
     }
 
     public void fireCannon(KeyboardEvent key, Cannon cannon, double initialSpeed) {
-        Cannonball ball = new Cannonball(getWorkingTank().getX() + getWorkingTank().getWidth(), getWorkingTank().getY(), initialSpeed, cannon.getAngle(), canvas.getWidth(), canvas.getHeight());
+        Cannonball ball = new Cannonball(getWorkingCannon().getX() - 10 + 50 * Math.cos(Math.toRadians(cannon.getAngle())), getWorkingCannon().getY() - getWorkingCannon().getHeight()/2, initialSpeed, cannon.getAngle(), canvas.getWidth(), canvas.getHeight());
         ball.addToCanvas(canvas);
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             System.out.println(getWorkingTank().getX());

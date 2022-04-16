@@ -48,4 +48,5 @@ public class Cannon extends Image{
     public static double getMaxWidth() {
         return MAX_WIDTH;
     }
+
 }
