@@ -1,4 +1,6 @@
 package TankGameFiles;
+import java.awt.Color;
+
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 
@@ -8,7 +10,7 @@ import edu.macalester.graphics.Ellipse;
  */
 public class Cannonball {
     public static final double GRAVITY = -9.8;
-    public static final double RADIUS = 20; 
+    public static final double RADIUS = 5; 
     private double centerX;
     private double centerY;
     // Will take the angle of the cannon. Make sure that we shoot the cannonball out of the TOP of the cannon. 
@@ -39,6 +41,7 @@ public class Cannonball {
         this.dy = initialSpeed * -Math.sin(angleInRadians);
 
         ballShape = new Ellipse(centerX - RADIUS, centerY - RADIUS, 2 * RADIUS, 2* RADIUS);
+        ballShape.setFillColor(Color.BLUE);
     }
 
     public double getCenterX() {

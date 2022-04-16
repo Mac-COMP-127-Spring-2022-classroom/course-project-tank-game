@@ -41,9 +41,11 @@ public class TankManager {
             } 
             else {
                 Tank blueTank = new Tank(x, y, "BlueTank.png");
-                Cannon blueCannon = new Cannon (x, y - 30,"BlueCannon.png");
+                Cannon blueCannon = new Cannon (blueTank.getCenterX() - 100.1, y + 5,"BlueCannon.png");
+                blueCannon.setAngle(180);
                 x += 500;
                 canvas.add(blueCannon);
+
                 canvas.add(blueTank);
                 tanks.add(blueTank);
                 cannons.add(blueCannon);
@@ -76,19 +78,19 @@ public class TankManager {
         if (key.getKey().equals(Key.valueOf("DOWN_ARROW"))){
             cannon.rotateBy(5);
             cannon.setAngle(cannon.getAngle() - 5);
-            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),  tank.getY() - 5 -50 * Math.sin(Math.toRadians(cannon.getAngle())));
+            cannon.setCenter(tank.getCenterX() - 10 + 50 * Math.cos(Math.toRadians(cannon.getAngle())),  tank.getY() + 14 -50 * Math.sin(Math.toRadians(cannon.getAngle())));
+            System.out.println(cannon.getCenter());
         }
         if (key.getKey().equals(Key.valueOf("UP_ARROW"))){
             cannon.rotateBy(-5);
             cannon.setAngle(cannon.getAngle() + 5);
-            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),  tank.getY() - 5 -50 * Math.sin(Math.toRadians(cannon.getAngle())));
-
+            cannon.setCenter(tank.getCenterX() - 10 + 50 * Math.cos(Math.toRadians(cannon.getAngle())),  tank.getY() + 14 -50 * Math.sin(Math.toRadians(cannon.getAngle())));
         }
         // cannon.setRotation(cannon.getAngle());
     }
 
     public void fireCannon(KeyboardEvent key, Cannon cannon, double initialSpeed) {
-        Cannonball ball = new Cannonball(getWorkingTank().getX() + getWorkingTank().getWidth(), getWorkingTank().getY(), initialSpeed, cannon.getAngle(), canvas.getWidth(), canvas.getHeight());
+        Cannonball ball = new Cannonball(getWorkingCannon().getX() - 10 + 50 * Math.cos(Math.toRadians(cannon.getAngle())), getWorkingCannon().getY() - getWorkingCannon().getHeight()/2, initialSpeed, cannon.getAngle(), canvas.getWidth(), canvas.getHeight());
         ball.addToCanvas(canvas);
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             System.out.println(getWorkingTank().getX());
