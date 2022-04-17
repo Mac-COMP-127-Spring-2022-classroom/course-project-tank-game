@@ -73,12 +73,12 @@ public class TankManager {
     * @param cannon
     */
     public void setCannonAngle(KeyboardEvent key) {
-        if (key.getKey().equals(Key.valueOf("DOWN_ARROW"))){
+        if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && getWorkingCannon().getAngle()>0){
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
             getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15);
         }
-        if (key.getKey().equals(Key.valueOf("UP_ARROW"))){
+        if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() +5);
             getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 15);

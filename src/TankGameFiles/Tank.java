@@ -7,6 +7,7 @@ import edu.macalester.graphics.Image;
 public class Tank extends Image{              
     private boolean working;
     private Cannon cannon;
+    private int hp = 5;
 
     public Tank(double x, double y, String imagePath, double cannonY, String cannonPath) {
         super(x, y, imagePath);
@@ -14,19 +15,13 @@ public class Tank extends Image{
  
     }
 
-    /**
-     * Moves Tank
-     * @param key
-     */
-    // public void moveTank(KeyboardEvent key) {
-    //     // if(body.getLeftPoint())
-    //         if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
-    //             moveBy(-5, 0);
-    //         }
-    //         if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
-    //             moveBy(5, 0);
-    //         }
-    // }
+    public int getHP() {
+        return hp;
+    }
+
+    public int setHP(int set) {
+        return hp -= set;
+    }
 
     public Cannon getCannon(){
         return cannon;
