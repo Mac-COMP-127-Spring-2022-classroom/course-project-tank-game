@@ -1,14 +1,16 @@
 package TankGameFiles;
 
 import edu.macalester.graphics.Image;
-import edu.macalester.graphics.Rectangle;
+
 
 
 public class Tank extends Image{              
-    private boolean working = true;
+    private boolean working;
+    private Cannon cannon;
 
-    public Tank(double x, double y, String imagePath) {
+    public Tank(double x, double y, String imagePath, double cannonY, String cannonPath) {
         super(x, y, imagePath);
+        cannon = new Cannon(getCenterX(), cannonY, cannonPath);
  
     }
 
@@ -26,17 +28,16 @@ public class Tank extends Image{
     //         }
     // }
 
+    public Cannon getCannon(){
+        return cannon;
+    }
+
     public boolean isWorking() {
         return working;
     }
 
     public void switchWorking() {
-        if (working) {
-            working = false;
-        }
-        else {
-            working = true;
-        }
+        working = !working;
     }
 
     public double getCenterX(){

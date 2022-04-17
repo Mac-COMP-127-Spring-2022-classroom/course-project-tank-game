@@ -7,7 +7,6 @@ import edu.macalester.graphics.events.KeyboardEvent;
 
 
 public class Cannon extends Image{
-    private boolean working = true;
     private double angle = 0; // Is in radians.
     
 
@@ -26,19 +25,6 @@ public class Cannon extends Image{
 
     public void setAngle(double input) {
         angle = input;
-    }
-
-    public boolean isWorking() {
-        return working;
-    }
-
-    public void switchWorking() {
-        if (working) {
-            working = false;
-        }
-        else {
-            working = true;
-        }
     }
     
     // public Point getLeftcannon(){

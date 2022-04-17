@@ -27,32 +27,26 @@ public class TankManager {
         int cannonY=y+5;
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redTank = new Tank(x, y, "RedTank.png");
-                Cannon redCannon = new Cannon (redTank.getCenterX(), cannonY, "RedCannon.png");
-                Ellipse ellipse = new Ellipse(0,0,50, 50);
+                Tank redTank = new Tank(x, y, "RedTank.png", cannonY, "RedCannon.png");
                 // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
                 // rect2.setStrokeColor(Color.BLUE);
                 // redCannon.setAnchor(redCannon.getX(), redCannon.getY() + redCannon.getHeight()/2);
                 x += 500;
-                canvas.add(redCannon);
+                canvas.add(redTank.getCannon());
                 canvas.add(redTank);
-                canvas.add(ellipse);
                 // canvas.add(rect);
                 // canvas.add(rect2);
                 tanks.add(redTank);
-                cannons.add(redCannon);
             } 
             else {
-                Tank blueTank = new Tank(x, y, "BlueTank.png");
-                Cannon blueCannon = new Cannon (blueTank.getCenterX() - 100.1, y + 5,"BlueCannon.png");
-                blueCannon.setAngle(180);
+                Tank blueTank = new Tank(x, y, "BlueTank.png",y ,"BlueCannon.png");
+                blueTank.getCannon().setAngle(180);
                 x += 500;
-                canvas.add(blueCannon);
-
+                canvas.add(blueTank.getCannon());
                 canvas.add(blueTank);
                 tanks.add(blueTank);
-                cannons.add(blueCannon);
+                blueTank.switchWorking();
             }
         }
     }
@@ -60,15 +54,15 @@ public class TankManager {
      * Moves Tank
      * @param key
      */
-    public void moveTank(KeyboardEvent key, Tank tank, Cannon cannon) {
-        if(tank.getCenterX()-75 > 0 ){ //not working properly
+    public void moveTank(KeyboardEvent key) {
+        if(getWorkingTank().getCenterX()-75 > 0 ){ //not working properly
             if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
-                tank.moveBy(-5, 0);
-                cannon.moveBy(-5, 0);
+                getWorkingTank().moveBy(-5, 0);
+                getWorkingCannon().moveBy(-5, 0);
             }
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
-                tank.moveBy(5, 0);
-                cannon.moveBy(5, 0);
+                getWorkingTank().moveBy(5, 0);
+                getWorkingCannon().moveBy(5, 0);
             }
         }
     }
@@ -78,30 +72,29 @@ public class TankManager {
     * @param key
     * @param cannon
     */
-    public void setCannonAngle(KeyboardEvent key, Tank tank, Cannon cannon) {
+    public void setCannonAngle(KeyboardEvent key) {
         if (key.getKey().equals(Key.valueOf("DOWN_ARROW"))){
-            cannon.rotateBy(5);
-            cannon.setAngle(cannon.getAngle() - 5);
-            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),  - 50 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() +15);
+            getWorkingCannon().rotateBy(5);
+            getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
+            getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15);
         }
         if (key.getKey().equals(Key.valueOf("UP_ARROW"))){
-            cannon.rotateBy(-5);
-            cannon.setAngle(cannon.getAngle() +5);
-            cannon.setCenter(50 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   - 50 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() + 15);
+            getWorkingCannon().rotateBy(-5);
+            getWorkingCannon().setAngle(getWorkingCannon().getAngle() +5);
+            getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 15);
 
         }
         // cannon.setRotation(cannon.getAngle());
     }
 
-    public void fireCannon(KeyboardEvent key, Tank tank, Cannon cannon, double initialSpeed) {
-        Cannonball ball = new Cannonball((50+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   -(50+(getWorkingCannon().getImageWidth()/2)) * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() +15, initialSpeed, cannon.getAngle(), canvas.getWidth(), canvas.getHeight());
+    public void fireCannon(KeyboardEvent key, double initialSpeed) {
+        Cannonball ball = new Cannonball((50+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   -(50+(getWorkingTank().getImageWidth()/2)) * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         ball.addToCanvas(canvas);
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
-             System.out.println(getWorkingCannon().getImageWidth()/2);
-            System.out.println(getWorkingCannon().getImageHeight()/2);
+            switchWorkingTank();
             while (ball.updatePosition(0.1)) {
                 canvas.draw();
-            }   
+            }
         }
         ball.removeFromCanvas(canvas);
     }
@@ -119,14 +112,14 @@ public class TankManager {
         return null;
     }
 
-
-
-    public Cannon getWorkingCannon() {
-        for (Cannon c : cannons) {
-            if (c.isWorking()) {
-                return c;
-            }
+    public void switchWorkingTank(){
+        for (Tank t : tanks) {
+            t.switchWorking();
         }
-        return null;
     }
+
+    public Cannon getWorkingCannon(){
+        return getWorkingTank().getCannon();
+    }
+ 
 }

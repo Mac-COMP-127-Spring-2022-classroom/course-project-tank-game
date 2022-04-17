@@ -17,18 +17,18 @@ public class TankGame {
         tankManager.generateTanks();
         // canvas.add(terrain);
         canvas.draw();
-        tankControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
-        cannonControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
+        tankControls(tankManager.getWorkingTank(), tankManager.getWorkingTank().getCannon());
+        cannonControls(tankManager.getWorkingTank(), tankManager.getWorkingTank().getCannon());
         
     }
 
     public void tankControls(Tank tank, Cannon cannon) {
-        canvas.onKeyDown(event -> tankManager.moveTank(event, tank, cannon));
+        canvas.onKeyDown(event -> tankManager.moveTank(event));
     }
 
     public void cannonControls(Tank tank, Cannon cannon) {
-        canvas.onKeyDown(event -> tankManager.setCannonAngle(event, tank, cannon));
-        canvas.onKeyDown(event -> tankManager.fireCannon(event, tank, cannon, 50));
+        canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
+        canvas.onKeyDown(event -> tankManager.fireCannon(event, 50));
     }
 
 
