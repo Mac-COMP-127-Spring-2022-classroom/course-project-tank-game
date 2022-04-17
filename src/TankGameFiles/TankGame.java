@@ -6,7 +6,7 @@ import edu.macalester.graphics.events.KeyboardEvent;
 
 public class TankGame {
     private final int CANVAS_HEIGHT = 600;
-    private final int CANVAS_WIDTH = 1000;
+    private final int CANVAS_WIDTH = 1200;
     private TankManager tankManager;
     private CanvasWindow canvas;
     private Terrain terrain;
@@ -28,7 +28,7 @@ public class TankGame {
 
     public void cannonControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.setCannonAngle(event, tank, cannon));
-        canvas.onKeyDown(event -> tankManager.fireCannon(event, cannon, 1));
+        canvas.onKeyDown(event -> tankManager.fireCannon(event, tank, cannon, 50));
     }
 
 

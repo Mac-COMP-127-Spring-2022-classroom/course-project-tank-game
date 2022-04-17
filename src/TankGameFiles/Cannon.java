@@ -9,12 +9,11 @@ import edu.macalester.graphics.events.KeyboardEvent;
 public class Cannon extends Image{
     private boolean working = true;
     private double angle = 0; // Is in radians.
-    public static final double MAX_WIDTH = 288;
     
 
     public Cannon(double x, double y, String imagePath){
         super(x, y, imagePath);
-        setMaxWidth(MAX_WIDTH);
+
     }
 
     /**
@@ -45,8 +44,5 @@ public class Cannon extends Image{
     // public Point getLeftcannon(){
     //     return new Point(getCenterX(), getCenterY());
     // }
-    public static double getMaxWidth() {
-        return MAX_WIDTH;
-    }
 
 }

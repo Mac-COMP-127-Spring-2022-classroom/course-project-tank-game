@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
+import edu.macalester.graphics.Ellipse;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
@@ -28,6 +29,7 @@ public class TankManager {
             if (i < 1) {
                 Tank redTank = new Tank(x, y, "RedTank.png");
                 Cannon redCannon = new Cannon (redTank.getCenterX(), cannonY, "RedCannon.png");
+                Ellipse ellipse = new Ellipse(0,0,50, 50);
                 // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
                 // rect2.setStrokeColor(Color.BLUE);
@@ -35,6 +37,7 @@ public class TankManager {
                 x += 500;
                 canvas.add(redCannon);
                 canvas.add(redTank);
+                canvas.add(ellipse);
                 // canvas.add(rect);
                 // canvas.add(rect2);
                 tanks.add(redTank);
@@ -90,11 +93,12 @@ public class TankManager {
         // cannon.setRotation(cannon.getAngle());
     }
 
-    public void fireCannon(KeyboardEvent key, Cannon cannon, double initialSpeed) {
-        Cannonball ball = new Cannonball(getWorkingCannon().getX() - 10 + 50 * Math.cos(Math.toRadians(cannon.getAngle())), getWorkingCannon().getY() - getWorkingCannon().getHeight()/2, initialSpeed, cannon.getAngle(), canvas.getWidth(), canvas.getHeight());
+    public void fireCannon(KeyboardEvent key, Tank tank, Cannon cannon, double initialSpeed) {
+        Cannonball ball = new Cannonball((50+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   -(50+(getWorkingCannon().getImageWidth()/2)) * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() +15, initialSpeed, cannon.getAngle(), canvas.getWidth(), canvas.getHeight());
         ball.addToCanvas(canvas);
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
-            System.out.println(getWorkingTank().getX());
+             System.out.println(getWorkingCannon().getImageWidth()/2);
+            System.out.println(getWorkingCannon().getImageHeight()/2);
             while (ball.updatePosition(0.1)) {
                 canvas.draw();
             }   
@@ -114,6 +118,8 @@ public class TankManager {
         }
         return null;
     }
+
+
 
     public Cannon getWorkingCannon() {
         for (Cannon c : cannons) {
