@@ -55,11 +55,13 @@ public class TankManager {
      * @param key
      */
     public void moveTank(KeyboardEvent key) {
-        if(getWorkingTank().getCenterX()-75 > 0 ){ //not working properly
+        if(getWorkingTank().getCenterX()-75 > 0 ){ 
             if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
                 getWorkingTank().moveBy(-5, 0);
                 getWorkingCannon().moveBy(-5, 0);
             }
+        }
+        if(getWorkingTank().getCenterX()+75 < 1200 ){
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
                 getWorkingTank().moveBy(5, 0);
                 getWorkingCannon().moveBy(5, 0);
@@ -118,8 +120,20 @@ public class TankManager {
         }
     }
 
+
     public Cannon getWorkingCannon(){
         return getWorkingTank().getCannon();
     }
+
+    public boolean testHit(Cannonball ball) {
+
+        if (ball.intersectsWithBottomPoint() || ball.intersectsWithLeftorRightPoint()
+            || ball.intersectsWithTopPoint()) {
+            return true;
+
+        }
+        return false;
+    }
+
  
 }
