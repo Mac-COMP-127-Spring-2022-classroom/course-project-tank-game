@@ -40,6 +40,7 @@ public class TankGame {
      */
     public boolean intersectsWithTopPoint() {
         if (canvas.getElementAt(cannonBall.getTopPoint()) instanceof Tank) {
+            tankManager..reduceHP();
             return true;
         } else {
             return false;

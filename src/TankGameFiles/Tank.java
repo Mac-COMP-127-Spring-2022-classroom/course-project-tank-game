@@ -19,9 +19,10 @@ public class Tank extends Image{
         return hp;
     }
 
-    public int reduceHP(int set) {
-        return hp -= set;
+    public int reduceHP() {
+        return hp -= 1;
     }
+
 
     public Cannon getCannon(){
         return cannon;
