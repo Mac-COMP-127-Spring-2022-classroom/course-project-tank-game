@@ -50,7 +50,7 @@ public class TankGame {
      * Checks if brick intersects with the left or right point. If it does the ball reverses X direction
      * and breaks the brick.
      */
-    public boolean intersectsWithLeftorRightPoint() {
+    public boolean intersectsWithLeftOrRightPoint() {
         if (canvas.getElementAt(cannonBall.getRightPoint()) instanceof Tank) {
             return true;
         }
@@ -72,7 +72,7 @@ public class TankGame {
     }
     
     public boolean testHit(Cannonball ball) {
-        if (intersectsWithBottomPoint() || intersectsWithLeftorRightPoint()
+        if (intersectsWithBottomPoint() || intersectsWithLeftOrRightPoint()
             || intersectsWithTopPoint()) {
             return true;
         }

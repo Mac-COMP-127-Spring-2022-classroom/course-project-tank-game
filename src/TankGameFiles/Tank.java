@@ -8,10 +8,20 @@ public class Tank extends Image{
     private boolean working;
     private Cannon cannon;
     private int hp = 5;
+    
 
-    public Tank(double x, double y, String imagePath, double cannonY, String cannonPath) {
+    /**
+     * Creates a Tank Object.
+     * @param x
+     * @param y
+     * @param imagePath
+     * @param cannonX
+     * @param cannonY
+     * @param cannonPath
+     */
+    public Tank(double x, double y, String imagePath, double cannonX, double cannonY, String cannonPath) {
         super(x, y, imagePath);
-        cannon = new Cannon(getCenterX(), cannonY, cannonPath);
+        cannon = new Cannon(cannonX, cannonY, cannonPath);
  
     }
 
