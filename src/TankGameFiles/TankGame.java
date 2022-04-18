@@ -52,12 +52,10 @@ public class TankGame {
      * and breaks the brick.
      */
     public boolean intersectsWithLeftorRightPoint() {
-
         if (canvas.getElementAt(cannonBall.getRightPoint()) instanceof Tank) {
             return true;
         }
         if (canvas.getElementAt(cannonBall.getLeftPoint()) instanceof Tank) {
-
             return true;
         }
         return false;
@@ -68,7 +66,6 @@ public class TankGame {
      */
     public boolean intersectsWithBottomPoint() {
         if (canvas.getElementAt(cannonBall.getBottomPoint()) instanceof Tank) {
-
             return true;
         } else {
             return false;
@@ -76,11 +73,9 @@ public class TankGame {
     }
     
     public boolean testHit(Cannonball ball) {
-
         if (intersectsWithBottomPoint() || intersectsWithLeftorRightPoint()
             || intersectsWithTopPoint()) {
             return true;
-
         }
         return false;
     }
