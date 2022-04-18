@@ -73,6 +73,15 @@ public class TankGame {
         }
     }
     
+    public boolean testHit(Cannonball ball) {
+
+        if (intersectsWithBottomPoint() || intersectsWithLeftorRightPoint()
+            || intersectsWithTopPoint()) {
+            return true;
+
+        }
+        return false;
+    }
     
     // We will bring back the run method later. We just don't need it at this time.
 
