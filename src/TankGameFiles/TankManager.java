@@ -118,8 +118,20 @@ public class TankManager {
         }
     }
 
+
     public Cannon getWorkingCannon(){
         return getWorkingTank().getCannon();
     }
+
+    public boolean testHit(Cannonball ball) {
+
+        if (ball.intersectsWithBottomPoint() || ball.intersectsWithLeftorRightPoint()
+            || ball.intersectsWithTopPoint()) {
+            return true;
+
+        }
+        return false;
+    }
+
  
 }

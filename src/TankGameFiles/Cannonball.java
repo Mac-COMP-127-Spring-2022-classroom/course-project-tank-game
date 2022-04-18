@@ -3,6 +3,8 @@ import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.Point;
+
 
 
 /**
@@ -80,4 +82,33 @@ public class Cannonball {
     public void removeFromCanvas(CanvasWindow canvas) {
         canvas.remove(ballShape);
     }
+
+    /**
+     * Gets topmost point of the ball.
+     */
+    public Point getTopPoint() {
+        return new Point(getCenterX(), getCenterY() - RADIUS);
+    }
+
+    /**
+     * Gets leftmost point of the ball.
+     */
+    public Point getLeftPoint() {
+        return new Point(getCenterX() - RADIUS, getCenterY());
+    }
+
+    /**
+     * Gets rightmost point of the ball.
+     */
+    public Point getRightPoint() {
+        return new Point(getCenterX() + RADIUS, getCenterY());
+    }
+
+    /**
+     * Gets bottommost point of the ball.
+     */
+    public Point getBottomPoint() {
+        return new Point(getCenterX(), getCenterY() + RADIUS);
+    }
+       
 }
