@@ -19,7 +19,7 @@ public class Tank extends Image{
         return hp;
     }
 
-    public int setHP(int set) {
+    public int reduceHP(int set) {
         return hp -= set;
     }
 
