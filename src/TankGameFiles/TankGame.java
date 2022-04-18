@@ -16,10 +16,11 @@ public class TankGame {
         canvas = new CanvasWindow("Tanks!", CANVAS_WIDTH, CANVAS_HEIGHT);
         tankManager = new TankManager(canvas);
         tankManager.generateTanks();
-        // canvas.add(terrain);
+        terrain = new Terrain(canvas);
+        terrain.generateTerrain(CANVAS_WIDTH);
         canvas.draw();
-        tankControls(tankManager.getWorkingTank(), tankManager.getWorkingTank().getCannon());
-        cannonControls(tankManager.getWorkingTank(), tankManager.getWorkingTank().getCannon());
+        tankControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
+        cannonControls(tankManager.getWorkingTank(), tankManager.getWorkingCannon());
         
     }
 

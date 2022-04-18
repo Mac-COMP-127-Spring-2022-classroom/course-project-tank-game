@@ -6,16 +6,17 @@ import edu.macalester.graphics.Line;
 
 public class Terrain extends GraphicsGroup{
     private Line line;
-    private static final double MAX_X =1000;
+    // private static final double MAX_X =1000;
     private CanvasWindow canvas;
 
     public Terrain(CanvasWindow canvas) {
-        Line line = new Line(0, 400, MAX_X, 400);
+        this.canvas = canvas;
     }
 
-    // public void generateTerrain(){
-    //     Terrain land = new Terrain();
-    //     canvas.add(land);
-    // }
+    public void generateTerrain(double maxX){
+        Line line = new Line(0, 400, maxX, 400);
+        canvas.add(line);
+        canvas.draw();
+    }
     
 }

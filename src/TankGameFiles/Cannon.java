@@ -12,7 +12,6 @@ public class Cannon extends Image{
 
     public Cannon(double x, double y, String imagePath){
         super(x, y, imagePath);
-
     }
 
     /**

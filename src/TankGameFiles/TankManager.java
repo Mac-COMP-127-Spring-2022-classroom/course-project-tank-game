@@ -40,7 +40,7 @@ public class TankManager {
                 tanks.add(redTank);
             } 
             else {
-                Tank blueTank = new Tank(x, y, "BlueTank.png",y ,"BlueCannon.png");
+                Tank blueTank = new Tank(x, y, "BlueTank.png", cannonY ,"BlueCannon.png");
                 blueTank.getCannon().setAngle(180);
                 x += 500;
                 canvas.add(blueTank.getCannon());
@@ -78,7 +78,7 @@ public class TankManager {
         if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && getWorkingCannon().getAngle()>0){
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-            getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15);
+            getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +15);
         }
         if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
@@ -90,7 +90,7 @@ public class TankManager {
     }
 
     public void fireCannon(KeyboardEvent key, double initialSpeed) {
-        Cannonball ball = new Cannonball((50+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   -(50+(getWorkingTank().getImageWidth()/2)) * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
+        Cannonball ball = new Cannonball((50+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (50+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         ball.addToCanvas(canvas);
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             switchWorkingTank();
