@@ -31,7 +31,7 @@ public class TankManager {
                 Tank redTank = new Tank(x, y, "RedTank.png", 92, cannonY, "RedCannon.png");
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
-                System.out.println(redTank.getCenterX());
+                // System.out.println(redTank.getCenterX());
                 // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
                 // rect2.setStrokeColor(Color.BLUE);
@@ -97,20 +97,22 @@ public class TankManager {
 
     public void fireCannon(KeyboardEvent key, double initialSpeed) {
         Cannonball ball = new Cannonball((20+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (20+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
-        ball.addToCanvas(canvas);
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             switchWorkingTank();
+            boolean ballIsOnCanvas = ball.addToCanvas(canvas);
             while (ball.updatePosition(0.1)) {
-                canvas.draw();
                 if (intersectsWithBottomPoint(ball)||intersectsWithLeftOrRightPoint(ball)||intersectsWithTopPoint(ball)){
+                    ballIsOnCanvas = ball.removeFromCanvas(canvas);
                     getWorkingTank().reduceHP();
-                    System.out.println(redTank.getHP());
+                    System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
                 }
-                
+                canvas.draw();
+            }
+            if (!ballIsOnCanvas) {
+            } else {        
+                ball.removeFromCanvas(canvas);
             }
         }
-        
-        ball.removeFromCanvas(canvas);
     }
 
     public List<Tank> getTanks() {

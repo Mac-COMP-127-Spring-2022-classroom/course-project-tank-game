@@ -75,12 +75,14 @@ public class Cannonball {
         return false;
     }
 
-    public void addToCanvas(CanvasWindow canvas) {
+    public boolean addToCanvas(CanvasWindow canvas) {
         canvas.add(ballShape);
+        return true;
     }
 
-    public void removeFromCanvas(CanvasWindow canvas) {
+    public boolean removeFromCanvas(CanvasWindow canvas) {
         canvas.remove(ballShape);
+        return false;
     }
 
     /**
@@ -110,5 +112,4 @@ public class Cannonball {
     public Point getBottomPoint() {
         return new Point(getCenterX(), getCenterY() + RADIUS);
     }
-  
 }
