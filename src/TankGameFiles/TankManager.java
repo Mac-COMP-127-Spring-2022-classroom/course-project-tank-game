@@ -27,23 +27,20 @@ public class TankManager {
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
                 Tank redTank = new Tank(x, y, "RedTank.png", 117.5, cannonY, "RedCannon.png");
-                Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
-                // System.out.println(redTank.getWidth());
-                // System.out.println(redTank.getCenterX());
+                // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
                 // rect2.setStrokeColor(Color.BLUE);
                 // redCannon.setAnchor(redCannon.getX(), redCannon.getY() + redCannon.getHeight()/2);
                 x += 500;
                 canvas.add(redTank.getCannon());
                 canvas.add(redTank);
-                canvas.add(rect);
+                // canvas.add(rect);
                 // canvas.add(rect2);
                 tanks.add(redTank);
             } 
             else {
                 Tank blueTank = new Tank(x, y, "BlueTank.png", 617.5 - 90.5, cannonY + 1 ,"BlueCannon.png");
                 blueTank.getCannon().setAngle(180);
-                // System.out.println(blueTank.getCenterX());
                 x += 500;
                 canvas.add(blueTank.getCannon());
                 canvas.add(blueTank);

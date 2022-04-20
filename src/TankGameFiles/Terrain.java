@@ -14,7 +14,7 @@ public class Terrain extends GraphicsGroup{
     }
 
     public void generateTerrain(double maxX){
-        Line line = new Line(0, 400, maxX, 400);
+        Line line = new Line(0, 481, maxX, 481);
         canvas.add(line);
         canvas.draw();
     }
