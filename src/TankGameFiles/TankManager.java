@@ -13,6 +13,8 @@ public class TankManager {
     private CanvasWindow canvas;
     private List<Tank> tanks;
     private List<Cannon> cannons;
+    private Tank redTank;
+    private Tank blueTank;
 
     public TankManager(CanvasWindow canvas) {
         tanks = new ArrayList<>();
@@ -37,6 +39,7 @@ public class TankManager {
                 // canvas.add(rect);
                 // canvas.add(rect2);
                 tanks.add(redTank);
+                System.out.println(redTank.getHP());
             } 
             else {
                 Tank blueTank = new Tank(x, y, "BlueTank.png", 617.5 - 90.5, cannonY + 1 ,"BlueCannon.png");
@@ -95,8 +98,14 @@ public class TankManager {
             switchWorkingTank();
             while (ball.updatePosition(0.1)) {
                 canvas.draw();
+                if (intersectsWithBottomPoint(ball)||intersectsWithLeftOrRightPoint(ball)||intersectsWithTopPoint(ball)){
+                    getWorkingTank().reduceHP();
+                    System.out.println(redTank.getHP());
+                }
+                
             }
         }
+        
         ball.removeFromCanvas(canvas);
     }
 
@@ -118,6 +127,44 @@ public class TankManager {
             t.switchWorking();
         }
     }
+
+     /**
+     * Checks if brick intersects with the top point. If it does the ball reverses Y direction and
+     * breaks the brick.
+     */
+    public boolean intersectsWithTopPoint(Cannonball ball) {
+        if (canvas.getElementAt(ball.getTopPoint()) instanceof Tank) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if brick intersects with the left or right point. If it does the ball reverses X direction
+     * and breaks the brick.
+     */
+    public boolean intersectsWithLeftOrRightPoint(Cannonball ball) {
+        if (canvas.getElementAt(ball.getRightPoint()) instanceof Tank) {
+            return true;
+        }
+        if (canvas.getElementAt(ball.getLeftPoint()) instanceof Tank) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if tank intersects with the bottom point of the ball. If it does the ball is destroyed and a life is lost.
+     */
+    public boolean intersectsWithBottomPoint(Cannonball ball) {
+        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Tank) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
 
     public Cannon getWorkingCannon(){

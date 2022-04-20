@@ -110,5 +110,5 @@ public class Cannonball {
     public Point getBottomPoint() {
         return new Point(getCenterX(), getCenterY() + RADIUS);
     }
-       
+  
 }
