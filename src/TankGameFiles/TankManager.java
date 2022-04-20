@@ -26,7 +26,10 @@ public class TankManager {
         int cannonY=y+5;
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redTank = new Tank(x, y, "RedTank.png", 117.5, cannonY, "RedCannon.png");
+                Tank redTank = new Tank(x, y, "RedTank.png", 92, cannonY, "RedCannon.png");
+                redTank.setMaxHeight(50);
+                redTank.getCannon().setMaxWidth(50);
+                System.out.println(redTank.getCenterX());
                 // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
                 // rect2.setStrokeColor(Color.BLUE);
@@ -75,21 +78,22 @@ public class TankManager {
     */
     public void setCannonAngle(KeyboardEvent key) {
         if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && getWorkingCannon().getAngle()>0){
+            // getWorkingCannon().setAnchor(getWorkingTank().getCenter());
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-            getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +15);
+            getWorkingCannon().setCenter(20 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 20 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +15);
         }
         if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
-            getWorkingCannon().setAngle(getWorkingCannon().getAngle() +5);
-            getWorkingCannon().setCenter(50 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 50 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 15);
+            getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
+            getWorkingCannon().setCenter(20 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 20 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 15);
 
         }
         // cannon.setRotation(cannon.getAngle());
     }
 
     public void fireCannon(KeyboardEvent key, double initialSpeed) {
-        Cannonball ball = new Cannonball((50+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (50+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
+        Cannonball ball = new Cannonball((20+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (20+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +15, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         ball.addToCanvas(canvas);
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             switchWorkingTank();
