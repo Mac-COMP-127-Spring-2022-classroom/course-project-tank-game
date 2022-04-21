@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 
