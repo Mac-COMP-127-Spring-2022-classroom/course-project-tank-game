@@ -31,6 +31,8 @@ public class TankManager {
                 Tank redTank = new Tank(x, y, "RedTank.png", 92, cannonY, "RedCannon.png");
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
+                System.out.println(redTank.getY());
+                System.out.println(redTank.getHeight());
                 // System.out.println(redTank.getCenterX());
                 // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());

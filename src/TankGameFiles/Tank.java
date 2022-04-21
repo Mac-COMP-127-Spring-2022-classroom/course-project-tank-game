@@ -2,8 +2,6 @@ package TankGameFiles;
 
 import edu.macalester.graphics.Image;
 
-
-
 public class Tank extends Image{              
     private boolean working;
     private Cannon cannon;
