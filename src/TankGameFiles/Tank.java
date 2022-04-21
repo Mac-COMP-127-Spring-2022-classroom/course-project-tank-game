@@ -8,6 +8,7 @@ public class Tank extends Image{
     private boolean working;
     private Cannon cannon;
     private int hp = 5;
+    private String imagePath;
     
 
     /**
@@ -21,6 +22,7 @@ public class Tank extends Image{
      */
     public Tank(double x, double y, String imagePath, double cannonX, double cannonY, String cannonPath) {
         super(x, y, imagePath);
+        this.imagePath = imagePath;
         cannon = new Cannon(cannonX, cannonY, cannonPath);
  
     }
@@ -51,6 +53,9 @@ public class Tank extends Image{
     }
     public double getCenterY(){
         return getPosition().getY() + getHeight()/2;
+    }
+    public String toString() {
+        return imagePath;
     }
     // public Point getLeftPoint(){
     //     return new Point(body.getPosition().getX(), getCenterY());

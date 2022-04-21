@@ -105,6 +105,10 @@ public class TankManager {
                     ballIsOnCanvas = ball.removeFromCanvas(canvas);
                     getWorkingTank().reduceHP();
                     System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
+                    if (checkLives()) {
+                        System.out.println(tanks.get(0) + " Wins!");
+                        canvas.closeWindow();
+                    };
                 }
                 canvas.draw();
             }
@@ -176,4 +180,14 @@ public class TankManager {
     public Cannon getWorkingCannon(){
         return getWorkingTank().getCannon();
     } 
+
+    public boolean checkLives() {
+        for (Tank t : tanks) {
+            if (t.getHP() == 0) {
+                tanks.remove(t);
+                return true;
+            }
+        }
+        return false;
+    }
 }
