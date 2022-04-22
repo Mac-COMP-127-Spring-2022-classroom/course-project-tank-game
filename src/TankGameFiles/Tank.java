@@ -25,7 +25,6 @@ public class Tank extends Image{
         this.point = point;
         this.imagePath = imagePath;
         cannon = new Cannon(cannonPoint, cannonPath);
- 
     }
 
     public int getHP() {
@@ -35,7 +34,6 @@ public class Tank extends Image{
     public int reduceHP() {
         return hp -= 1;
     }
-
 
     public Cannon getCannon(){
         return cannon;
@@ -52,12 +50,15 @@ public class Tank extends Image{
     public double getCenterX(){
         return getPosition().getX() + getWidth()/2;
     }
+
     public double getCenterY(){
         return getPosition().getY() + getHeight()/2;
     }
+
     public String toString() {
         return imagePath;
     }
+
     public Point getPoint() {
         return point;
     }
