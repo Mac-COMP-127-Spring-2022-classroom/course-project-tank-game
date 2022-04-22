@@ -33,8 +33,8 @@ public class TankManager {
                 Tank redTank = new Tank(point, "RedTank.png", cannonPoint, "RedCannon.png");
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
-                System.out.println(redTank.getY());
-                System.out.println(redTank.getHeight());
+                // System.out.println(redTank.getY());
+                // System.out.println(redTank.getHeight());
                 // System.out.println(redTank.getCenterX());
                 // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
@@ -64,7 +64,7 @@ public class TankManager {
      * @param key
      */
     public void moveTank(KeyboardEvent key) {
-        if(getWorkingTank().getCenterX()-75 > 0 ){ 
+        if(getWorkingTank().getCenterX()-getWorkingTank().getWidth()/2 > 0 ){ 
             if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), -5));    
                 getWorkingTank().setPosition(getWorkingTank().getPoint());            
@@ -72,7 +72,8 @@ public class TankManager {
                 getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
         }
-        if(getWorkingTank().getCenterX()+75 < 1200 ){
+
+        if(getWorkingTank().getCenterX() + getWorkingTank().getWidth()/2 < canvas.getWidth()){
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), 5));
                 getWorkingTank().setPosition(getWorkingTank().getPoint());   
@@ -89,14 +90,14 @@ public class TankManager {
     */
     public void setCannonAngle(KeyboardEvent key) {
         if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && getWorkingCannon().getAngle()>0){
-            // getWorkingCannon().setAnchor(getWorkingTank().getCenter());
+            
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
         }
+
         if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
-
         }
         // cannon.setRotation(cannon.getAngle());
     }
