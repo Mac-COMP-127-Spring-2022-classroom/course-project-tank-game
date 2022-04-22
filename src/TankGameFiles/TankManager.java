@@ -5,7 +5,7 @@ import java.util.List;
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
 import edu.macalester.graphics.Ellipse;
-
+import edu.macalester.graphics.Point;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 
@@ -15,20 +15,22 @@ public class TankManager {
     private List<Cannon> cannons;
     private Tank redTank;
     private Tank blueTank;
+    private Terrain terrain;
+    private Point point, cannonPoint;
 
-    public TankManager(CanvasWindow canvas) {
+    public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
         cannons = new ArrayList<>();
         this.canvas = canvas;
+        this.terrain = terrain;
     }
 
     public void generateTanks() {
-        int x = 50;
-        int y = 400;
-        int cannonY=y+5;
+        point = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
+        cannonPoint = new Point(point.getX()+10, point.getY()+5);
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redTank = new Tank(x, y, "RedTank.png", 92, cannonY, "RedCannon.png");
+                Tank redTank = new Tank(point, "RedTank.png", cannonPoint, "RedCannon.png");
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
                 System.out.println(redTank.getY());
@@ -38,7 +40,6 @@ public class TankManager {
                 // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
                 // rect2.setStrokeColor(Color.BLUE);
                 // redCannon.setAnchor(redCannon.getX(), redCannon.getY() + redCannon.getHeight()/2);
-                x += 500;
                 canvas.add(redTank.getCannon());
                 canvas.add(redTank);
                 // canvas.add(rect);
@@ -47,11 +48,10 @@ public class TankManager {
                 System.out.println(redTank.getHP());
             } 
             else {
-                Tank blueTank = new Tank(x, y, "BlueTank.png", 617.5 - 80.5, cannonY + 1 ,"BlueCannon.png");
+                Tank blueTank = new Tank(point.withX(550), "BlueTank.png", cannonPoint.withX(617.5 - 80.5),"BlueCannon.png");
                 blueTank.getCannon().setAngle(180);
                 blueTank.setMaxHeight(50);
                 blueTank.getCannon().setMaxWidth(50);
-                x += 500;
                 canvas.add(blueTank.getCannon());
                 canvas.add(blueTank);
                 tanks.add(blueTank);
@@ -66,14 +66,18 @@ public class TankManager {
     public void moveTank(KeyboardEvent key) {
         if(getWorkingTank().getCenterX()-75 > 0 ){ 
             if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
-                getWorkingTank().moveBy(-5, 0);
-                getWorkingCannon().moveBy(-5, 0);
+                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), -5));    
+                getWorkingTank().setPosition(getWorkingTank().getPoint());            
+                getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), -5));    
+                getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
         }
         if(getWorkingTank().getCenterX()+75 < 1200 ){
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
-                getWorkingTank().moveBy(5, 0);
-                getWorkingCannon().moveBy(5, 0);
+                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), 5));
+                getWorkingTank().setPosition(getWorkingTank().getPoint());   
+                getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), 5));    
+                getWorkingCannon().setPosition(getWorkingCannon().getPoint());
             }
         }
     }
@@ -88,12 +92,10 @@ public class TankManager {
             // getWorkingCannon().setAnchor(getWorkingTank().getCenter());
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-            getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
         }
         if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
-            getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
 
         }
         // cannon.setRotation(cannon.getAngle());

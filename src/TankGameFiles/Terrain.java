@@ -17,18 +17,38 @@ public class Terrain extends GraphicsGroup{
         this.canvas = canvas;
         points = new ArrayList<>();
         double xCord = 0;
-        do {
+        for (int i = 0; i<bounds; i+=5) {
             Point point = new Point(xCord, yAxis);
             points.add(point);
             xCord += 5;
         }
-        while (xCord != bounds);
     }
 
-    public void generateTerrain(){
+    public void setTerrainPoint(Point point, Point newPoint) {
+        points.set(points.indexOf(point), newPoint);
+    }
+
+    public Point getTerrainPoint(int listPoint) {
+        return points.get(listPoint);
+    }
+
+    public Point getTerrainMovePoint(Point point, double x) {
+        Point newPoint = new Point(point.getX()+x, point.getY());
+        for (Point p:points) {
+            if (Math.round(p.getX())==Math.round(newPoint.getX())) {
+                newPoint = new Point(p.getX(), point.getY());
+            }
+        }
+        return newPoint;
+    }
+
+    public void generateTerrain() {
         Path path = new Path(points, false);
         canvas.add(path);
         canvas.draw();
     }
     
+    public void terrainListDebug() {
+        System.out.println(points.size());
+    }
 }
