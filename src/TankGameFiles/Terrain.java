@@ -23,6 +23,9 @@ public class Terrain extends GraphicsGroup{
         int up = 6;
         // WE WILL BE RANDOMIZING TERRAIN HERE
         for (double xCoord = 0; xCoord < bounds; xCoord += 5) {
+            if (yAxis > 570) {
+                yAxis = 570;
+            }
             if (down<5){
                 yAxis = yAxis + 5;
                 Point point = new Point(xCoord, yAxis);
