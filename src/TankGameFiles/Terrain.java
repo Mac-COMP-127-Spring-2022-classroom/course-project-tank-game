@@ -21,8 +21,11 @@ public class Terrain extends GraphicsGroup{
         random = new Random();
         // WE WILL BE RANDOMIZING TERRAIN HERE
         for (double xCoord = 0; xCoord < bounds; xCoord += 5) {
-            double stuff = random.nextInt(150);
+            double stuff = random.nextInt(40);
             Point point = new Point(xCoord, yAxis + stuff);
+            if(xCoord<200){
+                stuff = random.nextInt(20);
+            }
             points.add(point);
         }
     }
