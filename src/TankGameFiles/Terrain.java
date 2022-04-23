@@ -20,7 +20,7 @@ public class Terrain extends GraphicsGroup{
         points = new ArrayList<>();
         random = new Random();
         // WE WILL BE RANDOMIZING TERRAIN HERE
-        for (double xCoord = 0; xCoord < bounds; xCoord += 50) {
+        for (double xCoord = 0; xCoord < bounds; xCoord += 5) {
             double stuff = random.nextInt(150);
             Point point = new Point(xCoord, yAxis + stuff);
             points.add(point);
@@ -39,7 +39,7 @@ public class Terrain extends GraphicsGroup{
         Point newPoint = new Point(point.getX() + x, point.getY());
         for (Point p : points) {
             if (Math.round(p.getX()) == Math.round(newPoint.getX())) {
-                newPoint = new Point(p.getX(), point.getY());
+                newPoint = new Point(p.getX(), p.getY()-50);
             }
         }
         return newPoint;
