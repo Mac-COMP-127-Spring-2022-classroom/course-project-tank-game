@@ -19,14 +19,38 @@ public class Terrain extends GraphicsGroup{
         this.canvas = canvas;
         points = new ArrayList<>();
         random = new Random();
+        int down = 6;
+        int up = 6;
         // WE WILL BE RANDOMIZING TERRAIN HERE
         for (double xCoord = 0; xCoord < bounds; xCoord += 5) {
-            double stuff = random.nextInt(40);
-            Point point = new Point(xCoord, yAxis + stuff);
-            if(xCoord<200){
-                stuff = random.nextInt(20);
+            if (down<5){
+                yAxis = yAxis + 5;
+                Point point = new Point(xCoord, yAxis);
+                points.add(point);
+                down++;
             }
-            points.add(point);
+            if (up<5){
+                yAxis = yAxis - 5;
+                Point point = new Point(xCoord, yAxis);
+                points.add(point);
+                up++;
+            }
+            if (xCoord%100==0){
+                double stuff = random.nextInt(20+20)-20;
+                yAxis = yAxis + stuff;
+                Point point = new Point(xCoord, yAxis);
+                points.add(point);
+                if (stuff>0) {
+                    down = 0;
+                }
+                if (stuff<0) {
+                    up = 0;
+                }
+            }
+            else{
+                Point point = new Point(xCoord, yAxis);
+                points.add(point);
+            }
         }
     }
 
