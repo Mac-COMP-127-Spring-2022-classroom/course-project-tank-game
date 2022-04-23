@@ -16,7 +16,7 @@ public class TankManager {
     private Tank redTank;
     private Tank blueTank;
     private Terrain terrain;
-    private Point point, cannonPoint;
+    private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
@@ -28,29 +28,22 @@ public class TankManager {
     public void generateTanks() {
         int y = 400;
         int cannonY=y+5;
-        point = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
-        cannonPoint = new Point(point.getX(), point.getY());
+        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
+        blueTankPoint =new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
+        redCannonPoint = new Point(redTankPoint.getX(), redTankPoint.getY());
+        blueCannonPoint = new Point(blueTankPoint.getX(), blueTankPoint.getY());
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redTank = new Tank(point, "RedTank.png",  cannonPoint.getX(), cannonPoint.getY(),  "RedCannon.png");
+                Tank redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  "RedCannon.png");
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
-                // System.out.println(redTank.getY());
-                // System.out.println(redTank.getHeight());
-                // System.out.println(redTank.getCenterX());
-                // Rectangle rect = new Rectangle(x, y, redTank.getWidth(), redTank.getHeight());
-                // Rectangle rect2 = new Rectangle(x, y, redCannon.getWidth(), redCannon.getHeight());
-                // rect2.setStrokeColor(Color.BLUE);
-                // redCannon.setAnchor(redCannon.getX(), redCannon.getY() + redCannon.getHeight()/2);
                 canvas.add(redTank.getCannon());
                 canvas.add(redTank);
-                // canvas.add(rect);
-                // canvas.add(rect2);
                 tanks.add(redTank);
                 System.out.println(redTank.getHP());
             } 
             else {
-                Tank blueTank = new Tank(point.withX(550), "BlueTank.png", 617.5 - 80.5, cannonY + 1 ,"BlueCannon.png");
+                Tank blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  ,"BlueCannon.png");
                 blueTank.getCannon().setAngle(180);
                 blueTank.setMaxHeight(50);
                 blueTank.getCannon().setMaxWidth(50);
@@ -71,7 +64,7 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), -5));
                 // getWorkingTank().rotateBy(tankAngleCalc(-5));   
                 getWorkingTank().setPosition(getWorkingTank().getPoint());
-                getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), -5));    
+                centerCannonToTank();
                 // getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
         }
@@ -81,7 +74,7 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), 5));
                 // getWorkingTank().rotateBy(tankAngleCalc(5));  
                 getWorkingTank().setPosition(getWorkingTank().getPoint());   
-                getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), 5));    
+                centerCannonToTank();
                 // getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
             }
         }
@@ -97,12 +90,12 @@ public class TankManager {
             
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-            getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
+            centerCannonToTank();
         }
         if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
-            getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
+            centerCannonToTank();
 
         }
         // cannon.setRotation(cannon.getAngle());
@@ -130,6 +123,9 @@ public class TankManager {
                 ball.removeFromCanvas(canvas);
             }
         }
+    }
+    private void centerCannonToTank(){
+       getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
     }
 
     public double tankAngleCalc(int move) {
@@ -176,8 +172,7 @@ public class TankManager {
     }
 
      /**
-     * Checks if brick intersects with the top point. If it does the ball reverses Y direction and
-     * breaks the brick.
+     * Checks if tank intersects with the top point. 
      */
     public boolean intersectsWithTopPoint(Cannonball ball) {
         if (canvas.getElementAt(ball.getTopPoint()) instanceof Tank) {
@@ -188,8 +183,7 @@ public class TankManager {
     }
 
     /**
-     * Checks if brick intersects with the left or right point. If it does the ball reverses X direction
-     * and breaks the brick.
+     * Checks if tank intersects with the Left or Right point. 
      */
     public boolean intersectsWithLeftOrRightPoint(Cannonball ball) {
         if (canvas.getElementAt(ball.getRightPoint()) instanceof Tank) {
@@ -202,7 +196,7 @@ public class TankManager {
     }
 
     /**
-     * Checks if tank intersects with the bottom point of the ball. If it does the ball is destroyed and a life is lost.
+     * Checks if tank intersects with the bottom point of the ball. 
      */
     public boolean intersectsWithBottomPoint(Cannonball ball) {
         if (canvas.getElementAt(ball.getBottomPoint()) instanceof Tank) {
@@ -218,6 +212,9 @@ public class TankManager {
         return getWorkingTank().getCannon();
     } 
 
+    /**
+     * Check how many lives a tank has, if 0 removes the tank.
+     */
     public boolean checkLives() {
         for (Tank t : tanks) {
             if (t.getHP() == 0) {
