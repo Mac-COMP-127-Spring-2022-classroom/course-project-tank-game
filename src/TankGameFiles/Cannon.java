@@ -12,9 +12,8 @@ public class Cannon extends Image{
     private double angle = 0; // Is in radians.
     
 
-    public Cannon(Point point, String imagePath){
-        super(point.getX(), point.getY(), imagePath);
-        this.point = point;
+    public Cannon(double x, double y, String imagePath){
+        super(x, y, imagePath);
     }
 
     /**
@@ -29,13 +28,13 @@ public class Cannon extends Image{
         angle = input;
     }
 
-    public Point getPoint() {
-        return point;
-    }
+    // public Point getPoint() {
+    //     return point;
+    // }
 
-    public void setPoint(Point p) {
-        point = p;
-    }
+    // public void setPoint(Point p) {
+    //     point = p;
+    // }
     
     // public Point getLeftcannon(){
     //     return new Point(getCenterX(), getCenterY());

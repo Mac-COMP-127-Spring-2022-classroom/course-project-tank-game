@@ -26,11 +26,13 @@ public class TankManager {
     }
 
     public void generateTanks() {
+        int y = 400;
+        int cannonY=y+5;
         point = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
         cannonPoint = new Point(point.getX()+10, point.getY()+5);
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redTank = new Tank(point, "RedTank.png", cannonPoint, "RedCannon.png");
+                Tank redTank = new Tank(point, "RedTank.png",  92, cannonY,  "RedCannon.png");
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
                 System.out.println(redTank.getY());
@@ -48,7 +50,7 @@ public class TankManager {
                 System.out.println(redTank.getHP());
             } 
             else {
-                Tank blueTank = new Tank(point.withX(550), "BlueTank.png", cannonPoint.withX(617.5 - 80.5),"BlueCannon.png");
+                Tank blueTank = new Tank(point.withX(550), "BlueTank.png", 617.5 - 80.5, cannonY + 1 ,"BlueCannon.png");
                 blueTank.getCannon().setAngle(180);
                 blueTank.setMaxHeight(50);
                 blueTank.getCannon().setMaxWidth(50);
@@ -67,17 +69,19 @@ public class TankManager {
         if(getWorkingTank().getCenterX()-75 > 0 ){ 
             if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), -5));    
-                getWorkingTank().setPosition(getWorkingTank().getPoint());            
-                getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), -5));    
-                getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
+                getWorkingTank().setPosition(getWorkingTank().getPoint());
+                getWorkingCannon().moveBy(-5, 0);
+                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), -5));    
+                // getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
         }
         if(getWorkingTank().getCenterX()+75 < 1200 ){
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), 5));
                 getWorkingTank().setPosition(getWorkingTank().getPoint());   
-                getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), 5));    
-                getWorkingCannon().setPosition(getWorkingCannon().getPoint());
+                getWorkingCannon().moveBy(5, 0);
+                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), 5));    
+                // getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
             }
         }
     }
@@ -92,10 +96,11 @@ public class TankManager {
             // getWorkingCannon().setAnchor(getWorkingTank().getCenter());
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-        }
+            getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);        }
         if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
+            getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
 
         }
         // cannon.setRotation(cannon.getAngle());
