@@ -26,12 +26,10 @@ public class TankManager {
     }
 
     public void generateTanks() {
-        int y = 400;
-        int cannonY=y+5;
         redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
         blueTankPoint =new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
-        redCannonPoint = new Point(redTankPoint.getX(), redTankPoint.getY());
-        blueCannonPoint = new Point(blueTankPoint.getX(), blueTankPoint.getY());
+        redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
+        blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
                 Tank redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  "RedCannon.png");
@@ -124,6 +122,10 @@ public class TankManager {
             }
         }
     }
+
+    /**
+     * Centers cannon to tank.
+     */
     private void centerCannonToTank(){
        getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
     }
