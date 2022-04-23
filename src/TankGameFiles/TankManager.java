@@ -113,6 +113,7 @@ public class TankManager {
                         System.out.println(tanks.get(0) + " Wins!");
                         canvas.closeWindow();
                     };
+                    break;
                 }
                 canvas.draw();
             }
