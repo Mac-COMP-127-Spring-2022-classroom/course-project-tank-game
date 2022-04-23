@@ -39,14 +39,14 @@ public class Terrain extends GraphicsGroup{
                 up++;
             }
             if (xCoord%100==0){
-                double stuff = random.nextInt(20+20)-20;
-                yAxis = yAxis + stuff;
+                double randomInt = random.nextInt(20+20)-20;
+                yAxis = yAxis + randomInt;
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
-                if (stuff>0) {
+                if (randomInt>0) {
                     down = 0;
                 }
-                if (stuff<0) {
+                if (randomInt<0) {
                     up = 0;
                 }
             }

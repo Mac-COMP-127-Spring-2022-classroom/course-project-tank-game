@@ -71,8 +71,7 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), -5));
                 // getWorkingTank().rotateBy(tankAngleCalc(-5));   
                 getWorkingTank().setPosition(getWorkingTank().getPoint());
-                getWorkingCannon().moveBy(getWorkingTank().getPoint().getX()+getWorkingTank().getWidth()/2, getWorkingTank().getPoint().getY()+getWorkingTank().getHeight()/2);
-                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), -5));    
+                getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), -5));    
                 // getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
         }
@@ -82,8 +81,7 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), 5));
                 // getWorkingTank().rotateBy(tankAngleCalc(5));  
                 getWorkingTank().setPosition(getWorkingTank().getPoint());   
-                getWorkingCannon().moveBy(getWorkingTank().getPoint().getX()+getWorkingTank().getWidth()/2, getWorkingTank().getPoint().getY()+getWorkingTank().getHeight()/2);
-                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), 5));    
+                getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);                // getWorkingCannon().setPoint(terrain.getTerrainMovePoint(getWorkingCannon().getPoint(), 5));    
                 // getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
             }
         }
