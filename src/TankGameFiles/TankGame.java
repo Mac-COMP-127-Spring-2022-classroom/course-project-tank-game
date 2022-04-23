@@ -27,14 +27,13 @@ public class TankGame {
     public void tankControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.moveTank(event));
     }
-
+ 
     public void cannonControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
         canvas.onKeyDown(event -> tankManager.fireCannon(event, 50));
     }
 
     public void checkLives() {
-
         System.out.println("Red Wins!");
         System.out.println("Blue Wins!");
     }
