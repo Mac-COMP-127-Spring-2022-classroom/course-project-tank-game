@@ -5,6 +5,7 @@ import java.util.List;
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
 import edu.macalester.graphics.Ellipse;
+import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
@@ -104,7 +105,7 @@ public class TankManager {
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             ball.addToCanvas(canvas);
             while (ball.updatePosition(0.1)) {
-                if (intersectsWithBottomPoint(ball)||intersectsWithLeftOrRightPoint(ball)||intersectsWithTopPoint(ball)){
+                if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
                     notWorkingTank().reduceHP();
                     System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
                     if (checkLives()) {
@@ -112,7 +113,9 @@ public class TankManager {
                         canvas.closeWindow();
                     };
                     break;
-                    
+                }
+                if (intersectsWithBottomPoint(ball) == 1||intersectsWithLeftOrRightPoint(ball) == 1||intersectsWithTopPoint(ball) == 1){
+                    break;
                 }
                 canvas.draw();
             }
@@ -123,17 +126,21 @@ public class TankManager {
 
 
 
-    // public boolean hitsObject(Cannonball ball) {
-    //     if (intersectsWithBottomPoint(ball)||intersectsWithLeftOrRightPoint(ball)||intersectsWithTopPoint(ball)){
-    //         ball.removeFromCanvas(canvas);
-    //         getWorkingTank().reduceHP();
-    //         System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
-    //         if (checkLives()) {
-    //             System.out.println(tanks.get(0) + " Wins!");
-    //             canvas.closeWindow();
-    //     }
-    //     return false;
-    // }
+    public boolean hitsObject(Cannonball ball) {
+        if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
+            ball.removeFromCanvas(canvas);
+            getWorkingTank().reduceHP();
+            System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
+            if (checkLives()) {
+                System.out.println(tanks.get(0) + " Wins!");
+                canvas.closeWindow();
+            }
+        }
+        if (intersectsWithBottomPoint(ball) == 1||intersectsWithLeftOrRightPoint(ball) == 1||intersectsWithTopPoint(ball) == 1){
+            ball.removeFromCanvas(canvas);
+        }
+        return false;
+    }
 
     /**
      * Centers cannon to tank.
@@ -199,36 +206,46 @@ public class TankManager {
      /**
      * Checks if tank intersects with the top point. 
      */
-    public boolean intersectsWithTopPoint(Cannonball ball) {
+    public int intersectsWithTopPoint(Cannonball ball) {
         if (canvas.getElementAt(ball.getTopPoint()) instanceof Tank) {
-            return true;
-        } else {
-            return false;
+            return 0;
         }
+        if (canvas.getElementAt(ball.getTopPoint()) instanceof Path) {
+            return 1;
+        }
+        return 2;
     }
 
     /**
      * Checks if tank intersects with the Left or Right point. 
      */
-    public boolean intersectsWithLeftOrRightPoint(Cannonball ball) {
+    public int intersectsWithLeftOrRightPoint(Cannonball ball) {
         if (canvas.getElementAt(ball.getRightPoint()) instanceof Tank) {
-            return true;
+            return 0;
         }
-        if (canvas.getElementAt(ball.getLeftPoint()) instanceof Tank) {
-            return true;
+        if (canvas.getElementAt(ball.getLeftPoint()) instanceof Path) {
+            return 1;
         }
-        return false;
+        if (canvas.getElementAt(ball.getRightPoint()) instanceof Tank) {
+            return 0;
+        }
+        if (canvas.getElementAt(ball.getLeftPoint()) instanceof Path) {
+            return 1;
+        }
+        return 2;
     }
 
     /**
      * Checks if tank intersects with the bottom point of the ball. 
      */
-    public boolean intersectsWithBottomPoint(Cannonball ball) {
-        if (canvas.getElementAt(ball.getBottomPoint()) instanceof ) {
-            return true;
-        } else {
-            return false;
+    public int intersectsWithBottomPoint(Cannonball ball) {
+        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Tank) {
+            return 0;
         }
+        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Path) {
+            return 1;
+        }
+        return 2;
     }
     
 
