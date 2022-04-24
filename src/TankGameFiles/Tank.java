@@ -44,6 +44,10 @@ public class Tank extends Image{
         return working;
     }
 
+    public boolean notWorking(){
+        return !working;
+    }
+
     public void switchWorking() {
         working = !working;
     }
@@ -67,11 +71,5 @@ public class Tank extends Image{
     public void setPoint(Point p) {
         point = p;
     }
-    // public Point getLeftPoint(){
-    //     return new Point(body.getPosition().getX(), getCenterY());
-    // }
-    // public Point getRightPoint(){
-    //     return new Point(getCenterX()+75, getCenterY());
-    // }
-    //Should fire cannon be here or in TankGame? (Marcus)
+   
 }

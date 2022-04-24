@@ -102,27 +102,38 @@ public class TankManager {
     public void fireCannon(KeyboardEvent key, double initialSpeed) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
-            switchWorkingTank();
-            boolean ballIsOnCanvas = ball.addToCanvas(canvas);
+            ball.addToCanvas(canvas);
             while (ball.updatePosition(0.1)) {
                 if (intersectsWithBottomPoint(ball)||intersectsWithLeftOrRightPoint(ball)||intersectsWithTopPoint(ball)){
-                    ballIsOnCanvas = ball.removeFromCanvas(canvas);
-                    getWorkingTank().reduceHP();
-                    System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
+                    notWorkingTank().reduceHP();
+                    System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
                     if (checkLives()) {
                         System.out.println(tanks.get(0) + " Wins!");
                         canvas.closeWindow();
                     };
                     break;
+                    
                 }
                 canvas.draw();
             }
-            if (!ballIsOnCanvas) {
-            } else {        
-                ball.removeFromCanvas(canvas);
-            }
+            ball.removeFromCanvas(canvas);
+            switchWorkingTank(); 
         }
     }
+
+
+
+    // public boolean hitsObject(Cannonball ball) {
+    //     if (intersectsWithBottomPoint(ball)||intersectsWithLeftOrRightPoint(ball)||intersectsWithTopPoint(ball)){
+    //         ball.removeFromCanvas(canvas);
+    //         getWorkingTank().reduceHP();
+    //         System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
+    //         if (checkLives()) {
+    //             System.out.println(tanks.get(0) + " Wins!");
+    //             canvas.closeWindow();
+    //     }
+    //     return false;
+    // }
 
     /**
      * Centers cannon to tank.
@@ -130,6 +141,7 @@ public class TankManager {
     private void centerCannonToTank(){
        getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
     }
+
 
     public double tankAngleCalc(int move) {
         double a = 0;
@@ -168,6 +180,16 @@ public class TankManager {
         return null;
     }
 
+    public Tank notWorkingTank(){
+        for (Tank t : tanks) {
+            if (t.notWorking()) {
+                return t;
+            }
+        }
+        return null;
+    }
+    
+
     public void switchWorkingTank(){
         for (Tank t : tanks) {
             t.switchWorking();
@@ -202,7 +224,7 @@ public class TankManager {
      * Checks if tank intersects with the bottom point of the ball. 
      */
     public boolean intersectsWithBottomPoint(Cannonball ball) {
-        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Tank) {
+        if (canvas.getElementAt(ball.getBottomPoint()) instanceof ) {
             return true;
         } else {
             return false;

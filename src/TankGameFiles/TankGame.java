@@ -38,15 +38,6 @@ public class TankGame {
         System.out.println("Blue Wins!");
     }
 
-    // public boolean testHit(Cannonball ball) {
-    //     if (tankManager.intersectsWithBottomPoint(ball) || tankManager.intersectsWithLeftOrRightPoint(ball)
-    //         || tankManager.intersectsWithTopPoint(ball)) {
-    //         tankManager.getWorkingTank().reduceHP();
-    //         System.out.println(tankManager.getWorkingTank().getHP());
-    //         return true;
-    //     }
-    //     return false;
-    // }
     
     // We will bring back the run method later. We just don't need it at this time.
     public static void main(String[] args) {
