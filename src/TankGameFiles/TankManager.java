@@ -24,25 +24,25 @@ public class TankManager {
         cannons = new ArrayList<>();
         this.canvas = canvas;
         this.terrain = terrain;
+        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
+        blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
+        redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
+        blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
+        redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  "RedCannon.png");
+        blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  ,"BlueCannon.png");
+
     }
 
     public void generateTanks() {
-        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
-        blueTankPoint =new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
-        redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
-        blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
-                Tank redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  "RedCannon.png");
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
                 canvas.add(redTank.getCannon());
                 canvas.add(redTank);
                 tanks.add(redTank);
-                System.out.println(redTank.getHP());
             } 
             else {
-                Tank blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  ,"BlueCannon.png");
                 blueTank.getCannon().setAngle(180);
                 blueTank.setMaxHeight(50);
                 blueTank.getCannon().setMaxWidth(50);
@@ -106,7 +106,15 @@ public class TankManager {
             ball.addToCanvas(canvas);
             while (ball.updatePosition(0.1)) {
                 if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
-                    notWorkingTank().reduceHP();
+                    if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
+                        redTank.reduceHP();
+                        redTank.getHP();
+                    }
+                    if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
+                        blueTank.reduceHP();
+                        blueTank.getHP();
+                    }
+                    System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
                     System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
                     if (checkLives()) {
                         System.out.println(tanks.get(0) + " Wins!");
