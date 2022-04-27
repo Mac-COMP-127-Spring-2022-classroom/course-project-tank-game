@@ -25,10 +25,10 @@ public class TankManager {
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
         cannons = new ArrayList<>();
-        this.canvas = canvas;
-        this.terrain = terrain;
         redCannonPath="RedCannon.png";
         blueCannonPath="BlueCannon.png";
+        this.canvas = canvas;
+        this.terrain = terrain;
         redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
         blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
@@ -36,7 +36,6 @@ public class TankManager {
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  redCannonPath);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  , blueCannonPath);
         force=0;
-        
     }
 
     public void generateTanks() {
@@ -227,12 +226,12 @@ public class TankManager {
         return null;
     }
     
-    private void animateCannon(){
-        if(getWorkingTank()==redTank){
-            redCannonPath="CannonFireFrame1";
-            System.out.println(redCannonPath);
-        }
-    }
+    // private void animateCannon(){
+    //     if(getWorkingTank()==redTank){
+    //         redTank.getCannon.setImagePath("CannonFireFrame1");
+
+    //     }
+    // }
 
     public void switchWorkingTank(){
         for (Tank t : tanks) {
