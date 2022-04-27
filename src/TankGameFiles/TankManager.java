@@ -18,18 +18,21 @@ public class TankManager {
     private Tank blueTank;
     private Terrain terrain;
     private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
+    private String blueCannonPath, redCannonPath;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
         cannons = new ArrayList<>();
         this.canvas = canvas;
         this.terrain = terrain;
+        redCannonPath="RedCannon.png";
+        blueCannonPath="BlueCannon.png";
         redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
         blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
-        redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  "RedCannon.png");
-        blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  ,"BlueCannon.png");
+        redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  redCannonPath);
+        blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  , blueCannonPath);
 
     }
 
@@ -103,6 +106,7 @@ public class TankManager {
     public void fireCannon(KeyboardEvent key, double initialSpeed) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
+            animateCannon();
             ball.addToCanvas(canvas);
             while (ball.updatePosition(0.1)) {
                 if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
@@ -204,6 +208,12 @@ public class TankManager {
         return null;
     }
     
+    private void animateCannon(){
+        if(getWorkingTank()==redTank){
+            redCannonPath="CannonFireFrame1";
+            System.out.println(redCannonPath);
+        }
+    }
 
     public void switchWorkingTank(){
         for (Tank t : tanks) {
