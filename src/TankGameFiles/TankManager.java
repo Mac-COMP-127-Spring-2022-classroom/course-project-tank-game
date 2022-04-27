@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
+import edu.macalester.graphics.events.MouseMotionEvent;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
@@ -18,6 +19,7 @@ public class TankManager {
     private Tank blueTank;
     private Terrain terrain;
     private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
+    private double force;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
@@ -30,7 +32,7 @@ public class TankManager {
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  "RedCannon.png");
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  ,"BlueCannon.png");
-
+        force = 0;
     }
 
     public void generateTanks() {
@@ -100,10 +102,11 @@ public class TankManager {
         // cannon.setRotation(cannon.getAngle());
     }
 
-    public void fireCannon(KeyboardEvent key, double initialSpeed) {
-        Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, initialSpeed, getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
+    public void fireCannon(KeyboardEvent key) {
+        Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             ball.addToCanvas(canvas);
+            // Replace 0.1 with getForce()
             while (ball.updatePosition(0.1)) {
                 if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
                     if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
@@ -128,11 +131,26 @@ public class TankManager {
                 canvas.draw();
             }
             ball.removeFromCanvas(canvas);
+            resetForce();
             switchWorkingTank(); 
         }
     }
 
+    public void setForce(KeyboardEvent k){
+        if (k.getKey().equals(Key.valueOf("SPACE"))) {
+            force += 2;
+            System.out.println(force);
+        }
+    }
 
+    public double getForce() {
+        return force;
+    }
+
+    public double resetForce() {
+        force = 0;
+        return force;
+    }
 
     public boolean hitsObject(Cannonball ball) {
         if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
