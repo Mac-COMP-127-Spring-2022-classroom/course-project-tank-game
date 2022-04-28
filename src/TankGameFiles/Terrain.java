@@ -69,7 +69,7 @@ public class Terrain extends GraphicsGroup{
         Point newPoint = new Point(point.getX() + x, point.getY());
         for (Point p : points) {
             if (Math.round(p.getX()) == Math.round(newPoint.getX())) {
-                newPoint = new Point(p.getX(), p.getY()-50);
+                newPoint = new Point(p.getX(), p.getY()-25);
             }
         }
         return newPoint;

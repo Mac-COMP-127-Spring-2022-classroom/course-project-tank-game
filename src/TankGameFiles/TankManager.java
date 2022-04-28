@@ -29,7 +29,7 @@ public class TankManager {
         blueCannonPath="BlueCannon.png";
         this.canvas = canvas;
         this.terrain = terrain;
-        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
+        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY());
         blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
@@ -44,6 +44,7 @@ public class TankManager {
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
                 canvas.add(redTank.getCannon());
+                redTank.setCenter(redTankPoint);
                 canvas.add(redTank);
                 tanks.add(redTank);
             } 
@@ -68,6 +69,7 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), -5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setPosition(getWorkingTank().getPoint());
+                getWorkingTank().setCenter(getWorkingTank().getPosition());
                 centerCannonToTank();
                 // getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
@@ -77,7 +79,8 @@ public class TankManager {
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){ 
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), 5));
                 getWorkingTank().setRotation(tankAngleCalc(5));  
-                getWorkingTank().setPosition(getWorkingTank().getPoint());   
+                getWorkingTank().setPosition(getWorkingTank().getPoint());  
+                getWorkingTank().setCenter(getWorkingTank().getPosition()); 
                 centerCannonToTank();
                 // getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
             }
@@ -108,7 +111,7 @@ public class TankManager {
     public void fireCannon(KeyboardEvent key) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
-            animateCannon();
+            // animateCannon();
             ball.addToCanvas(canvas);
             // Replace 0.1 with getForce()
             while (ball.updatePosition(0.1)) {
