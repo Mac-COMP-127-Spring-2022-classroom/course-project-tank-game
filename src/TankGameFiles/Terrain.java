@@ -75,6 +75,10 @@ public class Terrain extends GraphicsGroup{
         return newPoint;
     }
 
+    public void deformTerrain(Point point) {
+        
+    }
+
     public void generateTerrain() {
         Path path = new Path(points, false);
         canvas.add(path);

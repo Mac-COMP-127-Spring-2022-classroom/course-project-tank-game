@@ -200,7 +200,6 @@ public class TankManager {
                 return 0;
             }
             c = Math.abs(c);
-            System.out.println(Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))))+270);
             return Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))))+270;
         }
         else {
@@ -215,7 +214,6 @@ public class TankManager {
                 return 0;
             }
             c = Math.abs(c);
-            System.out.println(Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b)))));
             return Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
         }
     }
