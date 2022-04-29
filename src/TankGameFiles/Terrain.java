@@ -86,6 +86,6 @@ public class Terrain extends GraphicsGroup{
     }
 
     public void terrainListDebug() {
-        System.out.println(points.size());
+        // System.out.println(points.size());
     }
 }
