@@ -32,7 +32,18 @@ public class TankGame {
         canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
         canvas.onKeyDown(event -> tankManager.setForce(event));
         canvas.onKeyUp(event -> tankManager.fireCannon(event));
-        canvas.onKeyUp(event ->tankManager.animateCannon(event));
+        canvas.onKeyUp(event ->animateCannon(event));
+        
+    }
+    
+    public void animateCannon(KeyboardEvent key){
+        canvas.onKeyUp(event ->tankManager.animateCannonFrame1(event));
+        canvas.pause(400);
+        canvas.onKeyUp(event ->tankManager.animateCannonFrame2(event));
+        canvas.pause(700);
+        canvas.onKeyUp(event ->tankManager.animateCannonFrame3(event));
+        canvas.pause(1000);
+        canvas.onKeyUp(event ->tankManager.resetToOriginCannon(event));
     }
 
     public void checkLives() {

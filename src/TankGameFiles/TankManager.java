@@ -130,7 +130,6 @@ public class TankManager {
     public void fireCannon(KeyboardEvent key) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
-            animateCannon();
             ball.addToCanvas(canvas);
             
             while (ball.updatePosition(0.1)) {
@@ -284,23 +283,57 @@ public class TankManager {
         return null;
     }
     
-    private void animateCannon()  {
-        if(getWorkingTank()==redTank){
-            redTank.getCannon().setImagePath("RedFireFrame1.png");
-            redTank.getCannon().setMaxWidth(65);
+    public void animateCannonFrame1(KeyboardEvent key)  {
+        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("BlueFireFrame1.png");
+                redTank.getCannon().setMaxWidth(65);
+                
 
+            }
+            if(getWorkingTank()==blueTank){
+                blueTank.getCannon().setImagePath("BlueFireFrame1.png");
+                blueTank.getCannon().setMaxWidth(65);
+            }
         }
-        if(getWorkingTank()==blueTank){
-            blueTank.getCannon().setImagePath("BlueFireFrame1.png");
-            blueTank.getCannon().setMaxWidth(65);
+    }
+
+    public void animateCannonFrame2(KeyboardEvent key){
+        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+            if(getWorkingTank()==blueTank){
             blueTank.getCannon().setImagePath("BlueFireFrame2.png");
             blueTank.getCannon().setMaxWidth(75);
-            blueTank.getCannon().setImagePath("BlueFireFrame3.png");
+            }
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("BlueFireFrame2.png");
+                redTank.getCannon().setMaxWidth(75);
+                }
+        }
+    }
 
-            
+    public void animateCannonFrame3(KeyboardEvent key){
+        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("BlueFireFrame3.png");
+                redTank.getCannon().setMaxWidth(75);
+            }
+            if(getWorkingTank()==blueTank){
+             blueTank.getCannon().setImagePath("BlueFireFrame3.png");
+             blueTank.getCannon().setMaxWidth(75);
+            }
+        }
+    }
+    public void resetToOriginCannon(KeyboardEvent key){
+        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("RedCannon.png");
+                redTank.getCannon().setMaxWidth(50);
+                }
+        
+            if(getWorkingTank()==blueTank){
+            blueTank.getCannon().setImagePath("BlueCannon.png");
             blueTank.getCannon().setMaxWidth(50);
-            
-
+            }
         }
     }
 
