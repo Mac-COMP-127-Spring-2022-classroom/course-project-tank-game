@@ -24,6 +24,7 @@ public class TankManager {
     private double force;
     private Rectangle forceMeter;
     private Rectangle currentForceMeter;
+    private double tankAngle;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
@@ -180,7 +181,7 @@ public class TankManager {
     }
 
     public double resetForce() {
-        force = 0;
+        force = 5;
         return force;
     }
 
