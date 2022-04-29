@@ -1,5 +1,6 @@
 package TankGameFiles;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import edu.macalester.graphics.events.Key;
@@ -21,6 +22,8 @@ public class TankManager {
     private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
     private String blueCannonPath, redCannonPath;
     private double force;
+    private Rectangle forceMeter;
+    private Rectangle currentForceMeter;
     private double tankAngle;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
@@ -34,9 +37,12 @@ public class TankManager {
         blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
         redCannonPoint = new Point(redTankPoint.getX()-10, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
-        redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  redCannonPath);
-        blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  , blueCannonPath);
-        force=0;
+        redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath);
+        blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath);
+        force = 0;
+        forceMeter = new Rectangle(40, 40, 400, 20);
+        canvas.add(forceMeter);
+        // Still need to cap the force meter and reset the force meter.
     }
 
     public void generateTanks() {
@@ -48,7 +54,7 @@ public class TankManager {
                 redTank.setCenter(redTankPoint);
                 canvas.add(redTank);
                 tanks.add(redTank);
-            } 
+            }
             else {
                 blueTank.getCannon().setAngle(180);
                 blueTank.setMaxHeight(50);
@@ -123,7 +129,7 @@ public class TankManager {
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             animateCannon();
             ball.addToCanvas(canvas);
-            // Replace 0.1 with getForce()
+            
             while (ball.updatePosition(0.1)) {
                 if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
                     if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
@@ -153,9 +159,11 @@ public class TankManager {
         }
     }
 
+
     public void setForce(KeyboardEvent k){
         if (k.getKey().equals(Key.valueOf("SPACE"))) {
             force += 2;
+            updateForceMeter();
             System.out.println(force);
         }
     }
@@ -165,8 +173,18 @@ public class TankManager {
     }
 
     public double resetForce() {
-        force = 0;
+        force = 5;
         return force;
+    }
+
+    private void updateForceMeter() {
+        currentForceMeter = new Rectangle(40, 40, 2 * getForce(),20);
+        currentForceMeter.setFillColor(Color.RED);
+        canvas.add(currentForceMeter);
+    }
+
+    private void resetForceMeter() {
+        forceMeter.setFillColor(Color.WHITE);
     }
 
     public boolean hitsObject(Cannonball ball) {
