@@ -100,22 +100,14 @@ public class TankManager {
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
             centerCannonToTank();
         }
-        if (tankAngle>=250){
+        
             if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<tankAngle){
                 System.out.println(getWorkingCannon().getAngle());
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
             centerCannonToTank();
             }
-        }
-        if (tankAngle==0){
-            if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
-                System.out.println(getWorkingCannon().getAngle());
-            getWorkingCannon().rotateBy(-5);
-            getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
-            centerCannonToTank();
-            }
-        }
+        
     }
 
         /**
@@ -129,7 +121,7 @@ public class TankManager {
     public void fireCannon(KeyboardEvent key) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
-            // animateCannon();
+            animateCannon();
             ball.addToCanvas(canvas);
             // Replace 0.1 with getForce()
             while (ball.updatePosition(0.1)) {
@@ -271,12 +263,12 @@ public class TankManager {
         return null;
     }
     
-    // private void animateCannon(){
-    //     if(getWorkingTank()==redTank){
-    //         redTank.getCannon.setImagePath("CannonFireFrame1");
+    private void animateCannon(){
+        if(getWorkingTank()==redTank){
+            redTank.getCannon().setImagePath("CannonFireFrame1.png");
 
-    //     }
-    // }
+        }
+    }
 
     public void switchWorkingTank(){
         for (Tank t : tanks) {
