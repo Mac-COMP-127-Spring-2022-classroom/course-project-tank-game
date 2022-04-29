@@ -21,6 +21,7 @@ public class TankManager {
     private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
     private String blueCannonPath, redCannonPath;
     private double force;
+    private double tankAngle;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
@@ -29,9 +30,9 @@ public class TankManager {
         blueCannonPath="BlueCannon.png";
         this.canvas = canvas;
         this.terrain = terrain;
-        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY());
+        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
         blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
-        redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
+        redCannonPoint = new Point(redTankPoint.getX()-10, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(),  redCannonPath);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX() , blueCannonPoint.getY()  , blueCannonPath);
@@ -66,9 +67,9 @@ public class TankManager {
     public void moveTank(KeyboardEvent key) {
         if(getWorkingTank().getCenterX()-getWorkingTank().getWidth()/2 > 0 ){ 
             if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
-                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), -5));
+                getWorkingTank().setPoint(terrain.getTerrainMovePoint(workingTankPoint(), -5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
-                getWorkingTank().setPosition(getWorkingTank().getPoint());
+                getWorkingTank().setPosition(workingTankPoint());
                 getWorkingTank().setCenter(getWorkingTank().getPosition());
                 centerCannonToTank();
                 // getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
@@ -77,9 +78,9 @@ public class TankManager {
 
         if(getWorkingTank().getCenterX() + getWorkingTank().getWidth()/2 < canvas.getWidth()){
             if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){ 
-                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), 5));
+                getWorkingTank().setPoint(terrain.getTerrainMovePoint(workingTankPoint(), 5));
                 getWorkingTank().setRotation(tankAngleCalc(5));  
-                getWorkingTank().setPosition(getWorkingTank().getPoint());  
+                getWorkingTank().setPosition(workingTankPoint());  
                 getWorkingTank().setCenter(getWorkingTank().getPosition()); 
                 centerCannonToTank();
                 // getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
@@ -99,14 +100,31 @@ public class TankManager {
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
             centerCannonToTank();
         }
-        if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
+        if (tankAngle>=250){
+            if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<tankAngle){
+                System.out.println(getWorkingCannon().getAngle());
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
             centerCannonToTank();
-
+            }
         }
-        // cannon.setRotation(cannon.getAngle());
+        if (tankAngle==0){
+            if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
+                System.out.println(getWorkingCannon().getAngle());
+            getWorkingCannon().rotateBy(-5);
+            getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
+            centerCannonToTank();
+            }
+        }
     }
+
+        /**
+     * Centers cannon to tank.
+     */
+    private void centerCannonToTank(){
+        getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
+     }
+ 
 
     public void fireCannon(KeyboardEvent key) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
@@ -175,12 +193,6 @@ public class TankManager {
         return false;
     }
 
-    /**
-     * Centers cannon to tank.
-     */
-    private void centerCannonToTank(){
-       getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
-    }
 
 
     public double tankAngleCalc(int move) {
@@ -190,32 +202,51 @@ public class TankManager {
 
         if (move == -5) {
             a = 5;
-            b = getWorkingTank().getPoint().distance(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), move));
-            c = terrain.getTerrainMovePoint(getWorkingTank().getPoint(), move).getY()-getWorkingTank().getPoint().getY();
+            b = findDistance(terrain.getTerrainMovePoint(workingTankPoint(), move));
+            c = terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY();
             if (c < 0) {
-                c = Math.abs(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), move).getY()-getWorkingTank().getPoint().getY());
-                return Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
+                c = Math.abs(terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY());
+                tankAngle= Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
+                System.out.println(tankAngle);
+                return tankAngle;
             }
             if (c == 0) {
+                System.out.println(tankAngle);
                 return 0;
             }
             c = Math.abs(c);
-            return Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))))+270;
+            tankAngle= Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))))+270;
+            System.out.println(tankAngle);
+            return tankAngle;
         }
         else {
             a = 5;
-            b = getWorkingTank().getPoint().distance(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), move));
-            c = terrain.getTerrainMovePoint(getWorkingTank().getPoint(), move).getY()-getWorkingTank().getPoint().getY();
+            b = findDistance(terrain.getTerrainMovePoint(workingTankPoint(), move));
+            c = terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY();
             if (c < 0) {
-                c = Math.abs(terrain.getTerrainMovePoint(getWorkingTank().getPoint(), move).getY()-getWorkingTank().getPoint().getY());
-                return 360-Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
+                c = Math.abs(terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY());
+                tankAngle=360-Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
+                System.out.println(tankAngle);
+                return tankAngle;
             }
             if (c == 0) {
-                return 0;
+                tankAngle=0;
+                System.out.println(tankAngle);
+                return tankAngle;
             }
             c = Math.abs(c);
-            return Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
+            tankAngle=Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
+            System.out.println(tankAngle);
+            return tankAngle;
         }
+    }
+
+    public double findDistance(Point terrainPoint){
+        return getWorkingTank().getPoint().distance(terrainPoint);
+    }
+
+    public Point workingTankPoint(){
+        return getWorkingTank().getPoint();
     }
 
     public List<Tank> getTanks() {
