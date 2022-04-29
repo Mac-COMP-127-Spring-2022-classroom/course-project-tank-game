@@ -24,4 +24,5 @@ public class Cannon extends Image{
         angle = input;
     }
 
+
 }
