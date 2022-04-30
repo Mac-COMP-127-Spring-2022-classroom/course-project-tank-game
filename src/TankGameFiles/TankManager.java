@@ -133,7 +133,7 @@ public class TankManager {
             ball.addToCanvas(canvas);
             
             while (ball.updatePosition(0.1)) {
-                if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
+                if (intersects(ball) == 0){
                     if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
                         redTank.reduceHP();
                         redTank.getHP();
@@ -150,7 +150,7 @@ public class TankManager {
                     };
                     break;
                 }
-                if (intersectsWithBottomPoint(ball) == 1||intersectsWithLeftOrRightPoint(ball) == 1||intersectsWithTopPoint(ball) == 1){
+                if (intersects(ball) == 1){
                     break;
                 }
                 canvas.draw();
@@ -183,7 +183,7 @@ public class TankManager {
 
 
     public boolean hitsObject(Cannonball ball) {
-        if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
+        if (intersects(ball)==0){
             ball.removeFromCanvas(canvas);
             getWorkingTank().reduceHP();
             // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
@@ -192,7 +192,7 @@ public class TankManager {
                 canvas.closeWindow();
             }
         }
-        if (intersectsWithBottomPoint(ball) == 1||intersectsWithLeftOrRightPoint(ball) == 1||intersectsWithTopPoint(ball) == 1){
+        if (intersects(ball)==1){
             ball.removeFromCanvas(canvas);
         }
         return false;
@@ -331,49 +331,15 @@ public class TankManager {
      /**
      * Checks if tank intersects with the top point. 
      */
-    public int intersectsWithTopPoint(Cannonball ball) {
-        if (canvas.getElementAt(ball.getTopPoint()) instanceof Tank) {
+    public int intersects(Cannonball ball) {
+        if (canvas.getElementAt(ball.getCenterX(), ball.getCenterY()) instanceof Tank) {
             return 0;
         }
-        if (canvas.getElementAt(ball.getTopPoint()) instanceof Path) {
+        if (canvas.getElementAt(ball.getCenterX(), ball.getCenterY()) instanceof Path) {
             return 1;
         }
         return 2;
     }
-
-    /**
-     * Checks if tank intersects with the Left or Right point. 
-     */
-    public int intersectsWithLeftOrRightPoint(Cannonball ball) {
-        if (canvas.getElementAt(ball.getRightPoint()) instanceof Tank) {
-            return 0;
-        }
-        if (canvas.getElementAt(ball.getLeftPoint()) instanceof Path) {
-            return 1;
-        }
-        if (canvas.getElementAt(ball.getRightPoint()) instanceof Tank) {
-            return 0;
-        }
-        if (canvas.getElementAt(ball.getLeftPoint()) instanceof Path) {
-            return 1;
-        }
-        return 2;
-    }
-
-    /**
-     * Checks if tank intersects with the bottom point of the ball. 
-     */
-    public int intersectsWithBottomPoint(Cannonball ball) {
-        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Tank) {
-            return 0;
-        }
-        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Path) {
-            return 1;
-        }
-        return 2;
-    }
-    
-
 
     public Cannon getWorkingCannon(){
         return getWorkingTank().getCannon();
