@@ -11,6 +11,7 @@ import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
+import java.util.Timer;
 
 public class TankManager {
     private CanvasWindow canvas;
@@ -25,6 +26,7 @@ public class TankManager {
     private Rectangle currentForceMeter;
     private double tankAngle;
     private ForceMeter forceMeter;
+    private Timer timer;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
@@ -34,11 +36,12 @@ public class TankManager {
         this.canvas = canvas;
         this.terrain = terrain;
         redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
-        blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
-        redCannonPoint = new Point(redTankPoint.getX()-10, redTankPoint.getY()+1);
+        blueTankPoint = new Point(terrain.getTerrainPoint(115).getX(), terrain.getTerrainPoint(110).getY()-50);
+        redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath);
+        timer = new Timer();
         force = 0;
         forceMeter = new ForceMeter(canvas);
         forceMeter.addToCanvas(canvas);
@@ -50,6 +53,7 @@ public class TankManager {
             if (i < 1) {
                 redTank.setMaxHeight(50);
                 redTank.getCannon().setMaxWidth(50);
+                System.out.println(redTank.getCannon().getImageHeight());
                 canvas.add(redTank.getCannon());
                 redTank.setCenter(redTankPoint);
                 canvas.add(redTank);
@@ -107,8 +111,7 @@ public class TankManager {
             centerCannonToTank();
         }
         
-            if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<tankAngle){
-                System.out.println(getWorkingCannon().getAngle());
+            if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
             centerCannonToTank();
@@ -127,7 +130,6 @@ public class TankManager {
     public void fireCannon(KeyboardEvent key) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
-            animateCannon();
             ball.addToCanvas(canvas);
             
             while (ball.updatePosition(0.1)) {
@@ -140,10 +142,10 @@ public class TankManager {
                         blueTank.reduceHP();
                         blueTank.getHP();
                     }
-                    System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
-                    System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
+                    // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
+                    // System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
                     if (checkLives()) {
-                        System.out.println(tanks.get(0) + " Wins!");
+                        // System.out.println(tanks.get(0) + " Wins!");
                         canvas.closeWindow();
                     };
                     break;
@@ -156,7 +158,7 @@ public class TankManager {
             ball.removeFromCanvas(canvas);
             resetForce();
             forceMeter.resetForceMeter();
-            switchWorkingTank(); 
+            switchWorkingTank(); // comment out when animating
         }
     }
 
@@ -184,9 +186,9 @@ public class TankManager {
         if (intersectsWithBottomPoint(ball) == 0||intersectsWithLeftOrRightPoint(ball) == 0||intersectsWithTopPoint(ball) == 0){
             ball.removeFromCanvas(canvas);
             getWorkingTank().reduceHP();
-            System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
+            // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
             if (checkLives()) {
-                System.out.println(tanks.get(0) + " Wins!");
+                // System.out.println(tanks.get(0) + " Wins!");
                 canvas.closeWindow();
             }
         }
@@ -210,16 +212,16 @@ public class TankManager {
             if (c < 0) {
                 c = Math.abs(terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY());
                 tankAngle= Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
-                System.out.println(tankAngle);
+                // System.out.println(tankAngle);
                 return tankAngle;
             }
             if (c == 0) {
-                System.out.println(tankAngle);
+                // System.out.println(tankAngle);
                 return 0;
             }
             c = Math.abs(c);
             tankAngle= Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))))+270;
-            System.out.println(tankAngle);
+            // System.out.println(tankAngle);
             return tankAngle;
         }
         else {
@@ -229,17 +231,17 @@ public class TankManager {
             if (c < 0) {
                 c = Math.abs(terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY());
                 tankAngle=360-Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
-                System.out.println(tankAngle);
+                // System.out.println(tankAngle);
                 return tankAngle;
             }
             if (c == 0) {
                 tankAngle=0;
-                System.out.println(tankAngle);
+                // System.out.println(tankAngle);
                 return tankAngle;
             }
             c = Math.abs(c);
             tankAngle=Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
-            System.out.println(tankAngle);
+            // System.out.println(tankAngle);
             return tankAngle;
         }
     }
@@ -274,11 +276,50 @@ public class TankManager {
         return null;
     }
     
-    private void animateCannon(){
-        if(getWorkingTank()==redTank){
-            redTank.getCannon().setImagePath("CannonFireFrame1.png");
+    public void animateCannonFrame1()  {
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("BlueFireFrame1.png");
+                redTank.getCannon().setMaxWidth(65);
+                
 
-        }
+            }
+            if(getWorkingTank()==blueTank){
+                blueTank.getCannon().setImagePath("BlueFireFrame1.png");
+                blueTank.getCannon().setMaxWidth(65);
+            }
+    }
+
+    public void animateCannonFrame2(){
+            if(getWorkingTank()==blueTank){
+            blueTank.getCannon().setImagePath("BlueFireFrame2.png");
+            blueTank.getCannon().setMaxWidth(75);
+            }
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("BlueFireFrame2.png");
+                redTank.getCannon().setMaxWidth(75);
+                }
+    }
+
+    public void animateCannonFrame3(){
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("BlueFireFrame3.png");
+                redTank.getCannon().setMaxWidth(75);
+            }
+            if(getWorkingTank()==blueTank){
+             blueTank.getCannon().setImagePath("BlueFireFrame3.png");
+             blueTank.getCannon().setMaxWidth(75);
+            }
+    }
+    public void resetToOriginCannon(){
+            if(getWorkingTank()==redTank){
+                redTank.getCannon().setImagePath("RedCannon.png");
+                redTank.getCannon().setMaxWidth(50);
+                }
+        
+            if(getWorkingTank()==blueTank){
+            blueTank.getCannon().setImagePath("BlueCannon.png");
+            blueTank.getCannon().setMaxWidth(50);
+            }
     }
 
     public void switchWorkingTank(){

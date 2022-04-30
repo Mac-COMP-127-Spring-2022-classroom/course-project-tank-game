@@ -23,6 +23,5 @@ public class Cannon extends Image{
     public void setAngle(double input) {
         angle = input;
     }
-
-
+   
 }
