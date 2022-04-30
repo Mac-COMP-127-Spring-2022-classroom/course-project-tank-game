@@ -36,8 +36,8 @@ public class TankManager {
         this.canvas = canvas;
         this.terrain = terrain;
         redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
-        blueTankPoint = new Point(terrain.getTerrainPoint(110).getX(), terrain.getTerrainPoint(110).getY()-50);
-        redCannonPoint = new Point(redTankPoint.getX()-10, redTankPoint.getY()+1);
+        blueTankPoint = new Point(terrain.getTerrainPoint(115).getX(), terrain.getTerrainPoint(110).getY()-50);
+        redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath);
@@ -157,7 +157,7 @@ public class TankManager {
             }
             ball.removeFromCanvas(canvas);
             resetForce();
-            switchWorkingTank(); 
+            switchWorkingTank();  // comment out when animating
         }
     }
 
@@ -283,8 +283,7 @@ public class TankManager {
         return null;
     }
     
-    public void animateCannonFrame1(KeyboardEvent key)  {
-        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+    public void animateCannonFrame1()  {
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("BlueFireFrame1.png");
                 redTank.getCannon().setMaxWidth(65);
@@ -295,11 +294,9 @@ public class TankManager {
                 blueTank.getCannon().setImagePath("BlueFireFrame1.png");
                 blueTank.getCannon().setMaxWidth(65);
             }
-        }
     }
 
-    public void animateCannonFrame2(KeyboardEvent key){
-        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+    public void animateCannonFrame2(){
             if(getWorkingTank()==blueTank){
             blueTank.getCannon().setImagePath("BlueFireFrame2.png");
             blueTank.getCannon().setMaxWidth(75);
@@ -308,11 +305,9 @@ public class TankManager {
                 redTank.getCannon().setImagePath("BlueFireFrame2.png");
                 redTank.getCannon().setMaxWidth(75);
                 }
-        }
     }
 
-    public void animateCannonFrame3(KeyboardEvent key){
-        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+    public void animateCannonFrame3(){
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("BlueFireFrame3.png");
                 redTank.getCannon().setMaxWidth(75);
@@ -321,10 +316,8 @@ public class TankManager {
              blueTank.getCannon().setImagePath("BlueFireFrame3.png");
              blueTank.getCannon().setMaxWidth(75);
             }
-        }
     }
-    public void resetToOriginCannon(KeyboardEvent key){
-        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+    public void resetToOriginCannon(){
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("RedCannon.png");
                 redTank.getCannon().setMaxWidth(50);
@@ -334,7 +327,6 @@ public class TankManager {
             blueTank.getCannon().setImagePath("BlueCannon.png");
             blueTank.getCannon().setMaxWidth(50);
             }
-        }
     }
 
     public void switchWorkingTank(){
