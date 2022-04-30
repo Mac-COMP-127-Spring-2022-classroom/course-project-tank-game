@@ -35,7 +35,7 @@ public class TankManager {
         blueCannonPath="BlueCannon.png";
         this.canvas = canvas;
         this.terrain = terrain;
-        redTankPoint = new Point(terrain.getTerrainPoint(5).getX(), terrain.getTerrainPoint(5).getY()-50);
+        redTankPoint = new Point(terrain.getTerrainPoint(10).getX(), terrain.getTerrainPoint(5).getY()-50);
         blueTankPoint = new Point(terrain.getTerrainPoint(115).getX(), terrain.getTerrainPoint(110).getY()-50);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
@@ -278,7 +278,7 @@ public class TankManager {
     
     public void animateCannonFrame1()  {
             if(getWorkingTank()==redTank){
-                redTank.getCannon().setImagePath("BlueFireFrame1.png");
+                redTank.getCannon().setImagePath("RedFireFrame1.png");
                 redTank.getCannon().setMaxWidth(65);
                 
 
@@ -290,11 +290,11 @@ public class TankManager {
     }
 
     public void animateCannonFrame2(){
-            if(getWorkingTank()==blueTank){
-            blueTank.getCannon().setImagePath("BlueFireFrame2.png");
+            if(getWorkingTank()==redTank){
+            blueTank.getCannon().setImagePath("RedFireFrame2.png");
             blueTank.getCannon().setMaxWidth(75);
             }
-            if(getWorkingTank()==redTank){
+            if(getWorkingTank()==blueTank){
                 redTank.getCannon().setImagePath("BlueFireFrame2.png");
                 redTank.getCannon().setMaxWidth(75);
                 }
@@ -302,7 +302,7 @@ public class TankManager {
 
     public void animateCannonFrame3(){
             if(getWorkingTank()==redTank){
-                redTank.getCannon().setImagePath("BlueFireFrame3.png");
+                redTank.getCannon().setImagePath("RedFireFrame3.png");
                 redTank.getCannon().setMaxWidth(75);
             }
             if(getWorkingTank()==blueTank){
