@@ -177,7 +177,7 @@ public class TankManager {
     }
 
     public double resetForce() {
-        force = 5;
+        force = 10;
         return force;
     }
 
