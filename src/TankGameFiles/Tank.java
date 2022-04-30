@@ -22,6 +22,7 @@ public class Tank extends Image{
      */
     public Tank(Point point, String imagePath, double cannonX, double cannonY, String cannonPath) {
         super(point.getX(), point.getY(), imagePath);
+        setCenter(point);
         this.point = point;
         this.imagePath = imagePath;
         cannon = new Cannon(cannonX, cannonY, cannonPath);
