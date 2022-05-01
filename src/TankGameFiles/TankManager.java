@@ -28,9 +28,10 @@ public class TankManager {
     private ForceMeter forceMeter;
     private ForceMeter blueForceMeter;
     private Timer timer;
-    private Integer startWidth;
-    private Integer frame1Width;
-    private Integer frame23Width;
+    private final double startWidth = 50;
+    private final double frame1Width=60;
+    private final double frame2Width=70;
+    private final double frame3Width=75;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
         tanks = new ArrayList<>();
@@ -39,9 +40,7 @@ public class TankManager {
         blueCannonPath="BlueCannon.png";
         this.canvas = canvas;
         this.terrain = terrain;
-        startWidth=50;
-        frame1Width=65;
-        frame23Width=70;
+        
         redTankPoint = new Point(terrain.getTerrainPoint(40).getX(), terrain.getTerrainPoint(40).getY()-25);
         blueTankPoint = new Point(terrain.getTerrainPoint(115).getX(), terrain.getTerrainPoint(115).getY()-25);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
@@ -52,8 +51,8 @@ public class TankManager {
         // blueTank.setPoint(terrain.getTerrainMovePoint(blueTank.getPoint(), -5));
         // blueTank.setRotation(tankAngleCalc(-5));   
         // blueTank.setCenter(blueTank.getPoint());
-        centerCannonToTank(blueTank, blueTank.getCannon(),50);
-        centerCannonToTank(redTank, redTank.getCannon(),50);
+        centerCannonToTank(blueTank, blueTank.getCannon(),startWidth);
+        centerCannonToTank(redTank, redTank.getCannon(),startWidth);
 
         timer = new Timer();
         force = 0;
@@ -97,7 +96,7 @@ public class TankManager {
                 getWorkingTank().setCenter(workingTankPoint());
                 System.out.println(getWorkingTank().getCenter());
                 System.out.println(workingTankPoint());
-                centerCannonToTank(getWorkingTank(),getWorkingCannon(),50);
+                centerCannonToTank(getWorkingTank(),getWorkingCannon(),startWidth);
                 // getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
         }
@@ -107,7 +106,7 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(workingTankPoint(), 5));
                 getWorkingTank().setRotation(tankAngleCalc(5));  
                 getWorkingTank().setCenter(workingTankPoint());
-                centerCannonToTank(getWorkingTank(),getWorkingCannon(),50);
+                centerCannonToTank(getWorkingTank(),getWorkingCannon(),startWidth);
                 // getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
             }
         }
@@ -137,7 +136,7 @@ public class TankManager {
         /**
      * Centers cannon to tank.
      */
-    private void centerCannonToTank(Tank tank, Cannon cannon, Integer width){
+    private void centerCannonToTank(Tank tank, Cannon cannon, Double width){
         cannon.setCenter(width/2 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   - width/2 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() + 7.5);
      }
  
@@ -303,52 +302,52 @@ public class TankManager {
     public void animateCannonFrame1()  {
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("RedFireFrame1.png");
-                redTank.getCannon().setMaxWidth(60);
+                redTank.getCannon().setMaxWidth(frame1Width);
                 centerCannonToTank(redTank, redTank.getCannon(), frame1Width);
             }
             if(getWorkingTank()==blueTank){
                 blueTank.getCannon().setImagePath("BlueFireFrame1.png");
-                blueTank.getCannon().setMaxWidth(60);
-                centerCannonToTank(blueTank, blueTank.getCannon(), frame23Width);
+                blueTank.getCannon().setMaxWidth(frame1Width);
+                centerCannonToTank(blueTank, blueTank.getCannon(), frame1Width);
             }
     }
 
     public void animateCannonFrame2(){
             if(getWorkingTank()==redTank){
             redTank.getCannon().setImagePath("RedFireFrame2.png");
-            redTank.getCannon().setMaxWidth(65);
-            centerCannonToTank(redTank, redTank.getCannon(), frame23Width);
+            redTank.getCannon().setMaxWidth(frame2Width);
+            centerCannonToTank(redTank, redTank.getCannon(), frame2Width);
             }
             if(getWorkingTank()==blueTank){
                 blueTank.getCannon().setImagePath("BlueFireFrame2.png");
-                blueTank.getCannon().setMaxWidth(65);
-                centerCannonToTank(blueTank, blueTank.getCannon(), frame23Width);
+                blueTank.getCannon().setMaxWidth(frame2Width);
+                centerCannonToTank(blueTank, blueTank.getCannon(), frame2Width);
                 }
     }
 
     public void animateCannonFrame3(){
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("RedFireFrame3.png");
-                redTank.getCannon().setMaxWidth(75);
-                centerCannonToTank(redTank, redTank.getCannon(), frame23Width);
+                redTank.getCannon().setMaxWidth(frame3Width);
+                centerCannonToTank(redTank, redTank.getCannon(), frame3Width);
 
             }
             if(getWorkingTank()==blueTank){
              blueTank.getCannon().setImagePath("BlueFireFrame3.png");
-             blueTank.getCannon().setMaxWidth(75);
-             centerCannonToTank(blueTank, blueTank.getCannon(), frame23Width);
+             blueTank.getCannon().setMaxWidth(frame3Width);
+             centerCannonToTank(blueTank, blueTank.getCannon(), frame3Width);
             }
     }
     public void resetToOriginCannon(){
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("RedCannon.png");
-                redTank.getCannon().setMaxWidth(50);
+                redTank.getCannon().setMaxWidth(startWidth);
                 centerCannonToTank(redTank, redTank.getCannon(),startWidth);
                 }
         
             if(getWorkingTank()==blueTank){
             blueTank.getCannon().setImagePath("BlueCannon.png");
-            blueTank.getCannon().setMaxWidth(50);
+            blueTank.getCannon().setMaxWidth(startWidth);
             centerCannonToTank(blueTank, blueTank.getCannon(),startWidth);
             }
     }

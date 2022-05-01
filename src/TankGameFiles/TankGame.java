@@ -42,11 +42,11 @@ public class TankGame {
             public void run() {
                 try {
                     tankManager.animateCannonFrame1();
-                    sleep(100);
+                    sleep(1000);
                     tankManager.animateCannonFrame2();
-                    sleep(100);
+                    sleep(1000);
                     tankManager.animateCannonFrame3();
-                    sleep(100);
+                    sleep(1000);
                     tankManager.resetToOriginCannon();
                     tankManager.switchWorkingTank();
                 }
