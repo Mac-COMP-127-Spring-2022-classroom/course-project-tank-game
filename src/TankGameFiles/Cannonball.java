@@ -63,7 +63,7 @@ public class Cannonball {
         double yCoord = getCenterY() + (dy * dt);
         
         if (xCoord > 0 && xCoord < maxX) {
-            if (yCoord > 0 && yCoord < maxY) {
+            if (yCoord > 0 || yCoord < 0) {
                 centerX = xCoord;
                 centerY = yCoord;
                 ballShape.setPosition(centerX, centerY);

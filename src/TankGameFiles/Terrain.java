@@ -27,24 +27,24 @@ public class Terrain extends GraphicsGroup{
                 yAxis = 570;
             }
             if (down<5){
-                yAxis = yAxis + 5;
+                yAxis += 5;
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
                 down++;
             }
             if (up<5){
-                yAxis = yAxis - 5;
+                yAxis -= 5;
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
                 up++;
             }
             if (xCoord%100==0){
                 double randomInt = random.nextInt(20+20)-20;
-                yAxis = yAxis + randomInt;
+                yAxis += randomInt;
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
                 if (randomInt>0) {
-                    down = 0;
+                    down = 0; 
                 }
                 if (randomInt<0) {
                     up = 0;
@@ -57,9 +57,9 @@ public class Terrain extends GraphicsGroup{
         }
     }
 
-    public void setTerrainPoint(Point initialPoint, Point newPoint) {
-        points.set(points.indexOf(initialPoint), newPoint);
-    }
+    // public void setTerrainPoint(Point initialPoint, Point newPoint) {
+    //     points.set(points.indexOf(initialPoint), newPoint);
+    // }
 
     public Point getTerrainPoint(int index) {
         return points.get(index);
