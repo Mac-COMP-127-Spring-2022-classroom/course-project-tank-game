@@ -145,7 +145,7 @@ public class TankManager {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             ball.addToCanvas(canvas);
-            
+            animateCannon(key);
             while (ball.updatePosition(0.1)) {
                 if (intersects(ball) == 0){
                     if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
@@ -298,7 +298,32 @@ public class TankManager {
         }
         return null;
     }
-    
+
+    public void animateCannon(KeyboardEvent key){
+        if (key.getKey().equals(Key.valueOf("SPACE"))) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        animateCannonFrame1();
+                        sleep(50);
+                        animateCannonFrame2();
+                        sleep(50);
+                        animateCannonFrame3();
+                        sleep(50);
+                        resetToOriginCannon();
+                        switchWorkingTank();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    
+                }
+            };
+        thread.start();
+        }
+    }
+
     public void animateCannonFrame1()  {
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("RedFireFrame1.png");

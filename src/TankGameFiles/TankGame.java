@@ -30,34 +30,8 @@ public class TankGame {
     public void cannonControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
         canvas.onKeyDown(event -> tankManager.setForce(event));
-        canvas.onKeyUp(event ->animateCannon(event));
         canvas.onKeyUp(event -> tankManager.fireCannon(event));
         
-    }
-    
-    public void animateCannon(KeyboardEvent key){
-        if (key.getKey().equals(Key.valueOf("SPACE"))) {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    tankManager.animateCannonFrame1();
-                    sleep(50);
-                    tankManager.animateCannonFrame2();
-                    sleep(50);
-                    tankManager.animateCannonFrame3();
-                    sleep(50);
-                    tankManager.resetToOriginCannon();
-                    tankManager.switchWorkingTank();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                
-            }
-        };
-        thread.start();
-    }
     }
 
     public void checkLives() {
