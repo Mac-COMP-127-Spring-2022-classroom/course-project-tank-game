@@ -82,7 +82,14 @@ public class Terrain extends GraphicsGroup{
     }
 
     public void deformTerrain(Point point) {
-        
+        double checkPoint = 0;
+        Point deformCenter = new Point(0, 0);
+        for (Point p : points) {
+            if (Math.abs(point.getX()-p.getX()) < checkPoint) {
+                checkPoint = Math.abs(point.getX()-p.getX());
+                deformCenter = p;
+            }
+        }
     }
 
     public void generateTerrain() {
