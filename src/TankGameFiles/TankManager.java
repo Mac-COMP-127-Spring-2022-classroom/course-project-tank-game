@@ -37,17 +37,17 @@ public class TankManager {
         this.canvas = canvas;
         this.terrain = terrain;
         redTankPoint = new Point(terrain.getTerrainPoint(40).getX(), terrain.getTerrainPoint(40).getY()-25);
-        blueTankPoint = new Point(terrain.getTerrainPoint(115).getX(), terrain.getTerrainPoint(115).getY()-50);
+        blueTankPoint = new Point(terrain.getTerrainPoint(115).getX(), terrain.getTerrainPoint(115).getY()-25);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath);
         generateTanks();
-        blueTank.setPoint(terrain.getTerrainMovePoint(blueTank.getPoint(), -5));
-        blueTank.setRotation(tankAngleCalc(-5));   
-        blueTank.setCenter(blueTank.getPoint());
-        blueTank.getCannon().setCenter(25 * Math.cos(Math.toRadians(blueTank.getCannon().getAngle())) + blueTank.getCenterX(),   - 25 * Math.sin(Math.toRadians(blueTank.getCannon().getAngle()))+blueTank.getY() + 7.5);
-
+        // blueTank.setPoint(terrain.getTerrainMovePoint(blueTank.getPoint(), -5));
+        // blueTank.setRotation(tankAngleCalc(-5));   
+        // blueTank.setCenter(blueTank.getPoint());
+        centerCannonToTank(blueTank, blueTank.getCannon());
+        centerCannonToTank(redTank, redTank.getCannon());
 
         timer = new Timer();
         force = 0;
@@ -91,7 +91,7 @@ public class TankManager {
                 getWorkingTank().setCenter(workingTankPoint());
                 System.out.println(getWorkingTank().getCenter());
                 System.out.println(workingTankPoint());
-                centerCannonToTank();
+                centerCannonToTank(getWorkingTank(),getWorkingCannon());
                 // getWorkingCannon().setPosition(getWorkingCannon().getPoint());   
             }
         }
@@ -101,7 +101,7 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(workingTankPoint(), 5));
                 getWorkingTank().setRotation(tankAngleCalc(5));  
                 getWorkingTank().setCenter(workingTankPoint());
-                centerCannonToTank();
+                centerCannonToTank(getWorkingTank(),getWorkingCannon());
                 // getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),  - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle())) +getWorkingTank().getY() +7.5);
             }
         }
@@ -117,13 +117,13 @@ public class TankManager {
             
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-            centerCannonToTank();
+            centerCannonToTank(getWorkingTank(),getWorkingCannon());
         }
         
             if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
-            centerCannonToTank();
+            centerCannonToTank(getWorkingTank(),getWorkingCannon());
             }
         
     }
@@ -131,8 +131,8 @@ public class TankManager {
         /**
      * Centers cannon to tank.
      */
-    private void centerCannonToTank(){
-        getWorkingCannon().setCenter(25 * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   - 25 * Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() + 7.5);
+    private void centerCannonToTank(Tank tank, Cannon cannon){
+        cannon.setCenter(25 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   - 25 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() + 7.5);
      }
  
 
