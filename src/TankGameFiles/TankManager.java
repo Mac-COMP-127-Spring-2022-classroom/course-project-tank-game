@@ -35,7 +35,7 @@ public class TankManager {
         blueCannonPath="BlueCannon.png";
         this.canvas = canvas;
         this.terrain = terrain;
-        redTankPoint = new Point(terrain.getTerrainPoint(40).getX(), terrain.getTerrainPoint(40).getY()-50);
+        redTankPoint = new Point(terrain.getTerrainPoint(40).getX(), terrain.getTerrainPoint(40).getY()-25);
         blueTankPoint = new Point(terrain.getTerrainPoint(115).getX(), terrain.getTerrainPoint(115).getY()-50);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
@@ -183,7 +183,7 @@ public class TankManager {
     }
 
     public double resetForce() {
-        force = 5;
+        force = 10;
         return force;
     }
 
