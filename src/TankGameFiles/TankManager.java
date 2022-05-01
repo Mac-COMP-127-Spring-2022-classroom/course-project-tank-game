@@ -26,6 +26,7 @@ public class TankManager {
     private Rectangle currentForceMeter;
     private double tankAngle;
     private ForceMeter forceMeter;
+    private ForceMeter blueForceMeter;
     private Timer timer;
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
@@ -50,7 +51,9 @@ public class TankManager {
 
         timer = new Timer();
         force = 0;
-        forceMeter = new ForceMeter(canvas);
+        forceMeter = new ForceMeter(canvas, 0, 40);
+        blueForceMeter = new ForceMeter(canvas, canvas.getWidth() - 400, 40);
+        blueForceMeter.addToCanvas(canvas);
         forceMeter.addToCanvas(canvas);
         // Still need to cap the force meter and reset the force meter.
     }
@@ -164,6 +167,7 @@ public class TankManager {
             ball.removeFromCanvas(canvas);
             resetForce();
             forceMeter.resetForceMeter();
+            blueForceMeter.resetForceMeter();
             switchWorkingTank(); // comment out when animating
         }
     }
@@ -172,8 +176,17 @@ public class TankManager {
     public void setForce(KeyboardEvent k){
         if (k.getKey().equals(Key.valueOf("SPACE"))) {
             force += 2;
-            forceMeter.setForce(force);
-            forceMeter.updateForceMeter();
+            if (forceMeter.getProgressBarScale() * this.force >= forceMeter.getBarWidth()) {
+                this.force = forceMeter.getBarWidth()/forceMeter.getProgressBarScale();
+            }
+            if (getWorkingTank() == redTank) {
+                forceMeter.setForce(force);
+                forceMeter.updateRedForceMeter();
+            }
+            else if (getWorkingTank() == blueTank) {
+                blueForceMeter.setForce(force);
+                blueForceMeter.updateBlueForceMeter();
+            }
             System.out.println(force);
         }
     }
