@@ -27,7 +27,7 @@ public class ForceMeter extends GraphicsGroup{
     }
 
     public void resetForceMeter() {
-        canvas.remove(currentForceMeter);
+        currentForceMeter = new Rectangle(40, 40, 2 * force, 20);
     }
 
     public void addToCanvas(CanvasWindow canvas) {
