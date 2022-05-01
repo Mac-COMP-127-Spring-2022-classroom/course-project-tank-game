@@ -3,9 +3,11 @@ package TankGameFiles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 
@@ -22,7 +24,7 @@ public class Terrain extends GraphicsGroup{
         int down = 6;
         int up = 6;
         // WE WILL BE RANDOMIZING TERRAIN HERE
-        Point init = new Point(0, 600);
+        Point init = new Point(0, canvas.getHeight());
         points.add(init);
         for (double xCoord = 0; xCoord < bounds; xCoord += 5) {
             if (yAxis > 570) {
@@ -57,7 +59,7 @@ public class Terrain extends GraphicsGroup{
                 points.add(point);
             }
         }
-        Point end = new Point(1200, 600);
+        Point end = new Point(canvas.getWidth(), canvas.getHeight());
         points.add(end);
     }
 

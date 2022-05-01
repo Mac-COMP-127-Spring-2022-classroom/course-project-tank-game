@@ -362,10 +362,16 @@ public class TankManager {
      * Checks if tank intersects with the top point. 
      */
     public int intersects(Cannonball ball) {
-        if (canvas.getElementAt(ball.getCenterX(), ball.getCenterY()) instanceof Tank) {
+        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Tank ||
+        canvas.getElementAt(ball.getLeftPoint()) instanceof Tank ||
+        canvas.getElementAt(ball.getRightPoint()) instanceof Tank ||
+        canvas.getElementAt(ball.getTopPoint()) instanceof Tank) {
             return 0;
         }
-        if (canvas.getElementAt(ball.getCenterX(), ball.getCenterY()) instanceof Path) {
+        if (canvas.getElementAt(ball.getBottomPoint()) instanceof Path ||
+        canvas.getElementAt(ball.getLeftPoint()) instanceof Path ||
+        canvas.getElementAt(ball.getRightPoint()) instanceof Path ||
+        canvas.getElementAt(ball.getTopPoint()) instanceof Path) {
             return 1;
         }
         return 2;
