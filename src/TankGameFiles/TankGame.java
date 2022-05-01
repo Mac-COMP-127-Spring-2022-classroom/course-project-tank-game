@@ -14,7 +14,7 @@ public class TankGame {
 
     public TankGame() {
         canvas = new CanvasWindow("Tanks!", CANVAS_WIDTH, CANVAS_HEIGHT);
-        terrain = new Terrain(canvas, CANVAS_WIDTH, 481);
+        terrain = new Terrain(canvas, CANVAS_WIDTH, 400);
         tankManager = new TankManager(canvas, terrain);
         terrain.generateTerrain();
         terrain.terrainListDebug();
@@ -42,11 +42,11 @@ public class TankGame {
             public void run() {
                 try {
                     tankManager.animateCannonFrame1();
-                    sleep(1000);
+                    sleep(50);
                     tankManager.animateCannonFrame2();
-                    sleep(1000);
+                    sleep(50);
                     tankManager.animateCannonFrame3();
-                    sleep(1000);
+                    sleep(50);
                     tankManager.resetToOriginCannon();
                     tankManager.switchWorkingTank();
                 }

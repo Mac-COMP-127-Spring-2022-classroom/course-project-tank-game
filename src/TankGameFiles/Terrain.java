@@ -22,6 +22,8 @@ public class Terrain extends GraphicsGroup{
         int down = 6;
         int up = 6;
         // WE WILL BE RANDOMIZING TERRAIN HERE
+        Point init = new Point(0, 600);
+        points.add(init);
         for (double xCoord = 0; xCoord < bounds; xCoord += 5) {
             if (yAxis > 570) {
                 yAxis = 570;
@@ -55,6 +57,8 @@ public class Terrain extends GraphicsGroup{
                 points.add(point);
             }
         }
+        Point end = new Point(1200, 600);
+        points.add(end);
     }
 
     // public void setTerrainPoint(Point initialPoint, Point newPoint) {
