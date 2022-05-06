@@ -30,6 +30,9 @@ public class Terrain extends GraphicsGroup{
             if (yAxis > 570) {
                 yAxis = 570;
             }
+            if (yAxis < 200) {
+                yAxis = 200;
+            }
             if (down<5){
                 yAxis += 5;
                 Point point = new Point(xCoord, yAxis);
