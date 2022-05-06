@@ -61,7 +61,9 @@ public class TankManager {
         blueForceMeter.addToCanvas(canvas);
         forceMeter.addToCanvas(canvas);
     }
-
+    /**
+     * Generates blue and red tanks.
+     */
     public void generateTanks() {
         for (int i = 0; i < 2; i++) {
             if (i < 1) {
@@ -84,7 +86,7 @@ public class TankManager {
         }
     }
        /**
-     * Moves Tank
+     * Moves Tank.
      * @param key
      */
     public void moveTank(KeyboardEvent key) {
@@ -124,7 +126,7 @@ public class TankManager {
     }
 
     /**
-    * Changes cannon angle
+    * Changes cannon angle.
     * @param key
     * @param cannon
     */
@@ -151,7 +153,9 @@ public class TankManager {
         cannon.setCenter(width/2 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   - width/2 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() + 7.5);
      }
  
-     
+    /**
+     * Fires cannonball, animates cannon, checks if it hit's an object.
+     */
     public void fireCannon(KeyboardEvent key) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
@@ -187,7 +191,9 @@ public class TankManager {
         }
     }
 
-
+    /**
+     * Sets Force when space key is pressed and updates the bars on the force meter accordingly.
+     */
     public void setForce(KeyboardEvent k){
         if (k.getKey().equals(Key.valueOf("SPACE"))) {
             force += 2;
@@ -215,25 +221,9 @@ public class TankManager {
         return force;
     }
 
-
-    public boolean hitsObject(Cannonball ball) {
-        if (intersects(ball)==0){
-            ball.removeFromCanvas(canvas);
-            getWorkingTank().reduceHP();
-            // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
-            if (checkLives()) {
-                // System.out.println(tanks.get(0) + " Wins!");
-                canvas.closeWindow();
-            }
-        }
-        if (intersects(ball)==1){
-            ball.removeFromCanvas(canvas);
-        }
-        return false;
-    }
-
-
-
+    /**
+     * 
+     */
     public double tankAngleCalc(int move) {
         double a = 0;
         double b = 0;
@@ -300,7 +290,9 @@ public class TankManager {
         }
         return null;
     }
-
+    /**
+     * Returns the tank that is not working.
+     */
     public Tank notWorkingTank(){
         for (Tank t : tanks) {
             if (t.notWorking()) {
@@ -309,18 +301,20 @@ public class TankManager {
         }
         return null;
     }
-
+    /**
+     * Animates the working Cannon by going frame by frame through images when Space.
+     */
     public void animateCannon(KeyboardEvent key){
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
             Thread thread = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        animateCannonFrame1();
+                        animateWorkingCannonFrame1();
                         sleep(30);
-                        animateCannonFrame2();
+                        animateWorkingCannonFrame2();
                         sleep(30);
-                        animateCannonFrame3();
+                        animateWorkingCannonFrame3();
                         sleep(30);
                         resetToOriginCannon();
                         switchWorkingTank();
@@ -334,8 +328,10 @@ public class TankManager {
         thread.start();
         }
     }
-
-    public void animateCannonFrame1()  {
+    /**
+     * Gets the working tank's cannon and changes the cannon to animate the first frame.
+     */
+    public void animateWorkingCannonFrame1()  {
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setMaxWidth(frame1Width);
                 redTank.getCannon().setImagePath("RedFireFrame1.png");
@@ -347,8 +343,10 @@ public class TankManager {
                 centerCannonToTank(blueTank, blueTank.getCannon(), frame1Width);
             }
     }
-
-    public void animateCannonFrame2(){
+    /**
+     * Gets the working tank's cannon and changes the cannon to animate the second frame.
+     */
+    public void animateWorkingCannonFrame2(){
             if(getWorkingTank()==redTank){
             redTank.getCannon().setMaxWidth(frame2Width);
             redTank.getCannon().setImagePath("RedFireFrame2.png");
@@ -361,8 +359,10 @@ public class TankManager {
                 centerCannonToTank(blueTank, blueTank.getCannon(), frame2Width);
                 }
     }
-
-    public void animateCannonFrame3(){
+    /**
+     * Gets the working tank's cannon and changes the cannon to animate the third frame.
+     */
+    public void animateWorkingCannonFrame3(){
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setMaxWidth(frame3Width);
                 redTank.getCannon().setImagePath("RedFireFrame3.png");
@@ -375,6 +375,9 @@ public class TankManager {
              centerCannonToTank(blueTank, blueTank.getCannon(), frame3Width);
             }
     }
+    /**
+     * Gets the working tank's cannon and changes the cannon to go back to the origin.
+     */
     public void resetToOriginCannon(){
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("RedCannon.png");
@@ -389,6 +392,9 @@ public class TankManager {
             }
     }
 
+    /**
+     * Switches the working tank.
+     */
     public void switchWorkingTank(){
         for (Tank t : tanks) {
             t.switchWorking();

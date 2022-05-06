@@ -63,13 +63,16 @@ public class TankGame {
     public void tankControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.moveTank(event));
     }
- 
+
     public void cannonControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
         canvas.onKeyDown(event -> tankManager.setForce(event));
         canvas.onKeyUp(event -> tankManager.fireCannon(event));
     }
 
+    /**
+     * Creates the Opening Screen.
+     */
     public void openingScreen(){
         Image redTankImage = new Image("RedTank.png");
         Image redTankCannonImage = new Image("RedCannon.png");

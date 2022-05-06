@@ -31,7 +31,9 @@ public class ForceMeter extends GraphicsGroup{
     public double getProgressBarScale() {
         return SCALE;
     }
-
+    /**
+     * Sets the force of the cannon shot.
+     */
     public void setForce(double force) {
         this.force = force;
         if (SCALE * this.force >= 400) {
@@ -43,13 +45,18 @@ public class ForceMeter extends GraphicsGroup{
         return force;
     }
 
+    /**
+     * Updates the red force meter.
+     */
     public void updateRedForceMeter() {
         currentForceMeter.setSize(SCALE * force, 20);
         currentForceMeter.setFillColor(Color.RED);
         canvas.add(currentForceMeter);
     }
 
-
+    /**
+    * Updates the blue force meter.
+    */
     public void updateBlueForceMeter() {
         currentForceMeter.setSize(SCALE * force, 20); // Blue Force Meter should expand from Right-to-Left, not Left-to-Right
         currentForceMeter.setFillColor(Color.BLUE);
