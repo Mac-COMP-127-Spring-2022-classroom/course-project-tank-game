@@ -139,7 +139,7 @@ public class TankManager {
         cannon.setCenter(width/2 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   - width/2 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() + 7.5);
      }
  
-
+     
     public void fireCannon(KeyboardEvent key) {
         Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
         if (key.getKey().equals(Key.valueOf("SPACE"))) {
