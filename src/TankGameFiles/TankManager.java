@@ -43,15 +43,13 @@ public class TankManager {
         this.terrain = terrain;
         
         redTankPoint = new Point(terrain.getTerrainPoint(40).getX(), terrain.getTerrainPoint(40).getY()-25);
-        blueTankPoint = new Point(terrain.getTerrainPoint(120).getX(), terrain.getTerrainPoint(120).getY()-25);
+        blueTankPoint = new Point(terrain.getTerrainPoint(260).getX(), terrain.getTerrainPoint(260).getY()-25);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath);
         generateTanks();
-        System.out.println(blueTankPoint);
-        // blueTank.setPoint(terrain.getTerrainMovePoint(blueTank.getPoint(), -5));
-        // blueTank.setRotation(tankAngleCalc(-5));   
+        System.out.println(blueTankPoint);  
         blueTank.setCenter(blueTank.getPoint());
         centerCannonToTank(blueTank, blueTank.getCannon(),startCannonWidth);
         centerCannonToTank(redTank, redTank.getCannon(),startCannonWidth);
