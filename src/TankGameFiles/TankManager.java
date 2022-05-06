@@ -29,9 +29,9 @@ public class TankManager {
     private ForceMeter blueForceMeter;
     private Timer timer;
     private final double startCannonWidth = 50;
-    private final double frame1Width=60;
-    private final double frame2Width=70;
-    private final double frame3Width=75;
+    private final double frame1Width = 60;
+    private final double frame2Width = 70;
+    private final double frame3Width = 75;
     
 
     public TankManager(CanvasWindow canvas, Terrain terrain) {
