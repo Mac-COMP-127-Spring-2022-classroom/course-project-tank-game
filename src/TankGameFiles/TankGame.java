@@ -17,34 +17,20 @@ public class TankGame {
     private CanvasWindow canvas;
     private Cannonball cannonBall; 
     private Terrain terrain;
+    private Image redTankImage;
+    private Image redTankCannonImage;
+    private Image blueTankImage;
+    private Image blueTankCannonImage;
+    private Image tankLogo;
 
     public TankGame() {
         canvas = new CanvasWindow("Tanks!", CANVAS_WIDTH, CANVAS_HEIGHT);
         Button gameButton = new Button("Start Game!");
         gameButton.setCenter(CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
-        GraphicsText text = new GraphicsText("Tanks!");
-        text.setCenter(CANVAS_WIDTH/2, CANVAS_HEIGHT/2 - 50);
-        Image redTankImage = new Image("RedTank.png");
-        Image redTankCannonImage = new Image("RedCannon.png");
-        Image blueTankImage = new Image("BlueTank.png");
-        Image blueTankCannonImage = new Image("BlueCannon.png");
         // System.out.println(redTankCannonImage.getWidth());
         // System.out.println(redTankCannonImage.getHeight());
-        redTankImage.setCenter(CANVAS_WIDTH/3, CANVAS_HEIGHT/3);
-        redTankCannonImage.setX(redTankImage.getX() + 80);
-        redTankCannonImage.setY(redTankImage.getY() +  7);
-
-        blueTankImage.setCenter(CANVAS_WIDTH * 0.9, CANVAS_HEIGHT/2);
-        blueTankCannonImage.setX(blueTankImage.getX());
-        blueTankCannonImage.setY(blueTankImage.getY());
-
-        canvas.add(blueTankCannonImage);
-        canvas.add(blueTankImage);
-        canvas.add(redTankCannonImage);
-        canvas.add(redTankImage);
-        canvas.add(text);
+        openingScreen();
         terrain = new Terrain(canvas, CANVAS_WIDTH, 400);
-        createBackground();
         gameButton.onClick(() -> {
             canvas.removeAll();
             canvas.setBackground(Color.WHITE);
@@ -82,6 +68,29 @@ public class TankGame {
         canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
         canvas.onKeyDown(event -> tankManager.setForce(event));
         canvas.onKeyUp(event -> tankManager.fireCannon(event));
+    }
+
+    public void openingScreen(){
+        Image redTankImage = new Image("RedTank.png");
+        Image redTankCannonImage = new Image("RedCannon.png");
+        Image blueTankImage = new Image("BlueTank.png");
+        Image blueTankCannonImage = new Image("BlueCannon.png");
+        Image tankLogo= new Image("tankLogo.png");
+        createBackground();
+        redTankImage.setCenter(CANVAS_WIDTH/6, CANVAS_HEIGHT/2);
+        redTankCannonImage.setX(redTankImage.getX() + 80);
+        redTankCannonImage.setY(redTankImage.getY() +  7);
+
+        blueTankImage.setCenter(CANVAS_WIDTH * 0.9, CANVAS_HEIGHT/2);
+        blueTankCannonImage.setX(blueTankImage.getX());
+        blueTankCannonImage.setY(blueTankImage.getY());
+
+        tankLogo.setCenter(CANVAS_WIDTH/2, CANVAS_HEIGHT/2 - 50);
+        canvas.add(blueTankCannonImage);
+        canvas.add(blueTankImage);
+        canvas.add(redTankCannonImage);
+        canvas.add(redTankImage);
+        canvas.add(tankLogo);
     }
 
     public void checkLives() {
