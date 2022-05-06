@@ -43,15 +43,13 @@ public class TankManager {
         this.terrain = terrain;
         
         redTankPoint = new Point(terrain.getTerrainPoint(40).getX(), terrain.getTerrainPoint(40).getY()-25);
-        blueTankPoint = new Point(terrain.getTerrainPoint(120).getX(), terrain.getTerrainPoint(120).getY()-25);
+        blueTankPoint = new Point(terrain.getTerrainPoint(260).getX(), terrain.getTerrainPoint(260).getY()-25);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath);
         generateTanks();
-        System.out.println(blueTankPoint);
-        // blueTank.setPoint(terrain.getTerrainMovePoint(blueTank.getPoint(), -5));
-        // blueTank.setRotation(tankAngleCalc(-5));   
+        System.out.println(blueTankPoint);  
         blueTank.setCenter(blueTank.getPoint());
         centerCannonToTank(blueTank, blueTank.getCannon(),startCannonWidth);
         centerCannonToTank(redTank, redTank.getCannon(),startCannonWidth);
@@ -90,8 +88,15 @@ public class TankManager {
      * @param key
      */
     public void moveTank(KeyboardEvent key) {
-        if(getWorkingTank().getCenterX()-getWorkingTank().getWidth()/2 > 0 ){ 
-            if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))||key.getKey().equals(Key.valueOf("A"))){
+        if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))||key.getKey().equals(Key.valueOf("A"))) {
+            if((getWorkingTank().equals(blueTank)) && (blueTank.getCenterX()-25 > canvas.getWidth()/2)) {
+                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), -5));
+                getWorkingTank().setRotation(tankAngleCalc(-5));   
+                getWorkingTank().setCenter(workingTankPoint());
+                System.out.println(workingTankPoint());
+                centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
+            }
+            if((getWorkingTank().equals(redTank)) && (getWorkingTank().getCenterX()-getWorkingTank().getWidth()/2 > 0 )) {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), -5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setCenter(workingTankPoint());
@@ -100,13 +105,20 @@ public class TankManager {
             }
         }
 
-        if(getWorkingTank().getCenterX() + getWorkingTank().getWidth()/2 < canvas.getWidth()){
-            if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))||key.getKey().equals(Key.valueOf("D"))){ 
-                getWorkingTank().setPoint(terrain.getTerrainMovePoint(workingTankPoint(), 5));
-                getWorkingTank().setRotation(tankAngleCalc(5));  
+        if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))||key.getKey().equals(Key.valueOf("D"))){ 
+            if((getWorkingTank().equals(redTank)) && (redTank.getCenterX()+25 < canvas.getWidth()/2)) {
+                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), 5));
+                getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setCenter(workingTankPoint());
                 System.out.println(workingTankPoint());
-                centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);  
+                centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
+            }
+            if((getWorkingTank().equals(blueTank)) && (getWorkingTank().getCenterX()+getWorkingTank().getWidth()/2 < canvas.getWidth() )) {
+                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), 5));
+                getWorkingTank().setRotation(tankAngleCalc(-5));   
+                getWorkingTank().setCenter(workingTankPoint());
+                System.out.println(workingTankPoint());
+                centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
             }
         }
     }
