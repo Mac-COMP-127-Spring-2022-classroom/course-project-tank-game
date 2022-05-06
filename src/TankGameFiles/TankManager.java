@@ -91,7 +91,7 @@ public class TankManager {
      */
     public void moveTank(KeyboardEvent key) {
         if(getWorkingTank().getCenterX()-getWorkingTank().getWidth()/2 > 0 ){ 
-            if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))){
+            if (key.getKey().equals(Key.valueOf("LEFT_ARROW"))||key.getKey().equals(Key.valueOf("A"))){
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), -5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setCenter(workingTankPoint());
@@ -101,7 +101,7 @@ public class TankManager {
         }
 
         if(getWorkingTank().getCenterX() + getWorkingTank().getWidth()/2 < canvas.getWidth()){
-            if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))){ 
+            if (key.getKey().equals(Key.valueOf("RIGHT_ARROW"))||key.getKey().equals(Key.valueOf("D"))){ 
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(workingTankPoint(), 5));
                 getWorkingTank().setRotation(tankAngleCalc(5));  
                 getWorkingTank().setCenter(workingTankPoint());
@@ -117,14 +117,14 @@ public class TankManager {
     * @param cannon
     */
     public void setCannonAngle(KeyboardEvent key) {
-        if (key.getKey().equals(Key.valueOf("DOWN_ARROW")) && getWorkingCannon().getAngle()>0){
+        if ((key.getKey().equals(Key.valueOf("DOWN_ARROW"))||key.getKey().equals(Key.valueOf("S"))) && getWorkingCannon().getAngle()>0){
             
             getWorkingCannon().rotateBy(5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
             centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
         }
         
-            if (key.getKey().equals(Key.valueOf("UP_ARROW")) && getWorkingCannon().getAngle()<180){
+            if ((key.getKey().equals(Key.valueOf("UP_ARROW"))||key.getKey().equals(Key.valueOf("W"))) && getWorkingCannon().getAngle()<180){
             getWorkingCannon().rotateBy(-5);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
             centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
