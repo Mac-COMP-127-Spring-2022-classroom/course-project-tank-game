@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import edu.macalester.graphics.events.Key;
+import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.events.KeyboardEvent;
 import edu.macalester.graphics.events.MouseMotionEvent;
 import edu.macalester.graphics.Ellipse;
@@ -23,6 +24,7 @@ public class TankManager {
     private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
     private String blueCannonPath, redCannonPath;
     private double force;
+    private GraphicsText redHPBar, blueHPBar;
     private Rectangle currentForceMeter;
     private double tankAngle;
     private ForceMeter forceMeter;
@@ -58,6 +60,14 @@ public class TankManager {
         force = 0;
         forceMeter = new ForceMeter(canvas, 0, 40);
         blueForceMeter = new ForceMeter(canvas, canvas.getWidth() - 400, 40);
+        redHPBar = new GraphicsText("5", 20, 120);
+        blueHPBar = new GraphicsText("5", canvas.getWidth()-50, 120);
+        redHPBar.setFontSize(50);
+        redHPBar.setFillColor(Color.RED);
+        blueHPBar.setFontSize(50);
+        blueHPBar.setFillColor(Color.BLUE);
+        canvas.add(redHPBar);
+        canvas.add(blueHPBar);
         blueForceMeter.addToCanvas(canvas);
         forceMeter.addToCanvas(canvas);
     }
@@ -165,10 +175,12 @@ public class TankManager {
                 if (intersects(ball) == 0){
                     if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
                         redTank.reduceHP();
+                        redHPBar.setText(Integer.toString(redTank.getHP()));
                         redTank.getHP();
                     }
                     if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
                         blueTank.reduceHP();
+                        blueHPBar.setText(Integer.toString(blueTank.getHP()));
                         blueTank.getHP();
                     }
                     // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
@@ -236,16 +248,13 @@ public class TankManager {
             if (c < 0) {
                 c = Math.abs(terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY());
                 tankAngle= Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
-                // System.out.println(tankAngle);
                 return tankAngle;
             }
             if (c == 0) {
-                // System.out.println(tankAngle);
                 return 0;
             }
             c = Math.abs(c);
             tankAngle= Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))))+270;
-            // System.out.println(tankAngle);
             return tankAngle;
         }
         else {
@@ -255,17 +264,14 @@ public class TankManager {
             if (c < 0) {
                 c = Math.abs(terrain.getTerrainMovePoint(workingTankPoint(), move).getY()-workingTankPoint().getY());
                 tankAngle=360-Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
-                // System.out.println(tankAngle);
                 return tankAngle;
             }
             if (c == 0) {
                 tankAngle=0;
-                // System.out.println(tankAngle);
                 return tankAngle;
             }
             c = Math.abs(c);
             tankAngle=Math.toDegrees(Math.acos(Math.cos((a*a+b*b-c*c)/(2*a*b))));
-            // System.out.println(tankAngle);
             return tankAngle;
         }
     }
