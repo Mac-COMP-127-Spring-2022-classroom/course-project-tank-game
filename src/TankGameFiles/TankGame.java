@@ -44,7 +44,7 @@ public class TankGame {
         canvas.add(redTankImage);
         canvas.add(text);
         terrain = new Terrain(canvas, CANVAS_WIDTH, 400);
-        canvas.setBackground(Color.RED);
+        createBackground();
         gameButton.onClick(() -> {
             canvas.removeAll();
             canvas.setBackground(Color.WHITE);
@@ -63,8 +63,8 @@ public class TankGame {
      */
     private void createBackground() {
         Image sky = new Image(0, -300, "background.jpg");
-        sky.setMaxHeight(600);
-        sky.setMaxWidth(1400);
+        sky.setMaxHeight(CANVAS_HEIGHT);
+        sky.setMaxWidth(CANVAS_WIDTH);
         sky.setScale(3);
         canvas.add(sky);
 
