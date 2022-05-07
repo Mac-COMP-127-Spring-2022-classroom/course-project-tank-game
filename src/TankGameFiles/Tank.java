@@ -1,4 +1,5 @@
 package TankGameFiles;
+import java.awt.Color;
 
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
@@ -9,6 +10,8 @@ public class Tank extends Image{
     private Point point;
     private int hp = 5;
     private String imagePath;
+    private Color color;
+
     
 
     /**
@@ -20,10 +23,11 @@ public class Tank extends Image{
      * @param cannonY
      * @param cannonPath
      */
-    public Tank(Point point, String imagePath, double cannonX, double cannonY, String cannonPath) {
+    public Tank(Point point, String imagePath, double cannonX, double cannonY, String cannonPath, Color color) {
         super(point.getX(), point.getY(), imagePath);
         this.point = point;
         this.imagePath = imagePath;
+        this.color = color;
         cannon = new Cannon(cannonX, cannonY, cannonPath);
  
     }
@@ -71,5 +75,8 @@ public class Tank extends Image{
     public void setPoint(Point p) {
         point = p;
     }
-   
+
+    public Color getColor() {
+        return this.color;
+    }
 }

@@ -31,7 +31,7 @@ public class Cannonball {
      * @param maxX
      * @param maxY
      */
-    public Cannonball(double centerX, double centerY, double initialSpeed, double initialAngle, double maxX, double maxY) {
+    public Cannonball(double centerX, double centerY, double initialSpeed, double initialAngle, double maxX, double maxY, Color color) {
         this.centerX = centerX;
         this.centerY = centerY;
 
@@ -43,7 +43,7 @@ public class Cannonball {
         this.dy = initialSpeed * -Math.sin(angleInRadians);
 
         ballShape = new Ellipse(centerX - RADIUS, centerY - RADIUS, 2 * RADIUS, 2* RADIUS);
-        ballShape.setFillColor(Color.BLUE);
+        ballShape.setFillColor(color);
     }
 
     public double getCenterX() {

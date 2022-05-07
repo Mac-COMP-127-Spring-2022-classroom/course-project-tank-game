@@ -48,8 +48,8 @@ public class TankManager {
         blueTankPoint = new Point(terrain.getTerrainPoint(260).getX(), terrain.getTerrainPoint(260).getY()-25);
         redCannonPoint = new Point(redTankPoint.getX()+40, redTankPoint.getY()+1);
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
-        redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath);
-        blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath);
+        redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath, Color.RED);
+        blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath, Color.BLUE);
         generateTanks();
         System.out.println(blueTankPoint);  
         blueTank.setCenter(blueTank.getPoint());
@@ -167,36 +167,34 @@ public class TankManager {
      * Fires cannonball, animates cannon, checks if it hit's an object.
      */
     public void fireCannon(KeyboardEvent key) {
-        Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight());
-        if (key.getKey().equals(Key.valueOf("SPACE"))) {
-            ball.addToCanvas(canvas);
-            animateCannon(key);
-            while (ball.updatePosition(0.1)) {
-                if (intersects(ball) == 0){
-                    if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
-                        redTank.reduceHP();
-                        redHPBar.setText(Integer.toString(redTank.getHP()));
-                        redTank.getHP();
+        if (getWorkingCannon() != null) {
+            Cannonball ball = new Cannonball((25+(getWorkingCannon().getImageWidth()/2)) * Math.cos(Math.toRadians(getWorkingCannon().getAngle())) + getWorkingTank().getCenterX(),   (25+(getWorkingTank().getImageWidth()/2)) * -Math.sin(Math.toRadians(getWorkingCannon().getAngle()))+getWorkingTank().getY() +7.5, getForce(), getWorkingCannon().getAngle(), canvas.getWidth(), canvas.getHeight(), getWorkingTank().getColor());
+            if (key.getKey().equals(Key.valueOf("SPACE"))) {
+                ball.addToCanvas(canvas);
+                animateCannon(key);
+                while (ball.updatePosition(0.1)) {
+                    if (intersects(ball) == 0){
+                        if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
+                            redTank.reduceHP();
+                            redHPBar.setText(Integer.toString(redTank.getHP()));
+                            redTank.getHP();
+                        }
+                        if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
+                            blueTank.reduceHP();
+                            blueHPBar.setText(Integer.toString(blueTank.getHP()));
+                            blueTank.getHP();
+                        }
+                        // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
+                        // System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
+                        break;
                     }
-                    if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
-                        blueTank.reduceHP();
-                        blueHPBar.setText(Integer.toString(blueTank.getHP()));
-                        blueTank.getHP();
+                    if (intersects(ball) == 1){
+                        break;
                     }
-                    // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
-                    // System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
-                    if (checkLives()) {
-                        // System.out.println(tanks.get(0) + " Wins!");
-                        canvas.closeWindow();
-                    };
-                    break;
+                    canvas.draw();
                 }
-                if (intersects(ball) == 1){
-                    break;
-                }
-                canvas.draw();
-            }
-            ball.removeFromCanvas(canvas);
+                ball.removeFromCanvas(canvas);
+        }
             resetForce();
             forceMeter.resetForceMeter();
             blueForceMeter.resetForceMeter();
@@ -441,5 +439,12 @@ public class TankManager {
             }
         }
         return false;
+    }
+
+
+
+    public void reset() {
+        tanks.clear();
+        cannons.clear();
     }
 }
