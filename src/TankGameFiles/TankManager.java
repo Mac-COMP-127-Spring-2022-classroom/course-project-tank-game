@@ -50,8 +50,7 @@ public class TankManager {
         blueCannonPoint = new Point(blueTankPoint.getX()-10, blueTankPoint.getY()+1);
         redTank = new Tank(redTankPoint, "RedTank.png",  redCannonPoint.getX(), redCannonPoint.getY(), redCannonPath, Color.RED);
         blueTank = new Tank(blueTankPoint, "BlueTank.png", blueCannonPoint.getX(), blueCannonPoint.getY(), blueCannonPath, Color.BLUE);
-        generateTanks();
-        System.out.println(blueTankPoint);  
+        generateTanks();  
         blueTank.setCenter(blueTank.getPoint());
         centerCannonToTank(blueTank, blueTank.getCannon(),startCannonWidth);
         centerCannonToTank(redTank, redTank.getCannon(),startCannonWidth);
@@ -105,14 +104,12 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), -5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setCenter(workingTankPoint());
-                System.out.println(workingTankPoint());
                 centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
             }
             if((getWorkingTank().equals(redTank)) && (getWorkingTank().getCenterX()-getWorkingTank().getWidth()/2 > 0 )) {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), -5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setCenter(workingTankPoint());
-                System.out.println(workingTankPoint());
                 centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
             }
         }
@@ -122,14 +119,12 @@ public class TankManager {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), 5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setCenter(workingTankPoint());
-                System.out.println(workingTankPoint());
                 centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
             }
             if((getWorkingTank().equals(blueTank)) && (getWorkingTank().getCenterX()+getWorkingTank().getWidth()/2 < canvas.getWidth() )) {
                 getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), 5));
                 getWorkingTank().setRotation(tankAngleCalc(-5));   
                 getWorkingTank().setCenter(workingTankPoint());
-                System.out.println(workingTankPoint());
                 centerCannonToTank(getWorkingTank(),getWorkingCannon(),startCannonWidth);
             }
         }
@@ -160,6 +155,7 @@ public class TankManager {
      * Centers cannon to tank.
      */
     private void centerCannonToTank(Tank tank, Cannon cannon, Double width){
+        cannon.setMaxWidth(width);
         cannon.setCenter(width/2 * Math.cos(Math.toRadians(cannon.getAngle())) + tank.getCenterX(),   - width/2 * Math.sin(Math.toRadians(cannon.getAngle()))+tank.getY() + 7.5);
      }
  
@@ -173,22 +169,7 @@ public class TankManager {
                 ball.addToCanvas(canvas);
                 animateCannon(key);
                 while (ball.updatePosition(0.1)) {
-                    if (intersects(ball) == 0){
-                        if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
-                            redTank.reduceHP();
-                            redHPBar.setText(Integer.toString(redTank.getHP()));
-                            redTank.getHP();
-                        }
-                        if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
-                            blueTank.reduceHP();
-                            blueHPBar.setText(Integer.toString(blueTank.getHP()));
-                            blueTank.getHP();
-                        }
-                        // System.out.println(getWorkingTank().getHP() + "\t" + getWorkingTank());
-                        // System.out.println(notWorkingTank().getHP() + "\t" + notWorkingTank());
-                        break;
-                    }
-                    if (intersects(ball) == 1){
+                    if(testHit(ball)==true){
                         break;
                     }
                     canvas.draw();
@@ -201,6 +182,25 @@ public class TankManager {
         }
     }
 
+    public boolean testHit(Cannonball ball){
+        if (intersects(ball) == 0){
+            if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
+                redTank.reduceHP();
+                redHPBar.setText(Integer.toString(redTank.getHP()));
+                redTank.getHP();
+            }
+            if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
+                blueTank.reduceHP();
+                blueHPBar.setText(Integer.toString(blueTank.getHP()));
+                blueTank.getHP();
+            }
+            return true;
+        }
+        if (intersects(ball) == 1){
+            return true;
+        }
+        return false;
+    }
     /**
      * Sets Force when space key is pressed and updates the bars on the force meter accordingly.
      */
@@ -218,7 +218,6 @@ public class TankManager {
                 blueForceMeter.setForce(force);
                 blueForceMeter.updateBlueForceMeter();
             }
-            System.out.println(force);
         }
     }
 
@@ -337,12 +336,10 @@ public class TankManager {
      */
     public void animateWorkingCannonFrame1()  {
             if(getWorkingTank()==redTank){
-                redTank.getCannon().setMaxWidth(frame1Width);
                 redTank.getCannon().setImagePath("RedFireFrame1.png");
                 centerCannonToTank(redTank, redTank.getCannon(), frame1Width);
             }
             if(getWorkingTank()==blueTank){
-                blueTank.getCannon().setMaxWidth(frame1Width);
                 blueTank.getCannon().setImagePath("BlueFireFrame1.png");
                 centerCannonToTank(blueTank, blueTank.getCannon(), frame1Width);
             }
@@ -352,14 +349,11 @@ public class TankManager {
      */
     public void animateWorkingCannonFrame2(){
             if(getWorkingTank()==redTank){
-            redTank.getCannon().setMaxWidth(frame2Width);
             redTank.getCannon().setImagePath("RedFireFrame2.png");
             centerCannonToTank(redTank, redTank.getCannon(), frame2Width);
             }
             if(getWorkingTank()==blueTank){
-                blueTank.getCannon().setMaxWidth(frame2Width);
                 blueTank.getCannon().setImagePath("BlueFireFrame2.png");
-               
                 centerCannonToTank(blueTank, blueTank.getCannon(), frame2Width);
                 }
     }
@@ -368,30 +362,27 @@ public class TankManager {
      */
     public void animateWorkingCannonFrame3(){
             if(getWorkingTank()==redTank){
-                redTank.getCannon().setMaxWidth(frame3Width);
                 redTank.getCannon().setImagePath("RedFireFrame3.png");
                 centerCannonToTank(redTank, redTank.getCannon(), frame3Width);
-
             }
             if(getWorkingTank()==blueTank){
-            blueTank.getCannon().setMaxWidth(frame3Width);
              blueTank.getCannon().setImagePath("BlueFireFrame3.png");
              centerCannonToTank(blueTank, blueTank.getCannon(), frame3Width);
             }
     }
+
+    
     /**
      * Gets the working tank's cannon and changes the cannon to go back to the origin.
      */
     public void resetToOriginCannon(){
             if(getWorkingTank()==redTank){
                 redTank.getCannon().setImagePath("RedCannon.png");
-                redTank.getCannon().setMaxWidth(startCannonWidth);
                 centerCannonToTank(redTank, redTank.getCannon(),startCannonWidth);
                 }
         
             if(getWorkingTank()==blueTank){
             blueTank.getCannon().setImagePath("BlueCannon.png");
-            blueTank.getCannon().setMaxWidth(startCannonWidth);
             centerCannonToTank(blueTank, blueTank.getCannon(),startCannonWidth);
             }
     }

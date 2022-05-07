@@ -35,11 +35,6 @@ public class TankGame {
         sky.setScale(3);
         canvas.add(sky);
 
-        // Rectangle ground = new Rectangle(0, canvas.getHeight() - WINDOW_PADDING, canvas.getWidth(), WINDOW_PADDING);
-        // ground.setFilled(true);
-        // ground.setFillColor(GROUND_COLOR);
-        // ground.setStroked(false);
-        // canvas.add(ground);
     }
     public void tankControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.moveTank(event));
@@ -50,56 +45,59 @@ public class TankGame {
         canvas.onKeyDown(event -> tankManager.setForce(event));
         canvas.onKeyUp(event -> {
             tankManager.fireCannon(event);
-            if (checkLives()) {
-                canvas.removeAll();
-                
-                String winner = tankManager.getTanks().get(0).toString().replace("Tank.png", " Tank");
-                String winningTank = tankManager.getTanks().get(0).toString(); 
-                GraphicsText winnerMessage = new GraphicsText(winner + " wins!");
-                Button quitButton = new Button("Quit");
-                Button playButton = new Button("Play Again!");
-
-                if (winningTank == "RedTank.png"){
-                    Image redTankImage = new Image("RedTank.png");
-                    Image redTankCannonImage = new Image("RedCannon.png");
-                    redTankImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/3 + 15);
-                    redTankCannonImage.setX(redTankImage.getX() + 70);
-                    redTankCannonImage.setY(redTankImage.getY() +  7);
-                    canvas.add(redTankCannonImage);
-                    canvas.add(redTankImage);
-                    tankManager.reset();
-
-                }
-
-                if (winningTank == "BlueTank.png") {
-                    Image blueTankImage = new Image("BlueTank.png");
-                    Image blueTankCannonImage = new Image("BlueCannon.png");
-                    blueTankImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/3 + 15);
-                    blueTankCannonImage.setX(blueTankImage.getX() - 20);
-                    blueTankCannonImage.setY(blueTankImage.getY() + 7);
-                    canvas.add(blueTankCannonImage);
-                    canvas.add(blueTankImage);
-                    tankManager.reset();
-                }
-
-                winnerMessage.setCenter(canvas.getWidth()/2, canvas.getHeight()/3 - 50);
-                quitButton.setCenter(canvas.getWidth()/2 - 100, canvas.getHeight()/2);
-                playButton.setCenter(canvas.getWidth()/2 + 100, canvas.getHeight()/2);
-                // Call Opening Screen
-                playButton.onClick(() -> {
-                    canvas.removeAll();
-                    openingScreen();
-                    
-                });
-                quitButton.onClick(() -> canvas.closeWindow());
-                canvas.add(quitButton);
-                canvas.add(playButton);
-                canvas.add(winnerMessage);
-                canvas.draw();
+            if (tankManager.checkLives()) {
+                endScreen();
             }
         });
     }
 
+    public void endScreen() {
+        canvas.removeAll();
+                
+        String winner = tankManager.getTanks().get(0).toString().replace("Tank.png", " Tank");
+        String winningTank = tankManager.getTanks().get(0).toString(); 
+        GraphicsText winnerMessage = new GraphicsText(winner + " wins!");
+        Button quitButton = new Button("Quit");
+        Button playButton = new Button("Play Again!");
+
+        if (winningTank == "RedTank.png"){
+            Image redTankImage = new Image("RedTank.png");
+            Image redTankCannonImage = new Image("RedCannon.png");
+            redTankImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/3 + 15);
+            redTankCannonImage.setX(redTankImage.getX() + 70);
+            redTankCannonImage.setY(redTankImage.getY() +  7);
+            canvas.add(redTankCannonImage);
+            canvas.add(redTankImage);
+            tankManager.reset();
+
+        }
+
+        if (winningTank == "BlueTank.png") {
+            Image blueTankImage = new Image("BlueTank.png");
+            Image blueTankCannonImage = new Image("BlueCannon.png");
+            blueTankImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/3 + 15);
+            blueTankCannonImage.setX(blueTankImage.getX() - 20);
+            blueTankCannonImage.setY(blueTankImage.getY() + 7);
+            canvas.add(blueTankCannonImage);
+            canvas.add(blueTankImage);
+            tankManager.reset();
+        }
+
+        winnerMessage.setCenter(canvas.getWidth()/2, canvas.getHeight()/3 - 50);
+        quitButton.setCenter(canvas.getWidth()/2 - 100, canvas.getHeight()/2);
+        playButton.setCenter(canvas.getWidth()/2 + 100, canvas.getHeight()/2);
+        // Call Opening Screen
+        playButton.onClick(() -> {
+            canvas.removeAll();
+            openingScreen();
+            
+        });
+        quitButton.onClick(() -> canvas.closeWindow());
+        canvas.add(quitButton);
+        canvas.add(playButton);
+        canvas.add(winnerMessage);
+        canvas.draw();
+    }
     /**
      * Creates the Opening Screen.
      */
@@ -117,7 +115,6 @@ public class TankGame {
         gameButton.onClick(() -> {
             canvas.removeAll();
             createBackground();
-
             terrain = new Terrain(canvas, CANVAS_WIDTH, 400);
             tankManager = new TankManager(canvas, terrain);
 
@@ -149,11 +146,6 @@ public class TankGame {
         canvas.add(redTankImage);
         canvas.add(tankLogo);
     }
-
-    public boolean checkLives() {
-        return tankManager.checkLives();
-    }
-
     
     // We will bring back the run method later. We just don't need it at this time.
 
