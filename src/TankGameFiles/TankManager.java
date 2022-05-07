@@ -169,20 +169,7 @@ public class TankManager {
                 ball.addToCanvas(canvas);
                 animateCannon(key);
                 while (ball.updatePosition(0.1)) {
-                    if (intersects(ball) == 0){
-                        if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
-                            redTank.reduceHP();
-                            redHPBar.setText(Integer.toString(redTank.getHP()));
-                            redTank.getHP();
-                        }
-                        if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
-                            blueTank.reduceHP();
-                            blueHPBar.setText(Integer.toString(blueTank.getHP()));
-                            blueTank.getHP();
-                        }
-                        break;
-                    }
-                    if (intersects(ball) == 1){
+                    if(testHit(ball)==true){
                         break;
                     }
                     canvas.draw();
@@ -195,6 +182,25 @@ public class TankManager {
         }
     }
 
+    public boolean testHit(Cannonball ball){
+        if (intersects(ball) == 0){
+            if (canvas.getElementAt(ball.getBottomPoint()) == redTank || canvas.getElementAt(ball.getLeftPoint()) == redTank || canvas.getElementAt(ball.getRightPoint()) == redTank|| canvas.getElementAt(ball.getTopPoint()) == redTank) {
+                redTank.reduceHP();
+                redHPBar.setText(Integer.toString(redTank.getHP()));
+                redTank.getHP();
+            }
+            if (canvas.getElementAt(ball.getBottomPoint()) == blueTank || canvas.getElementAt(ball.getLeftPoint()) == blueTank || canvas.getElementAt(ball.getRightPoint()) == blueTank || canvas.getElementAt(ball.getTopPoint()) == blueTank) {
+                blueTank.reduceHP();
+                blueHPBar.setText(Integer.toString(blueTank.getHP()));
+                blueTank.getHP();
+            }
+            return true;
+        }
+        if (intersects(ball) == 1){
+            return true;
+        }
+        return false;
+    }
     /**
      * Sets Force when space key is pressed and updates the bars on the force meter accordingly.
      */
