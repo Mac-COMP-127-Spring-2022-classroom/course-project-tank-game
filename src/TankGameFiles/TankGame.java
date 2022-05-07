@@ -39,11 +39,6 @@ public class TankGame {
         sky.setScale(3);
         canvas.add(sky);
 
-        // Rectangle ground = new Rectangle(0, canvas.getHeight() - WINDOW_PADDING, canvas.getWidth(), WINDOW_PADDING);
-        // ground.setFilled(true);
-        // ground.setFillColor(GROUND_COLOR);
-        // ground.setStroked(false);
-        // canvas.add(ground);
     }
     public void tankControls(Tank tank, Cannon cannon) {
         canvas.onKeyDown(event -> tankManager.moveTank(event));
@@ -54,26 +49,30 @@ public class TankGame {
         canvas.onKeyDown(event -> tankManager.setForce(event));
         canvas.onKeyUp(event -> {
             tankManager.fireCannon(event);
-            if (checkLives()) {
-                System.out.println(tank.toString() + "wins!");
-                canvas.removeAll();
-                tankManager.reset();
-                Button quitButton = new Button("Quit");
-                Button playButton = new Button("Play Again!");
-                quitButton.setCenter(canvas.getWidth()/2 - 100, canvas.getHeight()/2);
-                playButton.setCenter(canvas.getWidth()/2 + 100, canvas.getHeight()/2);
-                // Call Opening Screen
-                playButton.onClick(() -> {
-                    canvas.removeAll();
-                    openingScreen();
-                    
-                });
-                quitButton.onClick(() -> canvas.closeWindow());
-                canvas.add(quitButton);
-                canvas.add(playButton);
+            if (tankManager.checkLives()) {
+             openEndScreen();
             }
         });
+    }
 
+    public void openEndScreen(){
+            // System.out.println(tank.toString() + "wins!");
+            canvas.removeAll();
+            tankManager.reset();
+            createBackground();
+            Button quitButton = new Button("Quit");
+            Button playButton = new Button("Play Again!");
+            quitButton.setCenter(canvas.getWidth()/2 - 100, canvas.getHeight()/2);
+            playButton.setCenter(canvas.getWidth()/2 + 100, canvas.getHeight()/2);
+            // Call Opening Screen
+            playButton.onClick(() -> {
+                canvas.removeAll();
+                openingScreen();
+                
+            });
+            quitButton.onClick(() -> canvas.closeWindow());
+            canvas.add(quitButton);
+            canvas.add(playButton);
     }
 
     /**
@@ -93,7 +92,6 @@ public class TankGame {
         gameButton.onClick(() -> {
             canvas.removeAll();
             createBackground();
-
             terrain = new Terrain(canvas, CANVAS_WIDTH, 400);
             tankManager = new TankManager(canvas, terrain);
 
@@ -125,11 +123,6 @@ public class TankGame {
         canvas.add(redTankImage);
         canvas.add(tankLogo);
     }
-
-    public boolean checkLives() {
-        return tankManager.checkLives();
-    }
-
     
     // We will bring back the run method later. We just don't need it at this time.
 
