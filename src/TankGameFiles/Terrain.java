@@ -23,7 +23,6 @@ public class Terrain extends GraphicsGroup {
         random = new Random();
         int down = 6;
         int up = 6;
-        // WE WILL BE RANDOMIZING TERRAIN HERE
         Point init = new Point(0, canvas.getHeight());
         points.add(init);
         for (double xCoord = 0; xCoord < bounds; xCoord += 5) {
@@ -65,10 +64,6 @@ public class Terrain extends GraphicsGroup {
         points.add(end);
     }
 
-    // public void setTerrainPoint(Point initialPoint, Point newPoint) {
-    // points.set(points.indexOf(initialPoint), newPoint);
-    // }
-
     public Point getTerrainPoint(int index) {
         return points.get(index);
     }
@@ -84,14 +79,19 @@ public class Terrain extends GraphicsGroup {
     }
 
     public void deformTerrain(Point point) {
-        double checkPoint = 0;
-        Point deformCenter = new Point(0, 0);
+        double checkPoint = point.getX();
+        int deformCenter = 0;
         for (Point p : points) {
             if (Math.abs(point.getX() - p.getX()) < checkPoint) {
                 checkPoint = Math.abs(point.getX() - p.getX());
-                deformCenter = p;
+                deformCenter = points.indexOf(p);
             }
         }
+        for (int i = 0; i < 2; i++){
+            points.set(deformCenter+i, points.get(deformCenter+i).withY(points.get(deformCenter+i).getY()+i*5));
+            points.set(deformCenter-i, points.get(deformCenter-i).withY(points.get(deformCenter-i).getY()+i*5));
+        }
+        canvas.draw();
     }
 
     /**
@@ -101,9 +101,5 @@ public class Terrain extends GraphicsGroup {
         Path path = new Path(points, false);
         canvas.add(path);
         canvas.draw();
-    }
-
-    public void terrainListDebug() {
-        // System.out.println(points.size());
     }
 }
