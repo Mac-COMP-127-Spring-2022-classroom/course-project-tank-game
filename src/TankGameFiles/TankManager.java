@@ -20,6 +20,7 @@ public class TankManager {
     private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
     private String blueCannonPath, redCannonPath;
     private double force;
+    private Integer changeInAngle;
     private GraphicsText redHPBar, blueHPBar;
     private double tankAngle;
     private ForceMeter forceMeter;
@@ -132,24 +133,22 @@ public class TankManager {
      * @param key
      * @param cannon
      */
-    public void setCannonAngle(KeyboardEvent key) {
+    public void tiltCannon (KeyboardEvent key) {
         if ((key.getKey().equals(Key.valueOf("DOWN_ARROW")) || key.getKey().equals(Key.valueOf("S")))
             && getWorkingCannon().getAngle() > 0) {
-
-            getWorkingCannon().rotateBy(5);
-            getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-            centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+                setCannonAngle(5);
         }
-
         if ((key.getKey().equals(Key.valueOf("UP_ARROW")) || key.getKey().equals(Key.valueOf("W")))
             && getWorkingCannon().getAngle() < 180) {
-            getWorkingCannon().rotateBy(-5);
-            getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
-            centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+            setCannonAngle(-5);
         }
 
     }
-
+    public void setCannonAngle(Integer changeInAngle){
+        getWorkingCannon().rotateBy(changeInAngle);
+            getWorkingCannon().setAngle(getWorkingCannon().getAngle() - changeInAngle);
+            centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+    }
     /**
      * Centers cannon to tank.
      */

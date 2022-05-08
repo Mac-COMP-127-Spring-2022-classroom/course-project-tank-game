@@ -34,7 +34,7 @@ public class TankGame {
     }
 
     public void cannonControls(Tank tank, Cannon cannon) {
-        canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
+        canvas.onKeyDown(event -> tankManager.tiltCannon(event));
         canvas.onKeyDown(event -> tankManager.setForce(event));
         canvas.onKeyUp(event -> {
             tankManager.fireCannon(event);
