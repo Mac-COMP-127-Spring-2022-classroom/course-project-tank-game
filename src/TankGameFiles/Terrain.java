@@ -23,12 +23,14 @@ public class Terrain extends GraphicsGroup {
     private List<Point> points;
     private CanvasWindow canvas;
     private Random random;
+    private Path path;
 
 
     public Terrain(CanvasWindow canvas, double bounds, double yAxis) {
         this.canvas = canvas;
         points = new ArrayList<>();
         random = new Random();
+        path = new Path(points, false);
         int down = 6;
         int up = 6;
         Point init = new Point(0, canvas.getHeight());
@@ -99,14 +101,14 @@ public class Terrain extends GraphicsGroup {
             points.set(deformCenter+i, points.get(deformCenter+i).withY(points.get(deformCenter+i).getY()+i*5));
             points.set(deformCenter-i, points.get(deformCenter-i).withY(points.get(deformCenter-i).getY()+i*5));
         }
-        canvas.draw();
+        path.setVertices(points);
     }
 
     /**
      * Generates the terrain by using a list of points.
      */
     public void generateTerrain() {
-        Path path = new Path(points, false);
+        path.setVertices(points);
         canvas.add(path);
         canvas.draw();
     }
