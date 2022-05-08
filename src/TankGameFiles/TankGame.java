@@ -129,9 +129,6 @@ public class TankGame {
         canvas.add(redTankImage);
         canvas.add(tankLogo);
     }
-
-    // We will bring back the run method later. We just don't need it at this time.
-
     public static void main(String[] args) {
         new TankGame();
     }

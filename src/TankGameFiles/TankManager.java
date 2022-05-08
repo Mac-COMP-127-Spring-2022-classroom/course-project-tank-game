@@ -127,6 +127,7 @@ public class TankManager {
         }
     }
 
+
     /**
      * Changes cannon angle.
      * 
@@ -144,6 +145,9 @@ public class TankManager {
         }
 
     }
+    /**
+     * Sets the cannon angle based on the input integer.
+     */
     public void setCannonAngle(Integer changeInAngle){
         getWorkingCannon().rotateBy(changeInAngle);
             getWorkingCannon().setAngle(getWorkingCannon().getAngle() - changeInAngle);
