@@ -13,6 +13,14 @@ import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.CanvasWindow;
 
+// ---------------------------------------------------------------------------------------
+// Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
+// Description: This class is responsible for spawning and moving the Red and Blue Tank 
+// that will be facing off against against each other. 
+// 
+// 
+// ---------------------------------------------------------------------------------------
+
 public class TankManager {
     private CanvasWindow canvas;
     private List<Tank> tanks;

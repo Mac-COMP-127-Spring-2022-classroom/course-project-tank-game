@@ -5,6 +5,14 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.ui.Button;
 
+// ---------------------------------------------------------------------------------------
+// Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
+// Description: This class sets up the canvas that the game will take place in and 
+// is also responsible for running opening-ending "Tanks!" game loop.
+// 
+// 
+// ---------------------------------------------------------------------------------------
+
 public class TankGame {
     private final int CANVAS_HEIGHT = 600;
     private final int CANVAS_WIDTH = 1200;
@@ -44,7 +52,7 @@ public class TankGame {
         });
     }
 
-    public void endScreen() {
+    private void endScreen() {
         canvas.removeAll();
 
         String winner = tankManager.getTanks().get(0).toString().replace("Tank.png", " Tank");
