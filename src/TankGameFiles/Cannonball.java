@@ -1,4 +1,5 @@
 package TankGameFiles;
+
 import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
@@ -6,24 +7,25 @@ import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Point;
 
 
-
 /**
  * Creates a Cannonball that is an ellipse object and moves it on the canvas.
  */
 public class Cannonball {
     public static final double GRAVITY = -9.8;
-    public static final double RADIUS = 5; 
+    public static final double RADIUS = 5;
     private double centerX;
     private double centerY;
-    // Will take the angle of the cannon. Make sure that we shoot the cannonball out of the TOP of the cannon. 
+    // Will take the angle of the cannon. Make sure that we shoot the cannonball out of the TOP of the
+    // cannon.
     private double dx;
     private double dy;
     private double maxX;
-    private double maxY;
+
     private Ellipse ballShape;
-    
+
     /**
      * Creates a cannonball ellipse object.
+     * 
      * @param centerX
      * @param centerY
      * @param initialSpeed
@@ -31,18 +33,18 @@ public class Cannonball {
      * @param maxX
      * @param maxY
      */
-    public Cannonball(double centerX, double centerY, double initialSpeed, double initialAngle, double maxX, double maxY, Color color) {
+    public Cannonball(double centerX, double centerY, double initialSpeed, double initialAngle, double maxX,
+        Color color) {
         this.centerX = centerX;
         this.centerY = centerY;
 
         this.maxX = maxX;
-        this.maxY = maxY;
 
         double angleInRadians = Math.toRadians(initialAngle);
         this.dx = initialSpeed * Math.cos(angleInRadians);
         this.dy = initialSpeed * -Math.sin(angleInRadians);
 
-        ballShape = new Ellipse(centerX - RADIUS, centerY - RADIUS, 2 * RADIUS, 2* RADIUS);
+        ballShape = new Ellipse(centerX - RADIUS, centerY - RADIUS, 2 * RADIUS, 2 * RADIUS);
         ballShape.setFillColor(color);
     }
 
@@ -57,14 +59,15 @@ public class Cannonball {
     public static double getRadius() {
         return RADIUS;
     }
+
     /**
-     * Updates the position of the cannon ball according to velocity and gravity. 
-     * Doesn't update if past canvas X limits and below bottom Y limit.
+     * Updates the position of the cannon ball according to velocity and gravity. Doesn't update if past
+     * canvas X limits and below bottom Y limit.
      */
     public boolean updatePosition(double dt) {
         double xCoord = getCenterX() + (dx * dt);
         double yCoord = getCenterY() + (dy * dt);
-        
+
         if (xCoord > 0 && xCoord < maxX) {
             if (yCoord > 0 || yCoord < 0) {
                 centerX = xCoord;

@@ -1,10 +1,11 @@
 package TankGameFiles;
+
 import java.awt.Color;
 
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 
-public class Tank extends Image{              
+public class Tank extends Image {
     private boolean working;
     private Cannon cannon;
     private Point point;
@@ -12,10 +13,9 @@ public class Tank extends Image{
     private String imagePath;
     private Color color;
 
-    
-
     /**
      * Creates a Tank Object.
+     * 
      * @param x
      * @param y
      * @param imagePath
@@ -29,7 +29,6 @@ public class Tank extends Image{
         this.imagePath = imagePath;
         this.color = color;
         cannon = new Cannon(cannonX, cannonY, cannonPath);
- 
     }
 
     public int getHP() {
@@ -40,7 +39,7 @@ public class Tank extends Image{
         return hp -= 1;
     }
 
-    public Cannon getCannon(){
+    public Cannon getCannon() {
         return cannon;
     }
 
@@ -48,7 +47,7 @@ public class Tank extends Image{
         return working;
     }
 
-    public boolean notWorking(){
+    public boolean notWorking() {
         return !working;
     }
 
@@ -56,12 +55,12 @@ public class Tank extends Image{
         working = !working;
     }
 
-    public double getCenterX(){
-        return getPosition().getX() + getWidth()/2;
+    public double getCenterX() {
+        return getPosition().getX() + getWidth() / 2;
     }
 
-    public double getCenterY(){
-        return getPosition().getY() + getHeight()/2;
+    public double getCenterY() {
+        return getPosition().getY() + getHeight() / 2;
     }
 
     public String toString() {

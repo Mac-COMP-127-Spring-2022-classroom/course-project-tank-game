@@ -11,7 +11,7 @@ import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 
-public class Terrain extends GraphicsGroup{
+public class Terrain extends GraphicsGroup {
     private List<Point> points;
     private CanvasWindow canvas;
     private Random random;
@@ -33,31 +33,30 @@ public class Terrain extends GraphicsGroup{
             if (yAxis < 200) {
                 yAxis = 200;
             }
-            if (down<5){
+            if (down < 5) {
                 yAxis += 5;
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
                 down++;
             }
-            if (up<5){
+            if (up < 5) {
                 yAxis -= 5;
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
                 up++;
             }
-            if (xCoord%100==0){
-                double randomInt = random.nextInt(20+20)-20;
+            if (xCoord % 100 == 0) {
+                double randomInt = random.nextInt(20 + 20) - 20;
                 yAxis += randomInt;
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
-                if (randomInt>0) {
-                    down = 0; 
+                if (randomInt > 0) {
+                    down = 0;
                 }
-                if (randomInt<0) {
+                if (randomInt < 0) {
                     up = 0;
                 }
-            }
-            else{
+            } else {
                 Point point = new Point(xCoord, yAxis);
                 points.add(point);
             }
@@ -67,7 +66,7 @@ public class Terrain extends GraphicsGroup{
     }
 
     // public void setTerrainPoint(Point initialPoint, Point newPoint) {
-    //     points.set(points.indexOf(initialPoint), newPoint);
+    // points.set(points.indexOf(initialPoint), newPoint);
     // }
 
     public Point getTerrainPoint(int index) {
@@ -78,7 +77,7 @@ public class Terrain extends GraphicsGroup{
         Point newPoint = new Point(point.getX() + x, point.getY());
         for (Point p : points) {
             if (Math.round(p.getX()) == Math.round(newPoint.getX())) {
-                newPoint = new Point(p.getX(), p.getY()-25);
+                newPoint = new Point(p.getX(), p.getY() - 25);
             }
         }
         return newPoint;
@@ -88,13 +87,16 @@ public class Terrain extends GraphicsGroup{
         double checkPoint = 0;
         Point deformCenter = new Point(0, 0);
         for (Point p : points) {
-            if (Math.abs(point.getX()-p.getX()) < checkPoint) {
-                checkPoint = Math.abs(point.getX()-p.getX());
+            if (Math.abs(point.getX() - p.getX()) < checkPoint) {
+                checkPoint = Math.abs(point.getX() - p.getX());
                 deformCenter = p;
             }
         }
     }
 
+    /**
+     * Generates the terrain by using a list of points.
+     */
     public void generateTerrain() {
         Path path = new Path(points, false);
         canvas.add(path);

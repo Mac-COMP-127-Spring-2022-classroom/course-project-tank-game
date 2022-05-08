@@ -2,19 +2,17 @@ package TankGameFiles;
 
 import edu.macalester.graphics.Image;
 
-
-public class Cannon extends Image{
+public class Cannon extends Image {
 
     private double angle = 0; // Is in radians.
-    
 
-    public Cannon(double x, double y, String imagePath){
+
+    public Cannon(double x, double y, String imagePath) {
         super(x, y, imagePath);
     }
 
     /**
      * Returns the cannon's angle in radians.
-     * @return
      */
     public double getAngle() {
         return angle;
@@ -23,5 +21,4 @@ public class Cannon extends Image{
     public void setAngle(double input) {
         angle = input;
     }
-   
 }
