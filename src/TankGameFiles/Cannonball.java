@@ -56,10 +56,6 @@ public class Cannonball {
         return centerY;
     }
 
-    public static double getRadius() {
-        return RADIUS;
-    }
-
     /**
      * Updates the position of the cannon ball according to velocity and gravity. Doesn't update if past
      * canvas X limits and below bottom Y limit.
