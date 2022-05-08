@@ -233,6 +233,7 @@ public class TankManager {
             return true;
         }
         if (intersects(ball) == 1) {
+            terrain.deformTerrain(intersectsPoint(ball));
             return true;
         }
         return false;
@@ -451,6 +452,19 @@ public class TankManager {
             return 1;
         }
         return 2;
+    }
+
+    public Point intersectsPoint(Cannonball ball) {
+        if (canvas.getElementAt(ball.getLeftPoint()) instanceof Path) {
+            return ball.getLeftPoint();
+        }
+        if (canvas.getElementAt(ball.getRightPoint()) instanceof Path) {
+            return ball.getRightPoint();
+        }
+        if (canvas.getElementAt(ball.getTopPoint()) instanceof Path) {
+            return ball.getTopPoint();
+        }
+        return ball.getBottomPoint();
     }
 
     public Cannon getWorkingCannon() {

@@ -58,7 +58,15 @@ public class Tank extends Image {
     public double getCenterX() {
         return getPosition().getX() + getWidth() / 2;
     }
-    
+
+    public double getCenterY() {
+        return getPosition().getY() + getHeight() / 2;
+    }
+
+    public String toString() {
+        return imagePath;
+    }
+
     public Point getPoint() {
         return point;
     }
@@ -69,9 +77,5 @@ public class Tank extends Image {
 
     public Color getColor() {
         return this.color;
-    }
-
-    public String toString() {
-        return imagePath;
     }
 }
