@@ -3,6 +3,9 @@ package TankGameFiles;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.events.KeyboardEvent;
@@ -20,6 +23,8 @@ public class TankManager {
     private Point redTankPoint, blueTankPoint, redCannonPoint, blueCannonPoint;
     private String blueCannonPath, redCannonPath;
     private double force;
+    private Integer changeInAngle;
+    private Integer move;
     private GraphicsText redHPBar, blueHPBar;
     private double tankAngle;
     private ForceMeter forceMeter;
@@ -95,36 +100,37 @@ public class TankManager {
     public void moveTank(KeyboardEvent key) {
         if (key.getKey().equals(Key.valueOf("LEFT_ARROW")) || key.getKey().equals(Key.valueOf("A"))) {
             if ((getWorkingTank().equals(blueTank)) && (blueTank.getCenterX() - 25 > canvas.getWidth() / 2)) {
-                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), -5));
-                getWorkingTank().setRotation(tankAngleCalc(-5));
-                getWorkingTank().setCenter(workingTankPoint());
-                centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+                setTankPosition(-5);
             }
             if ((getWorkingTank().equals(redTank))
                 && (getWorkingTank().getCenterX() - getWorkingTank().getWidth() / 2 > 0)) {
-                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), -5));
-                getWorkingTank().setRotation(tankAngleCalc(-5));
-                getWorkingTank().setCenter(workingTankPoint());
-                centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+                setTankPosition(-5);
             }
         }
 
         if (key.getKey().equals(Key.valueOf("RIGHT_ARROW")) || key.getKey().equals(Key.valueOf("D"))) {
             if ((getWorkingTank().equals(redTank)) && (redTank.getCenterX() + 25 < canvas.getWidth() / 2)) {
-                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), 5));
-                getWorkingTank().setRotation(tankAngleCalc(-5));
-                getWorkingTank().setCenter(workingTankPoint());
-                centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+                setTankPosition(5);
             }
             if ((getWorkingTank().equals(blueTank))
                 && (getWorkingTank().getCenterX() + getWorkingTank().getWidth() / 2 < canvas.getWidth())) {
-                getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), 5));
-                getWorkingTank().setRotation(tankAngleCalc(-5));
-                getWorkingTank().setCenter(workingTankPoint());
-                centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+                setTankPosition(5);
             }
         }
     }
+
+    /**
+     * Sets the tank Position based on how the tank moves.
+     * 
+     * @param move
+     */
+    private void setTankPosition(Integer move) {
+        getWorkingTank().setPoint(terrain.getTerrainMovePoint(getWorkingTank().getCenter(), move));
+        getWorkingTank().setRotation(tankAngleCalc(-5));
+        getWorkingTank().setCenter(workingTankPoint());
+        centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+    }
+
 
     /**
      * Changes cannon angle.
@@ -132,22 +138,25 @@ public class TankManager {
      * @param key
      * @param cannon
      */
-    public void setCannonAngle(KeyboardEvent key) {
+    public void tiltCannon(KeyboardEvent key) {
         if ((key.getKey().equals(Key.valueOf("DOWN_ARROW")) || key.getKey().equals(Key.valueOf("S")))
             && getWorkingCannon().getAngle() > 0) {
-
-            getWorkingCannon().rotateBy(5);
-            getWorkingCannon().setAngle(getWorkingCannon().getAngle() - 5);
-            centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+            setCannonAngle(5);
         }
-
         if ((key.getKey().equals(Key.valueOf("UP_ARROW")) || key.getKey().equals(Key.valueOf("W")))
             && getWorkingCannon().getAngle() < 180) {
-            getWorkingCannon().rotateBy(-5);
-            getWorkingCannon().setAngle(getWorkingCannon().getAngle() + 5);
-            centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
+            setCannonAngle(-5);
         }
 
+    }
+
+    /**
+     * Sets the cannon angle based on the input integer.
+     */
+    public void setCannonAngle(Integer changeInAngle) {
+        getWorkingCannon().rotateBy(changeInAngle);
+        getWorkingCannon().setAngle(getWorkingCannon().getAngle() - changeInAngle);
+        centerCannonToTank(getWorkingTank(), getWorkingCannon(), startCannonWidth);
     }
 
     /**
@@ -187,6 +196,14 @@ public class TankManager {
         }
     }
 
+    /**
+     * Tests if the ball that is passed in hits the red tnak the blue tank or the terrain. It returns
+     * true if it hits either of these. If it hits a tank, the tank loses a life and the HP counter and
+     * HP are updated.
+     * 
+     * @param ball
+     * @return
+     */
     public boolean testHit(Cannonball ball) {
         if (intersects(ball) == 0) {
             if (canvas.getElementAt(ball.getBottomPoint()) == redTank

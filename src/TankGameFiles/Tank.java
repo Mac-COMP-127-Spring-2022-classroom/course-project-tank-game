@@ -78,4 +78,8 @@ public class Tank extends Image {
     public Color getColor() {
         return this.color;
     }
+
+    public String toString() {
+        return imagePath;
+    }
 }

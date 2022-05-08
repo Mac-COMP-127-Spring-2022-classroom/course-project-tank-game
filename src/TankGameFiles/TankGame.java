@@ -34,7 +34,7 @@ public class TankGame {
     }
 
     public void cannonControls(Tank tank, Cannon cannon) {
-        canvas.onKeyDown(event -> tankManager.setCannonAngle(event));
+        canvas.onKeyDown(event -> tankManager.tiltCannon(event));
         canvas.onKeyDown(event -> tankManager.setForce(event));
         canvas.onKeyUp(event -> {
             tankManager.fireCannon(event);
@@ -129,9 +129,6 @@ public class TankGame {
         canvas.add(redTankImage);
         canvas.add(tankLogo);
     }
-
-    // We will bring back the run method later. We just don't need it at this time.
-
     public static void main(String[] args) {
         new TankGame();
     }
