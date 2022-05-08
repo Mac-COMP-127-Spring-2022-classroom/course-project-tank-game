@@ -5,6 +5,14 @@ import java.awt.Color;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 
+// ---------------------------------------------------------------------------------------
+// Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
+// Description: This class is responsible for spawning a tank on the screen and
+// keeping track of the tank's HP and active status.
+// 
+// 
+// ---------------------------------------------------------------------------------------
+
 public class Tank extends Image {
     private boolean working;
     private Cannon cannon;

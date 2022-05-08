@@ -6,6 +6,15 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Point;
 
+// ---------------------------------------------------------------------------------------
+// Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
+// Description: This class sets up the cannonball that will be shot out of a tank's 
+// cannon and is responsible for updating the movement of the cannonball on the canvas.
+// 
+// 
+// 
+// ---------------------------------------------------------------------------------------
+
 
 /**
  * Creates a Cannonball that is an ellipse object and moves it on the canvas.

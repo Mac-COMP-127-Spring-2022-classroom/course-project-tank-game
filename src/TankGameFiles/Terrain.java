@@ -11,6 +11,14 @@ import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 
+// ---------------------------------------------------------------------------------------
+// Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
+// Description: This class generates random terrain to be used for the game and
+// is responsible for keeping track of the vertices on the terrain.
+// 
+// 
+// ---------------------------------------------------------------------------------------
+
 public class Terrain extends GraphicsGroup {
     private List<Point> points;
     private CanvasWindow canvas;
