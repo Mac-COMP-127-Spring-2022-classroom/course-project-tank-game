@@ -3,9 +3,6 @@ package TankGameFiles;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
-
 import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.events.KeyboardEvent;
@@ -15,10 +12,10 @@ import edu.macalester.graphics.CanvasWindow;
 
 // ---------------------------------------------------------------------------------------
 // Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
-// Description: This class is responsible for spawning and moving the Red and Blue Tank 
-// that will be facing off against against each other. 
-// 
-// 
+// Description: This class is responsible for spawning and moving the Red and Blue Tank
+// that will be facing off against against each other.
+//
+//
 // ---------------------------------------------------------------------------------------
 
 public class TankManager {
@@ -268,7 +265,8 @@ public class TankManager {
     }
 
     /**
-     * Uses side-side-side theorem to calculate an angle using a initial distance input to retrieve other lengths
+     * Uses side-side-side theorem to calculate an angle using a initial distance input to retrieve
+     * other lengths
      */
     public double tankAngleCalc(int move) {
         double a = 0;
