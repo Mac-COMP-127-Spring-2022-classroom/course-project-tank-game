@@ -60,6 +60,7 @@ public class TankGame {
         GraphicsText winnerMessage = new GraphicsText(winner + " wins!");
         Button quitButton = new Button("Quit");
         Button playButton = new Button("Play Again!");
+        createBackground();
 
         if (winningTank == "RedTank.png") {
             Image redTankImage = new Image("RedTank.png");
