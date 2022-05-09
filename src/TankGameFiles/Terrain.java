@@ -3,11 +3,9 @@ package TankGameFiles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;
 
@@ -15,8 +13,8 @@ import edu.macalester.graphics.Point;
 // Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
 // Description: This class generates random terrain to be used for the game and
 // is responsible for keeping track of the vertices on the terrain.
-// 
-// 
+//
+//
 // ---------------------------------------------------------------------------------------
 
 public class Terrain extends GraphicsGroup {
@@ -82,7 +80,7 @@ public class Terrain extends GraphicsGroup {
      * Gets the new point on the path from an existing point.
      * 
      * @param point existing point
-     * @param x move point
+     * @param x     move point
      * @return
      */
     public Point getTerrainMovePoint(Point point, double x) {
@@ -109,10 +107,12 @@ public class Terrain extends GraphicsGroup {
                 deformCenter = points.indexOf(p);
             }
         }
-        points.set(deformCenter, points.get(deformCenter).withY(points.get(deformCenter).getY()+10));
-        for (int i = 1; i < 6; i++){
-            points.set(deformCenter+i, points.get(deformCenter+i).withY(points.get(deformCenter+i).getY()+10-(i*2)));
-            points.set(deformCenter-i, points.get(deformCenter-i).withY(points.get(deformCenter-i).getY()+10-(i*2)));
+        points.set(deformCenter, points.get(deformCenter).withY(points.get(deformCenter).getY() + 10));
+        for (int i = 1; i < 6; i++) {
+            points.set(deformCenter + i,
+                points.get(deformCenter + i).withY(points.get(deformCenter + i).getY() + 10 - (i * 2)));
+            points.set(deformCenter - i,
+                points.get(deformCenter - i).withY(points.get(deformCenter - i).getY() + 10 - (i * 2)));
         }
         path.setVertices(points);
     }

@@ -7,9 +7,9 @@ import java.awt.Color;
 
 // ---------------------------------------------------------------------------------------
 // Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
-// Description: This class sets up the force meters that will show the force of the 
+// Description: This class sets up the force meters that will show the force of the
 // cannonball for the Red and Blue tanks.
-// 
+//
 // ---------------------------------------------------------------------------------------
 
 public class ForceMeter extends GraphicsGroup {

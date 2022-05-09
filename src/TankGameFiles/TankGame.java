@@ -7,10 +7,10 @@ import edu.macalester.graphics.ui.Button;
 
 // ---------------------------------------------------------------------------------------
 // Author: Eddie Chen, Bram Nutt, and Marcus Monk Wallace
-// Description: This class sets up the canvas that the game will take place in and 
+// Description: This class sets up the canvas that the game will take place in and
 // is also responsible for running opening-ending "Tanks!" game loop.
-// 
-// 
+//
+//
 // ---------------------------------------------------------------------------------------
 
 public class TankGame {
@@ -137,6 +137,7 @@ public class TankGame {
         canvas.add(redTankImage);
         canvas.add(tankLogo);
     }
+
     public static void main(String[] args) {
         new TankGame();
     }
