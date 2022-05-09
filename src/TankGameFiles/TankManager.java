@@ -268,7 +268,7 @@ public class TankManager {
     }
 
     /**
-     * 
+     * Uses side-side-side theorem to calculate an angle using a initial distance input to retrieve other lengths
      */
     public double tankAngleCalc(int move) {
         double a = 0;

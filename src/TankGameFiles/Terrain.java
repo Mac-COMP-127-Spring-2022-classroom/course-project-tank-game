@@ -78,6 +78,13 @@ public class Terrain extends GraphicsGroup {
         return points.get(index);
     }
 
+    /**
+     * Gets the new point on the path from an existing point.
+     * 
+     * @param point existing point
+     * @param x move point
+     * @return
+     */
     public Point getTerrainMovePoint(Point point, double x) {
         Point newPoint = new Point(point.getX() + x, point.getY());
         for (Point p : points) {
@@ -88,6 +95,11 @@ public class Terrain extends GraphicsGroup {
         return newPoint;
     }
 
+    /**
+     * Changes existing points on the path by using an initial deform point
+     * 
+     * @param point cannonball collision part
+     */
     public void deformTerrain(Point point) {
         double checkPoint = point.getX();
         int deformCenter = 0;
