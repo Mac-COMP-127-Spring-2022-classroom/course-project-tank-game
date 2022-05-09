@@ -109,12 +109,14 @@ public class Terrain extends GraphicsGroup {
                 deformCenter = points.indexOf(p);
             }
         }
-        points.set(deformCenter, points.get(deformCenter).withY(points.get(deformCenter).getY()+10));
-        for (int i = 1; i < 6; i++){
-            points.set(deformCenter+i, points.get(deformCenter+i).withY(points.get(deformCenter+i).getY()+10-(i*2)));
-            points.set(deformCenter-i, points.get(deformCenter-i).withY(points.get(deformCenter-i).getY()+10-(i*2)));
+        if (points.get(deformCenter).getY() <= 570) {
+            points.set(deformCenter, points.get(deformCenter).withY(points.get(deformCenter).getY()+10));
+            for (int i = 1; i < 6; i++){
+                points.set(deformCenter+i, points.get(deformCenter+i).withY(points.get(deformCenter+i).getY()+10-(i*2)));
+                points.set(deformCenter-i, points.get(deformCenter-i).withY(points.get(deformCenter-i).getY()+10-(i*2)));
+            }
+            path.setVertices(points);
         }
-        path.setVertices(points);
     }
 
     /**
